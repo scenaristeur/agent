@@ -26,7 +26,8 @@ export default {
     };
 
     let graphDiv = this.$refs.graph
-    this.Graph = ForceGraph3D()(graphDiv).graphData(gData);
+    this.Graph = ForceGraph3D()(graphDiv).graphData(gData)
+    this.$graphInit(this.Graph)
   }
 
 }
