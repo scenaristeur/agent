@@ -2,6 +2,8 @@
 const state = () => ({
   core: undefined,
   currentNode : undefined,
+  nodeLinks: [],
+  nodeProperties: [],
   brain: undefined,
   graph: undefined,
   db: undefined,
@@ -21,6 +23,14 @@ const mutations = {
   setCurrentNode(state, n){
     console.log(n)
     state.currentNode = n
+  },
+  setNodeLinks(state, l){
+    console.log(l)
+    state.nodeLinks = l
+  },
+  setNodeProperties(state, p){
+    console.log(p)
+    state.nodeProperties = p
   },
   setBrain(state, b){
     console.log(b)

@@ -12,6 +12,9 @@
         </b-col>
       </b-row>
 
+      <NodeLinks v-model="tempNode.links"/>
+      <NodeProperties v-model="tempNode.properties"/>
+
 
       <b-button @click="tempNode = null">Cancel</b-button>
       <b-button @click="save" variant="primary">Save</b-button>
@@ -27,6 +30,10 @@
 
 export default {
   name: "NodeEdition",
+  components: {
+    'NodeLinks': ()=>import('@/components/nodeEdition/NodeLinks'),
+    'NodeProperties': ()=>import('@/components/nodeEdition/NodeProperties'),
+  },
   data(){
     return {
       tempNode: null
@@ -46,6 +53,8 @@ export default {
   watch:{
     currentNode(){
       this.tempNode = this.currentNode
+      this.$store.commit('core/setNodeProperties', this.tempNode.properties)
+      this.$store.commit('core/setNodeLinks', this.tempNode.links)
     }
   },
   computed: {
