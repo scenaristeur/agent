@@ -23,6 +23,17 @@ const mutations = {
     console.log(d)
     state.doc = d
   },
+  updateDoc(state, newDoc) {
+    state.doc = newDoc
+    //render(newDoc)
+  },
+  addItem(state, text) {
+  let newDoc = Automerge.change(state.doc, doc => {
+    if (!doc.items) doc.items = []
+    doc.items.push({ text, done: false })
+  })
+  state.updateDoc(newDoc)
+}
   // pushHistory(state, c){
   //   state.lastCommand = c
   //   state.history.push(c)

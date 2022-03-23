@@ -4,6 +4,7 @@
       <b-button-group class="mx-1">
         <b-button @click="newNeurone">new</b-button>
         <b-button @click="newAutomerge">new automerge</b-button>
+        <b-button @click="addItem">add item</b-button>
       </b-button-group>
       <b-button-group class="mx-1">
         <b-button>Edit</b-button>
@@ -27,6 +28,10 @@ export default {
     },
     newAutomerge(){
       this.$store.dispatch('automerge/newDoc')
+    },
+    addItem(){
+      let text = "blah"
+      this.$store.commit('automerge/addItem', text)
     }
   }
 }
