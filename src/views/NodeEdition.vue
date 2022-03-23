@@ -4,7 +4,7 @@
       Node edition
       <b-row>
         <b-col cols="10">
-          <b-form-input v-model="tempNode.name" placeholder="name"></b-form-input>
+          <b-form-input v-model="tempNode.name" placeholder="name" autofocus></b-form-input>
         </b-col>
         <b-col cols="2">
 
@@ -15,10 +15,8 @@
       <NodeLinks v-model="tempNode.links"/>
       <NodeProperties v-model="tempNode.properties"/>
 
-
       <b-button @click="tempNode = null">Cancel</b-button>
       <b-button @click="save" variant="primary">Save</b-button>
-
       <hr>
 
       {{ tempNode }}
@@ -53,8 +51,10 @@ export default {
   watch:{
     currentNode(){
       this.tempNode = this.currentNode
-      this.$store.commit('core/setNodeProperties', this.tempNode.properties)
-      this.$store.commit('core/setNodeLinks', this.tempNode.links)
+      let tempProps = this.tempNode != null ? this.tempNode.properties : []
+      let tempLinks = this.tempNode != null ? this.tempNode.links : []
+      this.$store.commit('core/setNodeProperties', tempProps)
+      this.$store.commit('core/setNodeLinks', tempLinks)
     }
   },
   computed: {
