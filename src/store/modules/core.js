@@ -1,4 +1,7 @@
 // import Vue from 'vue'
+import idb from '@/api/idb-nodes';
+import { v4 as uuidv4 } from 'uuid';
+
 const state = () => ({
   core: undefined,
   currentNode : undefined,
@@ -8,7 +11,9 @@ const state = () => ({
   graph: undefined,
   db: undefined,
   history: [],
-  lastCommand: null
+  lastCommand: null,
+  nodes: [],
+  links: []
 })
 
 const mutations = {
@@ -44,14 +49,54 @@ const mutations = {
     console.log(db)
     state.db = db
   },
-  addNode(state, n){
-    let {nodes, links} = state.graph.graphData()
-    nodes.push(n)
-    state.graph.graphData({ nodes: nodes, links: links })
-  }
+  // addNode(state, n){
+  //
+  //   //let {nodes, links} = state.graph.graphData()
+  //   //nodes.push(n)
+  //   //state.graph.graphData({ nodes: nodes, links: links })
+  // }
 }
 
 const actions = {
+
+  async newNode(context){
+    let node = { id: uuidv4(), name: "", color: "#00ff00"}
+    context.commit('setCurrentNode', node)
+    console.log("onBackgroundClick", event)
+  },
+  async saveNode(context, node){
+    try{
+      await idb.saveNode(node);
+    }catch(e){
+      alert(e)
+    }
+  },
+  async getNodes(context) {
+    context.state.nodes = [];
+    let nodes = await idb.getNodes();
+    console.log("nodes in db", nodes)
+    nodes.forEach(n => {
+      context.state.nodes.push(n);
+    });
+
+  },
+  async saveBrain(context){
+
+    let {nodes, links} = context.state.graph.graphData()
+    console.log(nodes, links)
+
+    for (let node of nodes){
+      console.log(node)
+      delete node.__ob__
+      delete node.__threeObj
+      node.id == undefined ? node.id = uuidv4() : ""
+      node.created == undefined ? node.created = Date.now() : ""
+      node.updated = Date.now()
+      console.log(node)
+      await idb.saveNode(node);
+    }
+
+  }
   // async addWorkspace(context, w) {
   //   context.state.pod.workspaces.push(w)
   //   Vue.prototype.$addWorkspaceToPod(w)

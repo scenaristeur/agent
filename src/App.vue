@@ -17,6 +17,7 @@ export default {
   name: 'App',
   created(){
     this.$coreInit({name: "SuperCore"})
+    this.$store.dispatch('core/getNodes')
   }
 }
 </script>

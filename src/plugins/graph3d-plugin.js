@@ -1,5 +1,6 @@
 import ForceGraph3D from '3d-force-graph';
-import { Neurone/*, Brain,*/ /* Graph*/ } from '@/neurone-factory'
+
+// import { Neurone/*, Brain,*/ /* Graph*/ } from '@/neurone-factory'
 
 // let graph = undefined
 const plugin = {
@@ -57,6 +58,7 @@ const plugin = {
 
       let graph = ForceGraph3D()(options.domElement).graphData(graphData)
       graph
+      // .nodeId('id')
       .onBackgroundClick(event => onBackgroundClick(event))
       .onNodeClick(node => onNodeClick(node))
 
@@ -89,21 +91,21 @@ const plugin = {
     }
 
     async function onBackgroundClick(event){
-      let node =       new Neurone(
-        {
-          //  blip: "blop",
-          //  color: this.randomColor(),
-          //
-          //  id: i,
-          //  name: "node fictif "+i, //"name for graph_",
-          age: 0,
-          type: "neurone",
-          color: '#ffff00'
-        }
-      )
-      console.log("onBackgroundClick", event)
-      store.commit('core/setCurrentNode', node)
-      console.log("new", node)
+      // let node =       new Neurone(
+      //   {
+      //     //  blip: "blop",
+      //     //  color: this.randomColor(),
+      //     //
+      //     //  id: i,
+      //     //  name: "node fictif "+i, //"name for graph_",
+      //     age: 0,
+      //     type: "neurone",
+      //     color: '#ffff00'
+      //   }
+      // )
+      console.log(event)
+      store.dispatch('core/newNode')
+      // console.log("new", node)
       //  Vue.prototype.$bvModal.show("modal-node")
 
     }

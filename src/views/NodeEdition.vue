@@ -43,7 +43,7 @@ export default {
   methods:{
     save(){
       console.log(this.tempNode)
-      this.$store.commit('core/addNode', this.tempNode)
+      this.$store.dispatch('core/saveNode', this.tempNode)
       this.$store.commit('core/setCurrentNode', null)
     }
 

@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkagent"]=self["webpackChunkagent"]||[]).push([[727],{9727:function(t,e,n){n.r(e),n.d(e,{default:function(){return h}});var a=function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("div",{ref:"graph",attrs:{id:"graph"}},[t._v("Loading graph... ")])},r=[],u={name:"VisualisationView",data(){return{graph:null}},mounted(){this.graph=this.$graphInit({domElement:this.$refs.graph})}},i=u,l=n(1001),s=(0,l.Z)(i,a,r,!1,null,null,null),h=s.exports}}]);
-//# sourceMappingURL=727.2aeab0dd.js.map

@@ -11,7 +11,7 @@
     :options="graphData.nodes"
     ></b-form-select>
 
-    {{graphData.nodes}}
+    <!-- {{graphData.nodes}} -->
 
 
   </div>
