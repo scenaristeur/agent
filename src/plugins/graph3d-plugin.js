@@ -1,3 +1,6 @@
+import ForceGraph3D from '3d-force-graph';
+import { Neurone, Brain, /* Graph*/ } from '@/neurone-factory'
+
 let graph = undefined
 const plugin = {
   install(Vue, opts = {}) {
@@ -5,9 +8,54 @@ const plugin = {
     console.log(store)
 
 
-    Vue.prototype.$graphInit = async function(_graph){
-      graph = _graph
-      graph.onBackgroundClick(event => onBackgroundClick(event))
+    Vue.prototype.$graphInit = async function(options){
+      console.log(options)
+
+      const N = 300;
+
+      let nodes =  [...Array(N).keys()].map(i => (
+        // { id: i , name: "node fictif "+i}
+        new Neurone(
+          {
+            //  blip: "blop",
+            //  color: this.randomColor(),
+            //
+            id: i,
+            name: "node fictif "+i, //"name for graph_",
+            age: 0,
+            type: "neurone"
+          }
+        )
+
+      ))
+      let links = [...Array(N).keys()]
+      .filter(id => id)
+      .map(id => ({
+        source: id,
+        target: Math.round(Math.random() * (id-1))
+      }))
+
+      let gData = {name: "default basic brain demo", nodes: nodes, links: links}
+
+      let brain = new Brain(gData)
+      console.log(brain)
+      //
+      // console.log("newNeurone")
+      // let node = new Neurone(
+      //   {
+      //     //  blip: "blop",
+      //     //  color: this.randomColor(),
+      //     name: "name for graph_",
+      //     age: 0,
+      //     type: "neurone"
+      //   }
+      // )
+      // console.log("neurone ", node)
+
+
+      graph = ForceGraph3D()(options.domElement).graphData(brain)
+      graph
+      .onBackgroundClick(event => onBackgroundClick(event))
       .onNodeClick(node => onNodeClick(node))
 
       console.log(graph)
@@ -38,10 +86,21 @@ const plugin = {
     }
 
     async function onBackgroundClick(event){
-
+      let node =       new Neurone(
+        {
+          //  blip: "blop",
+          //  color: this.randomColor(),
+          //
+          //  id: i,
+          //  name: "node fictif "+i, //"name for graph_",
+          age: 0,
+          type: "neurone",
+          color: 'rgb(255,0,0,1)'
+        }
+      )
       console.log("onBackgroundClick", event)
-      store.commit('core/setCurrentNode', null)
-      console.log("new")
+      store.commit('core/setCurrentNode', node)
+      console.log("new", node)
       //  Vue.prototype.$bvModal.show("modal-node")
 
     }
