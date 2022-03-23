@@ -8,6 +8,19 @@
   </div>
 </template>
 
+
+<script>
+// @ is an alias to /src
+// import HelloWorld from '@/components/HelloWorld.vue'
+
+export default {
+  name: 'App',
+  created(){
+    this.$coreInit({name: "SuperCore"})
+  }
+}
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
