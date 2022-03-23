@@ -59,7 +59,7 @@ const plugin = {
       let graph = ForceGraph3D()(options.domElement).graphData(graphData)
       graph
       // .nodeId('id')
-      .onBackgroundClick(event => onBackgroundClick(event))
+      //.onBackgroundClick(event => onBackgroundClick(event))
       .onNodeClick(node => onNodeClick(node))
 
       console.log(graph)
@@ -90,25 +90,25 @@ const plugin = {
 
     }
 
-    async function onBackgroundClick(event){
-      // let node =       new Neurone(
-      //   {
-      //     //  blip: "blop",
-      //     //  color: this.randomColor(),
-      //     //
-      //     //  id: i,
-      //     //  name: "node fictif "+i, //"name for graph_",
-      //     age: 0,
-      //     type: "neurone",
-      //     color: '#ffff00'
-      //   }
-      // )
-      console.log(event)
-      store.dispatch('core/newNode')
-      // console.log("new", node)
-      //  Vue.prototype.$bvModal.show("modal-node")
-
-    }
+    // async function onBackgroundClick(event){
+    //   // let node =       new Neurone(
+    //   //   {
+    //   //     //  blip: "blop",
+    //   //     //  color: this.randomColor(),
+    //   //     //
+    //   //     //  id: i,
+    //   //     //  name: "node fictif "+i, //"name for graph_",
+    //   //     age: 0,
+    //   //     type: "neurone",
+    //   //     color: '#ffff00'
+    //   //   }
+    //   // )
+    //   console.log(event)
+    //   store.dispatch('core/newNode')
+    //   // console.log("new", node)
+    //   //  Vue.prototype.$bvModal.show("modal-node")
+    //
+    // }
   }
 }
 

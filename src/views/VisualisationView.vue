@@ -23,7 +23,8 @@ export default {
       this.$store.dispatch('core/saveBrain')
     },
     update(){
-      if (this.graph != undefined){
+      console.log(this.graph, this.nodes)
+      if (this.graph != undefined && this.nodes.length > 0){
         this.graph.graphData({nodes: this.nodes, links: []})
       }
 

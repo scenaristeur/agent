@@ -11,15 +11,16 @@
           <b-form-input type="color" v-model="tempNode.color" size="sm"></b-form-input>
         </b-col>
       </b-row>
+      <b-form-input v-model="tempNode.type" placeholder="type"></b-form-input>
 
-      <NodeLinks v-model="tempNode.links"/>
-      <NodeProperties v-model="tempNode.properties"/>
+      <!-- <NodeLinks v-model="tempNode.links"/>
+      <NodeProperties v-model="tempNode.properties"/> -->
 
       <b-button @click="tempNode = null">Cancel</b-button>
       <b-button @click="save" variant="primary">Save</b-button>
       <hr>
 
-      {{ tempNode }}
+      <!-- {{ tempNode }} -->
     </b-container>
   </div>
 </template>
@@ -29,8 +30,8 @@
 export default {
   name: "NodeEdition",
   components: {
-    'NodeLinks': ()=>import('@/components/nodeEdition/NodeLinks'),
-    'NodeProperties': ()=>import('@/components/nodeEdition/NodeProperties'),
+    // 'NodeLinks': ()=>import('@/components/nodeEdition/NodeLinks'),
+    // 'NodeProperties': ()=>import('@/components/nodeEdition/NodeProperties'),
   },
   data(){
     return {
@@ -41,9 +42,9 @@ export default {
 
   },
   methods:{
-    save(){
+    async save(){
       console.log(this.tempNode)
-      this.$store.dispatch('core/saveNode', this.tempNode)
+      await this.$store.dispatch('core/saveNode', this.tempNode)
       this.$store.commit('core/setCurrentNode', null)
     }
 

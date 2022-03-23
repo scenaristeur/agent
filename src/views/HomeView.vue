@@ -2,6 +2,7 @@
   <div class="home">
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+    <ToolbarView />
     <NodeEdition />
     <VisualisationView />
   </div>
@@ -16,6 +17,7 @@ export default {
   components: {
     'VisualisationView': ()=>import('@/views/VisualisationView'),
     'NodeEdition': ()=>import('@/views/NodeEdition'),
+    'ToolbarView': ()=>import('@/views/ToolbarView'),
   },
 }
 </script>

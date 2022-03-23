@@ -11,13 +11,14 @@
   },
   "dependencies": {
     "3d-force-graph": "^1.70.9",
+    "automerge": "^1.0.1-preview.7",
+    "bootstrap": "^4.5.3",
+    "bootstrap-vue": "^2.21.2",
     "core-js": "^3.8.3",
     "register-service-worker": "^1.7.2",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
-    "vuex": "^3.6.2",
-    "bootstrap": "^4.5.3",
-    "bootstrap-vue": "^2.21.2"
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
