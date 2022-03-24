@@ -27,13 +27,7 @@ const mutations = {
     state.doc = newDoc
     //render(newDoc)
   },
-  addItem(state, text) {
-  let newDoc = Automerge.change(state.doc, doc => {
-    if (!doc.items) doc.items = []
-    doc.items.push({ text, done: false })
-  })
-  state.updateDoc(newDoc)
-}
+
   // pushHistory(state, c){
   //   state.lastCommand = c
   //   state.history.push(c)
@@ -76,6 +70,14 @@ const actions = {
     let doc = Automerge.init()
     context.commit('setDoc', doc)
   },
+  addItem(context, text) {
+    console.log(context.state.doc)
+    let newDoc = Automerge.change(context.state.doc, doc => {
+      if (!doc.items) doc.items = []
+      doc.items.push({ text, done: false })
+    })
+    context.commit('updateDoc', newDoc)
+  }
   // async saveNode(context, node){
   //   console.log(node)
   //   delete node.__ob__

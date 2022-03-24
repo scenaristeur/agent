@@ -60,9 +60,38 @@ const mutations = {
 const actions = {
 
   async newNode(context){
-    let node = { id: uuidv4(), name: "", type: "neurone", color: "#00ff00"}
+    // let node = { id: uuidv4(), name: "", type: "neurone", color: "#00ff00"}
+    let node = {
+      "@context": {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "id": "@id",
+        "type": "@type",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      },
+      "id": "http://local/"+uuidv4(),
+      "name": "Manu Sporny",
+      type: "neurone",
+      color: "#00ff00",
+      "homepage": "http://manu.sporny.org/",
+      // "knows": [{
+      //   "name": "Daniele"
+      // }, {
+      //   "name": "Lucio"
+      // }],
+        "knows": [{
+          "id": "_:7053c150-5fea-11e3-a62e-adadc4e3df76",
+          "name": "Boby"
+        }, {
+          "id": "_:9d2bb59d-3baf-42ff-ba5d-9f8eab34ada4",
+          "name": "John"
+        }]
+    };
     context.commit('setCurrentNode', node)
-    console.log("onBackgroundClick", event)
+    // console.log("onBackgroundClick", event)
   },
   async saveNode(context, node){
     console.log(node)
@@ -70,18 +99,21 @@ const actions = {
     delete node.__threeObj
     try{
       await idb.saveNode(node);
-      //await context.dispatch('getNodes') // pose problème de rafraichissement, certainement car on a enlevé __ob & __threeObj
+      await context.dispatch('getNodes') // pose problème de rafraichissement, certainement car on a enlevé __ob & __threeObj
     }catch(e){
       alert(e)
     }
   },
   async getNodes(context) {
-    context.state.nodes = [];
+    // context.state.nodes = [];
     let nodes = await idb.getNodes();
     console.log("nodes in db", nodes)
     nodes.forEach(n => {
       n.type == undefined ? n.type = "neurone" : ""
-      context.state.nodes.push(n);
+      // context.state.nodes.push(n);
+      var index = context.state.nodes.findIndex(x => x.id==n.id);
+      console.log(n.id, index)
+      index === -1 ? context.state.nodes.push(n) : Object.assign(context.state.nodes[index], n)
     });
 
   },
@@ -104,7 +136,7 @@ const actions = {
 
     let brain = {id: uuidv4(), nodes: nodes_ids, type: 'brain', color: "#fffff"}
     await idb.saveNode(brain);
-  //  context.dispatch('getNodes')
+    //  context.dispatch('getNodes')
 
   }
   // async addWorkspace(context, w) {

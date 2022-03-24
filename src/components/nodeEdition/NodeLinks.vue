@@ -1,6 +1,26 @@
 <template>
   <div>
-    Links
+
+    <div v-for="(p) in Object.keys(currentNode)" :key="p">
+      <!-- <hr> -->
+      <div v-if="jsonldProps.includes(p)">
+        <!-- jsonldProp : {{p}}<br> -->
+        <!-- value {{currentNode[p]}}<br> -->
+      </div>
+      <div v-else-if="graphProps.includes(p)">
+        <!-- graphProp : {{p}} -->
+      </div>
+      <div v-else>
+
+       <b> {{p}}</b> ({{ typeof currentNode[p]}}) :
+        {{currentNode[p]}} <b-button @click="addValue(p)" variant="outline-primary" size="sm">+</b-button>
+      </div>
+
+    </div>
+
+
+
+
     {{ nodeLinks }}
     <hr>
 
@@ -20,9 +40,18 @@
 <script>
 export default {
   name: "NodeLinks",
+
   data(){
     return {
-      selected: null
+      selected: null,
+      graphProps: ['__threeObj', 'index', 'x', 'y', 'z', 'vx', 'vy', 'vz'],
+      jsonldProps: ['@context', 'id']
+    }
+  },
+  methods:{
+    addValue(p){
+      console.log("addValue",p)
+      console.log(this.currentNode[p], typeof this.currentNode[p])
     }
   },
   watch:{
@@ -34,9 +63,9 @@ export default {
     }
   },
   computed: {
-    // currentNode() {
-    //   return this.$store.state.core.currentNode
-    // },
+    currentNode() {
+      return this.$store.state.core.currentNode
+    },
     nodeLinks() {
       return this.$store.state.core.nodeLinks
     },

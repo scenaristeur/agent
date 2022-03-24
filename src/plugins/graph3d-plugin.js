@@ -1,5 +1,10 @@
 import ForceGraph3D from '3d-force-graph';
+import {CSS2DRenderer, CSS2DObject} from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 
+// let selectedNodes = new Set(),
+let highlightNodes = new Set(),
+// highlightLinks = new Set(),
+hoverNode= null
 // import { Neurone/*, Brain,*/ /* Graph*/ } from '@/neurone-factory'
 
 // let graph = undefined
@@ -11,60 +16,49 @@ const plugin = {
 
     Vue.prototype.$graphInit = async function(options){
       console.log(options)
-
-      // const N = 300;
-      //
-      // let nodes =  [...Array(N).keys()].map(i => (
-      //   // { id: i , name: "node fictif "+i}
-      //   new Neurone(
-      //     {
-      //       //  blip: "blop",
-      //       //  color: this.randomColor(),
-      //       //
-      //       id: i,
-      //       name: "node fictif "+i, //"name for graph_",
-      //       age: 0,
-      //       type: "neurone"
-      //     }
-      //   )
-      //
-      // ))
-      // let links = [...Array(N).keys()]
-      // .filter(id => id)
-      // .map(id => ({
-      //   source: id,
-      //   target: Math.round(Math.random() * (id-1))
-      // }))
-      //
-      // let gData = {name: "default basic brain demo", nodes: nodes, links: links}
-      //
-      // let brain = new Brain(gData)
-      // console.log(brain)
-      //
-      // store.commit ('core/setBrain', brain)
-      // //
-      // // console.log("newNeurone")
-      // // let node = new Neurone(
-      // //   {
-      // //     //  blip: "blop",
-      // //     //  color: this.randomColor(),
-      // //     name: "name for graph_",
-      // //     age: 0,
-      // //     type: "neurone"
-      // //   }
-      // // )
-      // // console.log("neurone ", node)
       let graphData={nodes: [], links: []}
 
-      let graph = ForceGraph3D()(options.domElement).graphData(graphData)
+      let graph = ForceGraph3D({extraRenderers: [new CSS2DRenderer()]})(options.domElement).graphData(graphData)
       graph
       // .nodeId('id')
+      .nodeLabel('name')
+      .nodeColor(node => highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : node.color)
       //.onBackgroundClick(event => onBackgroundClick(event))
       .onNodeClick(node => onNodeClick(node))
+      .nodeThreeObjectExtend(true)
+      .nodeThreeObject(node => nodeThreeObject(node))
+      // .nodeThreeObject(({ url }) => nodeThreeObject(url))
 
       console.log(graph)
       store.commit ('core/setGraph', graph)
     }
+
+
+
+
+function nodeThreeObject(node){
+  const nodeEl = document.createElement('div');
+  nodeEl.textContent = node.name //node.id;
+  nodeEl.style.color = node.color || "#ffffff";
+  nodeEl.className = 'node-label';
+  return new CSS2DObject(nodeEl);
+}
+// function nodeThreeObject({url}){
+//   // .nodeThreeObject(({ url }) => {
+//
+//   // if(url == undefined){
+//   //   url = "root"
+//   // }
+//   if (url != undefined && (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg'))){
+//     const imgTexture = new THREE.TextureLoader().load(`${url}`);
+//     const material = new THREE.SpriteMaterial({ map: imgTexture });
+//     const sprite = new THREE.Sprite(material);
+//     sprite.scale.set(12, 12);
+//     return sprite;
+//   }
+//
+// // })
+// }
 
 
     async function onNodeClick(node){

@@ -51,5 +51,11 @@ export default {
 </script>
 
 <style>
-
+.node-label {
+  font-size: 12px;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background-color: rgba(0,0,0,0.5);
+  user-select: none;
+}
 </style>

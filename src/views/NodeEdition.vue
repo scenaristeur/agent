@@ -12,8 +12,9 @@
         </b-col>
       </b-row>
       <b-form-input v-model="tempNode.type" placeholder="type"></b-form-input>
-
-      <!-- <NodeLinks v-model="tempNode.links"/>
+        <NodeLinks />
+      <!--
+      <NodeLinks v-model="tempNode.links"/>
       <NodeProperties v-model="tempNode.properties"/> -->
 
       <b-button @click="tempNode = null">Cancel</b-button>
@@ -30,7 +31,7 @@
 export default {
   name: "NodeEdition",
   components: {
-    // 'NodeLinks': ()=>import('@/components/nodeEdition/NodeLinks'),
+    'NodeLinks': ()=>import('@/components/nodeEdition/NodeLinks'),
     // 'NodeProperties': ()=>import('@/components/nodeEdition/NodeProperties'),
   },
   data(){

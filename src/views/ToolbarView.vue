@@ -31,7 +31,7 @@ export default {
     },
     addItem(){
       let text = "blah"
-      this.$store.commit('automerge/addItem', text)
+      this.$store.dispatch('automerge/addItem', text)
     }
   }
 }
