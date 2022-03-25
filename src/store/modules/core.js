@@ -5,15 +5,15 @@ import { v4 as uuidv4 } from 'uuid';
 const state = () => ({
   core: undefined,
   currentNode : undefined,
-  nodeLinks: [],
-  nodeProperties: [],
   brain: undefined,
   graph: undefined,
   db: undefined,
   commandHistory: [],
   command: null,
   nodes: [],
-  links: []
+  links: [],
+  jsonldProps: ['@context', 'id', 'reverse', 'type'],
+  graphProps: ['__ob__', '__threeObj', 'index', 'vx', 'vy', 'vz', 'x', 'y', 'z' ]
 })
 
 const mutations = {
@@ -25,14 +25,6 @@ const mutations = {
   setCurrentNode(state, n){
     console.log(n)
     state.currentNode = n
-  },
-  setNodeLinks(state, l){
-    console.log(l)
-    state.nodeLinks = l
-  },
-  setNodeProperties(state, p){
-    console.log(p)
-    state.nodeProperties = p
   },
   setBrain(state, b){
     console.log(b)
@@ -51,13 +43,10 @@ const mutations = {
   },
   pushHistory(state, c){
     state.commandHistory.push(c)
+  },
+  setLinks(state, l){
+    state.links = l
   }
-  // addNode(state, n){
-  //
-  //   //let {nodes, links} = state.graph.graphData()
-  //   //nodes.push(n)
-  //   //state.graph.graphData({ nodes: nodes, links: links })
-  // }
 }
 
 const actions = {
@@ -65,114 +54,58 @@ const actions = {
     context.commit('setCommand', c)
     context.commit('pushHistory',c)
     if(c.type == "triplet"){
-      let triplet = c.value
-    //  console.log(triplet, c.selected)
-      let s = triplet.subject
-      let p = triplet.predicate
-      let o = triplet.object
-
-    //  console.log(s,p,o)
-
-    //  console.log(context.state.nodes)
-
-      let subjectNode = context.state.nodes.find(x => x.name == s)
-      let objectNode = context.state.nodes.find(x => x.name == o)
-
-    //  console.log(subjectNode, objectNode)
-      if(subjectNode == undefined){
-        subjectNode = Vue.prototype.$newNode({name: s})
-      }
-
-      if(objectNode == undefined){
-        objectNode = Vue.prototype.$newNode({name: o})
-      }
-
-    //  console.log(subjectNode, objectNode)
-
-      let nodes2save  = Vue.prototype.$addProp({subject: subjectNode, predicate:p, object:objectNode})
-      console.log(nodes2save)
-      nodes2save.forEach(n => {
-        context.dispatch('saveNode', n)
+      let subjectNode = context.state.nodes.find(x => x.name == c.value.subject)
+      let objectNode = context.state.nodes.find(x => x.name == c.value.object)
+      subjectNode == undefined ? subjectNode = Vue.prototype.$newNode({name: c.value.subject}) : ""
+      objectNode == undefined ? objectNode = Vue.prototype.$newNode({name: c.value.object}) : ""
+      let nodes2save  = Vue.prototype.$addProp({subject: subjectNode, predicate:c.value.predicate, object:objectNode})
+      nodes2save.forEach(async function(n) {
+        await context.dispatch('saveNode', n)
       });
-
-      // subjectNode[p] = {id: objectNode.id, name: objectNode.name}
-      // objectNode.reverse == undefined ? objectNode.reverse = {} : ""
-      // objectNode.reverse[p] = {id: subjectNode, name: subjectNode.name}
-
-    //  console.log(subjectNode, objectNode)
-
-
-      // var index = context.state.nodes.findIndex(x => x.name == s);
-      // // console.log(n.id, index)
-      // index === -1 ? context.state.nodes.push(n) : Object.assign(context.state.nodes[index], n)
-      // // let subjectNode =
-
-
-
-
-
+      await context.dispatch('getNodes') // pose problème de rafraichissement, certainement car on a enlevé __ob & __threeObj
     }
-
-
-
   },
   async newNode(context){
-    // let node = { id: uuidv4(), name: "", type: "neurone", color: "#00ff00"}
-    let node = {
-      "@context": {
-        "name": "http://xmlns.com/foaf/0.1/name",
-        "knows": "http://xmlns.com/foaf/0.1/knows",
-        "id": "@id",
-        "type": "@type",
-        "homepage": {
-          "@id": "http://xmlns.com/foaf/0.1/homepage",
-          "@type": "@id"
-        }
-      },
-      "id": "http://local/"+uuidv4(),
-      "name": "Manu Sporny",
-      type: "neurone",
-      color: "#00ff00",
-      "homepage": "http://manu.sporny.org/",
-      // "knows": [{
-      //   "name": "Daniele"
-      // }, {
-      //   "name": "Lucio"
-      // }],
-      "knows": [{
-        "id": "_:7053c150-5fea-11e3-a62e-adadc4e3df76",
-        "name": "Boby"
-      }, {
-        "id": "_:9d2bb59d-3baf-42ff-ba5d-9f8eab34ada4",
-        "name": "John"
-      }]
-    };
+    let node = Vue.prototype.$newNode()
     context.commit('setCurrentNode', node)
-    // console.log("onBackgroundClick", event)
   },
   async saveNode(context, node){
-    console.log(node)
-    // delete node.__ob__
-    // delete node.__threeObj
     try{
       await idb.saveNode(node);
-      await context.dispatch('getNodes') // pose problème de rafraichissement, certainement car on a enlevé __ob & __threeObj
     }catch(e){
       alert(e)
     }
   },
   async getNodes(context) {
-    // context.state.nodes = [];
     let nodes = await idb.getNodes();
+    let linksTemp = []
     console.log("nodes in db", nodes)
     nodes.forEach(n => {
       n.type == undefined ? n.type = "neurone" : ""
-      // context.state.nodes.push(n);
       var index = context.state.nodes.findIndex(x => x.id==n.id);
-      console.log(n.id, index)
+
       index === -1 ? context.state.nodes.push(n) : Object.assign(context.state.nodes[index], n)
+      for (let [p,v] of Object.entries(n)){
+        if(!context.state.jsonldProps.includes(p) && !context.state.graphProps.includes(p)){
+          // console.log("#", typeof v,p, v)
+          if(Array.isArray(v)){
+            for(let item of v ){
+              //  console.log('##',item.id, item)
+              linksTemp.push({source: n.id, target: item.id, label: p})
+            }
+          }else if(typeof v == "object" && v.id != undefined){
+            linksTemp.push({source: n.id, target: v.id, label: p})
+          }
+        }
+      }
     });
 
+
+    let validLinks = linksTemp.filter(l => context.state.nodes.findIndex(n => n.id==l.target) > -1 )
+    let otherLinks = linksTemp.filter(l => context.state.nodes.findIndex(n => n.id==l.target) === -1 )
+    console.log("validlinks, otherlinks",validLinks, otherLinks)
+
+    context.commit('setLinks', validLinks)
   },
   async saveBrain(context){
 

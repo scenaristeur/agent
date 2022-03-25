@@ -28,19 +28,13 @@
           <div v-else>
 
             <b> {{p}}</b> ({{ typeof currentNode[p]}}) :
-            {{currentNode[p]}} <b-button @click="addValue(p)" variant="outline-primary" size="sm">+</b-button>
+            {{currentNode[p]}}
+            <!-- <b-button @click="addValue(p)" variant="outline-primary" size="sm">+</b-button> -->
           </div>
 
         </div>
 
 
-
-
-        {{ nodeLinks }}
-        <hr>
-        <!--
-        <NodeLinks v-model="tempNode.links"/>
-        <NodeProperties v-model="tempNode.properties"/> -->
 
         <b-button @click="tempNode = null">Cancel</b-button>
         <b-button @click="save" variant="primary">Save</b-button>
@@ -70,6 +64,7 @@ export default {
     async save(){
       console.log(this.tempNode)
       await this.$store.dispatch('core/saveNode', this.tempNode)
+      await this.$store.dispatch('core/getNodes') // pose problème de rafraichissement, certainement car on a enlevé __ob & __threeObj
       this.$store.commit('core/setCurrentNode', null)
     }
 
@@ -77,10 +72,7 @@ export default {
   watch:{
     currentNode(){
       this.tempNode = this.currentNode
-      let tempProps = this.tempNode != null ? this.tempNode.properties : []
-      let tempLinks = this.tempNode != null ? this.tempNode.links : []
-      this.$store.commit('core/setNodeProperties', tempProps)
-      this.$store.commit('core/setNodeLinks', tempLinks)
+
     }
   },
   computed: {
@@ -89,9 +81,6 @@ export default {
     },
     graph() {
       return this.$store.state.core.graph
-    },
-    nodeLinks() {
-      return this.$store.state.core.nodeLinks
     },
   },
 

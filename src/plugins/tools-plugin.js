@@ -8,7 +8,7 @@ const plugin = {
     let store = opts.store
     console.log(store)
 
-    Vue.prototype.$newNode = function(options){
+    Vue.prototype.$newNode = function(options = {}){
       let node = {
         "@context": {
           "name": "http://xmlns.com/foaf/0.1/name",
@@ -22,7 +22,7 @@ const plugin = {
           }
         },
         "id": "http://local/"+uuidv4(),
-        "name": options.name,
+        "name": options.name || "",
         type: "neurone",
         color: "#00ff00",
         "homepage": "http://manu.sporny.org/",

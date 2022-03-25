@@ -25,9 +25,10 @@ export default {
     update(){
       console.log(/*this.graph,*/ this.nodes)
 
-      if (this.graph != undefined && this.nodes.length > 0){
+      if (this.graph != undefined){
         let nodes = this.nodes.map(a => {return {...a}})
-        this.graph.graphData({nodes: nodes, links: []})
+        let links = this.links.map(a => {return {...a}})
+        this.graph.graphData({nodes: nodes, links: links})
       }
 
     }
@@ -35,7 +36,11 @@ export default {
   watch:{
     nodes(){
       console.log(this.nodes)
-       this.update()
+      this.update()
+    },
+    links(){
+      console.log(this.links)
+      this.update()
     },
     graph(){
       this.update()
@@ -44,6 +49,9 @@ export default {
   computed: {
     nodes() {
       return this.$store.state.core.nodes
+    },
+    links() {
+      return this.$store.state.core.links
     },
     graph() {
       return this.$store.state.core.graph

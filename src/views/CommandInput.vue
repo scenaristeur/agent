@@ -11,9 +11,6 @@
     title="type three words followed by a comma"
     placeholder="/h + Enter for help"></b-form-input>
     <template #append>
-      <!-- <NetworkToolBar /> -->
-      <!-- <NodeLinks /> -->
-
       <b-form-select
       v-if="nodes.length > 0"
       v-model="selected"
@@ -21,28 +18,22 @@
       text-field="name"
       :options="nodes"
       >
-      <b-form-select-option :value="null">nodes</b-form-select-option>
+      <b-form-select-option :value="null">current nodes</b-form-select-option>
 
     </b-form-select>
     <b-button @click="clear" variant="outline-danger">X</b-button>
   </template>
 </b-input-group>
 
-<!-- {{nodes}}
-<hr>
-{{options}}
-</div> -->
+
 </template>
 
 <script>
-import { Command , /* Brain, Graph*/ } from '@/neurone-factory'
+import { Command } from '@/neurone-factory'
 
 export default {
   name: "CommandInput",
-  components: {
-    // 'NodeLinks': ()=>import('@/components/nodeEdition/NodeLinks'),
-    // 'NodeProperties': ()=>import('@/components/nodeEdition/NodeProperties'),
-  },
+
   data() {
     return {
       main_input: "",

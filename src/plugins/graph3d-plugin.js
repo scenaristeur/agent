@@ -1,5 +1,6 @@
 import ForceGraph3D from '3d-force-graph';
 import {CSS2DRenderer, CSS2DObject} from 'three/examples/jsm/renderers/CSS2DRenderer.js';
+import SpriteText from 'three-spritetext';
 
 // let selectedNodes = new Set(),
 let highlightNodes = new Set(),
@@ -15,7 +16,7 @@ const plugin = {
 
 
     Vue.prototype.$graphInit = async function(options){
-      console.log(options)
+      // console.log(options)
       let graphData={nodes: [], links: []}
 
       let graph = ForceGraph3D({extraRenderers: [new CSS2DRenderer()]})(options.domElement).graphData(graphData)
@@ -25,40 +26,68 @@ const plugin = {
       .nodeColor(node => highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : node.color)
       //.onBackgroundClick(event => onBackgroundClick(event))
       .onNodeClick(node => onNodeClick(node))
+      .onLinkClick(ln => onLinkClick(ln))
       .nodeThreeObjectExtend(true)
       .nodeThreeObject(node => nodeThreeObject(node))
+      .linkThreeObjectExtend(true)
+      .linkThreeObject(link => {
+        // extend link with text sprite
+        if(link.label != undefined){
+          const sprite = new SpriteText(`${link.label}`);
+          sprite.color = 'lightgrey';
+          sprite.textHeight = 1.5;
+          return sprite;
+        }
+      })
+      .linkDirectionalArrowLength(3.5)
+      .linkDirectionalArrowRelPos(1)
+      //  .linkCurvature(0.25)
+      .linkPositionUpdate((sprite, { start, end }) => {
+        if(sprite != undefined){
+          const middlePos = Object.assign(...['x', 'y', 'z'].map(c => ({
+            [c]: start[c] + (end[c] - start[c]) / 2 // calc middle point
+          })))
+
+
+
+          // Position sprite
+          Object.assign(sprite.position, middlePos);
+        }
+      })
       // .nodeThreeObject(({ url }) => nodeThreeObject(url))
 
-      console.log(graph)
+      // console.log(graph)
       store.commit ('core/setGraph', graph)
     }
 
 
+    function onLinkClick(ln){
+      console.log(ln)
+    }
 
-
-function nodeThreeObject(node){
-  const nodeEl = document.createElement('div');
-  nodeEl.textContent = node.name //node.id;
-  nodeEl.style.color = node.color || "#ffffff";
-  nodeEl.className = 'node-label';
-  return new CSS2DObject(nodeEl);
-}
-// function nodeThreeObject({url}){
-//   // .nodeThreeObject(({ url }) => {
-//
-//   // if(url == undefined){
-//   //   url = "root"
-//   // }
-//   if (url != undefined && (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg'))){
-//     const imgTexture = new THREE.TextureLoader().load(`${url}`);
-//     const material = new THREE.SpriteMaterial({ map: imgTexture });
-//     const sprite = new THREE.Sprite(material);
-//     sprite.scale.set(12, 12);
-//     return sprite;
-//   }
-//
-// // })
-// }
+    function nodeThreeObject(node){
+      const nodeEl = document.createElement('div');
+      nodeEl.textContent = node.name //node.id;
+      nodeEl.style.color = node.color || "#ffffff";
+      nodeEl.className = 'node-label';
+      return new CSS2DObject(nodeEl);
+    }
+    // function nodeThreeObject({url}){
+    //   // .nodeThreeObject(({ url }) => {
+    //
+    //   // if(url == undefined){
+    //   //   url = "root"
+    //   // }
+    //   if (url != undefined && (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg'))){
+    //     const imgTexture = new THREE.TextureLoader().load(`${url}`);
+    //     const material = new THREE.SpriteMaterial({ map: imgTexture });
+    //     const sprite = new THREE.Sprite(material);
+    //     sprite.scale.set(12, 12);
+    //     return sprite;
+    //   }
+    //
+    // // })
+    // }
 
 
     async function onNodeClick(node){
@@ -80,7 +109,9 @@ function nodeThreeObject(node){
         node, // lookAt ({ x, y, z })
         3000  // ms transition duration
       );
-      store.commit ('core/setCurrentNode', node)
+      let n = store.state.core.nodes.find(n => n.id == node.id)
+      console.log(n)
+      store.commit ('core/setCurrentNode', n)
 
     }
 
