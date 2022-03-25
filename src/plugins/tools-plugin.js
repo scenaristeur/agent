@@ -31,13 +31,13 @@ const plugin = {
         // }, {
         //   "name": "Lucio"
         // }],
-        "knows": [{
-          "id": "_:7053c150-5fea-11e3-a62e-adadc4e3df76",
-          "name": "Boby"
-        }, {
-          "id": "_:9d2bb59d-3baf-42ff-ba5d-9f8eab34ada4",
-          "name": "John"
-        }]
+        // "knows": [{
+        //   "id": "_:7053c150-5fea-11e3-a62e-adadc4e3df76",
+        //   "name": "Boby"
+        // }, {
+        //   "id": "_:9d2bb59d-3baf-42ff-ba5d-9f8eab34ada4",
+        //   "name": "John"
+        // }]
       };
 
       return node
