@@ -58,7 +58,7 @@ export default {
   data(){
     return {
       tempNode: null,
-      graphProps: ['__threeObj', 'index', 'x', 'y', 'z', 'vx', 'vy', 'vz'],
+      graphProps: ['__threeObj', '__obj__','index', 'x', 'y', 'z', 'vx', 'vy', 'vz'],
       jsonldProps: ['@context', 'id']
     }
   },
@@ -75,6 +75,7 @@ export default {
         // Save it!
         console.log('ok to remove.', this.tempNode);
         await this.$store.dispatch('core/removeNode', this.tempNode)
+        this.$store.commit('core/setCurrentNode', null)
       }
     }
 
@@ -83,6 +84,7 @@ export default {
   watch:{
     currentNode(){
       this.tempNode = this.currentNode
+      console.log(this.tempNode)
     }
   },
   computed: {

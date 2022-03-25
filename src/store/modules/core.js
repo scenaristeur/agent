@@ -89,43 +89,73 @@ const actions = {
   },
   async removeNode(context,n){
     console.log("removing", n)
-    if (n.reverse){
-      console.log("must update", n.reverse)
+    console.log("todo remove backlinks/reverse")
+
+    if(n.reverse){
+      console.log(n.reverse)
       for (const [key, value] of Object.entries(n.reverse)) {
-        console.log(key, ":", value);
-        if(Array.isArray(value)){
-          for(const item of value ){
-            console.log(item)
-            let node = context.state.nodes.find(x => x.id == item.id)
-          //  console.log(node)
-            console.log("----A", key,  node[key])
-            node[key] = node[key].filter(function(candidate) {
-              return candidate.id != n.id;
-            });
-            console.log("====A",key,  node[key])
-            console.log(node)
-          }
-        }else{
-          console.log("todo remove object", value.id , "from",)
-          let node = context.state.nodes.find(x => x.id == value.id)
-        //  console.log(node)
-          console.log("----O", key,  node[key])
-          node[key] = node[key].filter(function(candidate) {
-            return candidate.id != n.id;
-          });
-          console.log("====O",key,  node[key])
-          console.log(node)
-        }
-
-
-
-
+        console.log("must remove", n.id, "in",value, key);
       }
 
 
 
 
     }
+
+
+    // if (n.reverse){
+    //   console.log("must update DOES NOT WORK", n.reverse)
+    //   for (const [key, value] of Object.entries(n.reverse)) {
+    //     console.log(key, ":", value);
+    //     if(Array.isArray(value)){
+    //       for(const item of value ){
+    //         console.log("remove",n.id , "at", key, "from",  item.name)
+    //         let node = context.state.nodes.find(x => x.id == item.id)
+    //         //  console.log(node)
+    //         console.log("----A", key,  node[key])
+    //         if(Array.isArray(node[key])){
+    //           node[key] = node[key].filter(function(candidate) {
+    //             return candidate.id != n.id;
+    //           });
+    //         }else{
+    //           delete node[key]
+    //         }
+    //
+    //         console.log("====A",key,  node[key])
+    //         console.log(node)
+    //         context.dispatch('saveNode',node)
+    //       }
+    //     }else{
+    //       console.log("remove object", n.id, "at", key, "from",  value.id , value.name)
+    //       let node = context.state.nodes.find(x => x.id == value.id)
+    //       console.log(node)
+    //       console.log("----O", key,  node[key])
+    //       if(Array.isArray(node[key])){
+    //         node[key] = node[key].filter(function(candidate) {
+    //           return candidate.id != n.id;
+    //         });
+    //       }else{
+    //         delete node[key]
+    //       }
+    //       // node[key] = node[key].filter(function(candidate) {
+    //       //   return candidate.id != n.id;
+    //       // });
+    //       // console.log("====O",key,  node[key])
+    //       console.log(node)
+    //       context.dispatch('saveNode',node)
+    //     }
+    //   }
+    // }
+    try{
+      await idb.deleteNode(n);
+      context.state.links = context.state.links.filter(l => l.source != n.id && l.target != n.id)
+      context.state.nodes = context.state.nodes.filter(x=> x.id!= n.id)
+      await context.dispatch('getNodes')
+    }catch(e){
+      alert(e)
+    }
+
+
   },
   async getNodes(context) {
     let nodes = await idb.getNodes();

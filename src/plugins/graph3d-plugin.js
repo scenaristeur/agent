@@ -101,6 +101,7 @@ const plugin = {
       // if(node.url != undefined && node.url.startsWith('http')){
       //   app.$store.commit ('app/mustExplore', node.url)
       // }
+      console.log(store.state.core.nodes[1])
 
       const distance = 160;
       const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
