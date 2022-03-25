@@ -87,6 +87,46 @@ const actions = {
       alert(e)
     }
   },
+  async removeNode(context,n){
+    console.log("removing", n)
+    if (n.reverse){
+      console.log("must update", n.reverse)
+      for (const [key, value] of Object.entries(n.reverse)) {
+        console.log(key, ":", value);
+        if(Array.isArray(value)){
+          for(const item of value ){
+            console.log(item)
+            let node = context.state.nodes.find(x => x.id == item.id)
+          //  console.log(node)
+            console.log("----A", key,  node[key])
+            node[key] = node[key].filter(function(candidate) {
+              return candidate.id != n.id;
+            });
+            console.log("====A",key,  node[key])
+            console.log(node)
+          }
+        }else{
+          console.log("todo remove object", value.id , "from",)
+          let node = context.state.nodes.find(x => x.id == value.id)
+        //  console.log(node)
+          console.log("----O", key,  node[key])
+          node[key] = node[key].filter(function(candidate) {
+            return candidate.id != n.id;
+          });
+          console.log("====O",key,  node[key])
+          console.log(node)
+        }
+
+
+
+
+      }
+
+
+
+
+    }
+  },
   async getNodes(context) {
     let nodes = await idb.getNodes();
     let linksTemp = []

@@ -17,7 +17,7 @@
         </b-row>
         <b-form-input v-model="tempNode.type" placeholder="type"></b-form-input>
         <div v-for="p in Object.keys(currentNode)" :key="p">
-          
+
           <div v-if="!jsonldProps.includes(p) && !graphProps.includes(p) && p != 'reverse'">
             <PropertieView :p="p" :v="currentNode[p]"/>
           </div>
@@ -38,6 +38,9 @@
             </div>
           </b-collapse>
         </div>
+
+        <b-button @click="remove" variant="danger">Remove this node</b-button>
+
 
       </b-collapse>
 
@@ -67,6 +70,13 @@ export default {
       await this.$store.dispatch('core/getNodes') // pose problème de rafraichissement, certainement car on a enlevé __ob & __threeObj
       this.$store.commit('core/setCurrentNode', null)
     },
+    async remove(){
+      if (confirm('Are you sure you want to remove this node?')) {
+        // Save it!
+        console.log('ok to remove.', this.tempNode);
+        await this.$store.dispatch('core/removeNode', this.tempNode)
+      }
+    }
 
 
   },
