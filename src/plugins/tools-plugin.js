@@ -43,7 +43,34 @@ const plugin = {
       return node
     }
 
-    Vue.prototype.$addProp = function(t){
+    Vue.prototype.$addProp = function(data){
+      let n = data.node
+      let p = data.propertie
+      let newValue = data.value
+      let oldValue = n[p]
+      console.log(typeof oldValue, oldValue)
+      if (oldValue == undefined){
+        n[p] = newValue
+      }else if(Array.isArray(oldValue)){
+        n[p].push(newValue)
+      }else{
+        n[p] = [oldValue, newValue]
+      }
+
+      // }else if(typeof oldValue == 'object'){
+      //
+      // }else if(typeof oldValue == 'string'){
+      //   n[p] = [oldValue, newValue]
+      // }else{
+      //   console.log("todo", data)
+      // }
+
+
+
+      return n
+    }
+
+    Vue.prototype.$addLink = function(t){
       console.log(t)
       let s = t.subject
       let p = t.predicate

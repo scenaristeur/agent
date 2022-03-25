@@ -30,7 +30,7 @@ const mutations = {
     state.graph = g
   },
   setDb(state, db){
-      state.db = db
+    state.db = db
   },
   setCommand(state, c){
     state.command = c
@@ -49,14 +49,31 @@ const actions = {
     context.commit('pushHistory',c)
     if(c.type == "triplet"){
       let subjectNode = context.state.nodes.find(x => x.name == c.value.subject)
-      let objectNode = context.state.nodes.find(x => x.name == c.value.object)
       subjectNode == undefined ? subjectNode = Vue.prototype.$newNode({name: c.value.subject}) : ""
-      objectNode == undefined ? objectNode = Vue.prototype.$newNode({name: c.value.object}) : ""
-      let nodes2save  = Vue.prototype.$addProp({subject: subjectNode, predicate:c.value.predicate, object:objectNode})
-      nodes2save.forEach(async function(n) {
+      if (c.value.predicate.startsWith('.'))
+      {
+        let p = c.value.predicate.slice(1)
+        console.log("add prop", p)
+        let n = Vue.prototype.$addProp({node: subjectNode, propertie: p, value: c.value.object})
+        console.log(n)
         await context.dispatch('saveNode', n)
-      });
-      await context.dispatch('getNodes') // pose problème de rafraichissement, certainement car on a enlevé __ob & __threeObj
+
+        await context.dispatch('getNodes')
+
+
+
+      }
+      else
+      {
+        let objectNode = context.state.nodes.find(x => x.name == c.value.object)
+
+        objectNode == undefined ? objectNode = Vue.prototype.$newNode({name: c.value.object}) : ""
+        let nodes2save  = Vue.prototype.$addLink({subject: subjectNode, predicate:c.value.predicate, object:objectNode})
+        nodes2save.forEach(async function(n) {
+          await context.dispatch('saveNode', n)
+        });
+        await context.dispatch('getNodes') // pose problème de rafraichissement, certainement car on a enlevé __ob & __threeObj
+      }
     }
   },
   async newNode(context){
