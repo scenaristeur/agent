@@ -1,4 +1,4 @@
-// import Vue from 'vue'
+import Vue from 'vue'
 import idb from '@/api/idb-nodes';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,8 +10,8 @@ const state = () => ({
   brain: undefined,
   graph: undefined,
   db: undefined,
-  history: [],
-  lastCommand: null,
+  commandHistory: [],
+  command: null,
   nodes: [],
   links: []
 })
@@ -21,10 +21,7 @@ const mutations = {
     console.log(c)
     state.c = c
   },
-  pushHistory(state, c){
-    state.lastCommand = c
-    state.history.push(c)
-  },
+
   setCurrentNode(state, n){
     console.log(n)
     state.currentNode = n
@@ -49,6 +46,12 @@ const mutations = {
     console.log(db)
     state.db = db
   },
+  setCommand(state, c){
+    state.command = c
+  },
+  pushHistory(state, c){
+    state.commandHistory.push(c)
+  }
   // addNode(state, n){
   //
   //   //let {nodes, links} = state.graph.graphData()
@@ -58,7 +61,61 @@ const mutations = {
 }
 
 const actions = {
+  async pushCommandHistory(context, c){
+    context.commit('setCommand', c)
+    context.commit('pushHistory',c)
+    if(c.type == "triplet"){
+      let triplet = c.value
+    //  console.log(triplet, c.selected)
+      let s = triplet.subject
+      let p = triplet.predicate
+      let o = triplet.object
 
+    //  console.log(s,p,o)
+
+    //  console.log(context.state.nodes)
+
+      let subjectNode = context.state.nodes.find(x => x.name == s)
+      let objectNode = context.state.nodes.find(x => x.name == o)
+
+    //  console.log(subjectNode, objectNode)
+      if(subjectNode == undefined){
+        subjectNode = Vue.prototype.$newNode({name: s})
+      }
+
+      if(objectNode == undefined){
+        objectNode = Vue.prototype.$newNode({name: o})
+      }
+
+    //  console.log(subjectNode, objectNode)
+
+      let nodes2save  = Vue.prototype.$addProp({subject: subjectNode, predicate:p, object:objectNode})
+      console.log(nodes2save)
+      nodes2save.forEach(n => {
+        context.dispatch('saveNode', n)
+      });
+
+      // subjectNode[p] = {id: objectNode.id, name: objectNode.name}
+      // objectNode.reverse == undefined ? objectNode.reverse = {} : ""
+      // objectNode.reverse[p] = {id: subjectNode, name: subjectNode.name}
+
+    //  console.log(subjectNode, objectNode)
+
+
+      // var index = context.state.nodes.findIndex(x => x.name == s);
+      // // console.log(n.id, index)
+      // index === -1 ? context.state.nodes.push(n) : Object.assign(context.state.nodes[index], n)
+      // // let subjectNode =
+
+
+
+
+
+    }
+
+
+
+  },
   async newNode(context){
     // let node = { id: uuidv4(), name: "", type: "neurone", color: "#00ff00"}
     let node = {
@@ -82,13 +139,13 @@ const actions = {
       // }, {
       //   "name": "Lucio"
       // }],
-        "knows": [{
-          "id": "_:7053c150-5fea-11e3-a62e-adadc4e3df76",
-          "name": "Boby"
-        }, {
-          "id": "_:9d2bb59d-3baf-42ff-ba5d-9f8eab34ada4",
-          "name": "John"
-        }]
+      "knows": [{
+        "id": "_:7053c150-5fea-11e3-a62e-adadc4e3df76",
+        "name": "Boby"
+      }, {
+        "id": "_:9d2bb59d-3baf-42ff-ba5d-9f8eab34ada4",
+        "name": "John"
+      }]
     };
     context.commit('setCurrentNode', node)
     // console.log("onBackgroundClick", event)

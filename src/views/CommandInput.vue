@@ -60,17 +60,17 @@ export default {
       // this.$store.commit('app/setSearch', s)
     },
     onEnter(){
-      console.log(Command)
+      //  console.log(Command)
       console.log(this.main_input)
       let inputValue = this.main_input.trim()
       if (inputValue.length > 0){
-        let inputObject = new Command({inputValue: inputValue})
+        let inputObject = new Command({inputValue: inputValue, selected: this.selected})
         //  var inputObject = this.getInputType(inputValue)
         console.log("inputObject",inputObject);
         //  this.traiteInput(inputObject);
         //  this.updateInput(inputObject.inputNew);
         // this.$emit('onCommand', inputObject)
-        this.$store.commit('app/setInputObject', inputObject)
+        this.$store.dispatch('core/pushCommandHistory', inputObject)
         this.main_input = inputObject.inputNew
       }
     },
