@@ -18,25 +18,19 @@ const state = () => ({
 
 const mutations = {
   setCore(state, c){
-    console.log(c)
     state.c = c
   },
-
   setCurrentNode(state, n){
-    console.log(n)
     state.currentNode = n
   },
   setBrain(state, b){
-    console.log(b)
     state.brain = b
   },
   setGraph(state, g){
-    console.log(g)
     state.graph = g
   },
   setDb(state, db){
-    console.log(db)
-    state.db = db
+      state.db = db
   },
   setCommand(state, c){
     state.command = c
@@ -128,6 +122,10 @@ const actions = {
     await idb.saveNode(brain);
     //  context.dispatch('getNodes')
 
+  },
+  switchTo(context, id){
+    let n = context.state.nodes.find(n=> n.id == id)
+    context.commit('setCurrentNode', n)
   }
   // async addWorkspace(context, w) {
   //   context.state.pod.workspaces.push(w)

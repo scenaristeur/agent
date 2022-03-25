@@ -18,31 +18,63 @@
         <b-form-input v-model="tempNode.type" placeholder="type"></b-form-input>
         <div v-for="(p) in Object.keys(currentNode)" :key="p">
           <!-- <hr> -->
-          <div v-if="jsonldProps.includes(p)">
-            <!-- jsonldProp : {{p}}<br> -->
-            <!-- value {{currentNode[p]}}<br> -->
-          </div>
-          <div v-else-if="graphProps.includes(p)">
-            <!-- graphProp : {{p}} -->
+          <!-- <div v-if="jsonldProps.includes(p)">
+
+        </div>
+        <div v-else-if="graphProps.includes(p)">
+
+      </div> -->
+      <div v-if="!jsonldProps.includes(p) && !graphProps.includes(p) && p != 'reverse'">
+
+
+        <div v-if="typeof currentNode[p] == 'object'">
+
+          <b> {{p}}</b> :
+          <div v-if="Array.isArray(currentNode[p])">
+            <ul>
+              <li v-for="(v, i) in currentNode[p]" :key="i">
+                <!-- {{i}} : {{v}} -->
+                <b-button size="sm" @click="switchTo(v.id)" variant="outline-primary">{{v.name || v.id}}</b-button>
+              </li>
+            </ul>
+
           </div>
           <div v-else>
 
-            <b> {{p}}</b> ({{ typeof currentNode[p]}}) :
-            {{currentNode[p]}}
-            <!-- <b-button @click="addValue(p)" variant="outline-primary" size="sm">+</b-button> -->
+            <b-button v-if="currentNode[p].id != undefined" size="sm" @click="switchTo(currentNode[p].id)" variant="outline-primary">{{currentNode[p].name || currentNode[p].id}}</b-button>
+            <div v-else>
+              {{currentNode[p]}}
+            </div>
           </div>
 
         </div>
+        <div v-else>
+          <b> {{p}}</b> ({{ typeof currentNode[p]}}) :
+          {{currentNode[p]}}
+        </div>
+
+        <!-- <b-button @click="addValue(p)" variant="outline-primary" size="sm">+</b-button> -->
+      </div>
+
+
+    </div>
+
+
+    <b-button @click="tempNode = null">Cancel</b-button>
+    <b-button @click="save" variant="primary">Save</b-button>
+
+    <div v-if="currentNode.reverse != undefined">
+      <b>BackLinks:</b>   {{currentNode.reverse}}
+    </div>
 
 
 
-        <b-button @click="tempNode = null">Cancel</b-button>
-        <b-button @click="save" variant="primary">Save</b-button>
-        <hr>
-      </b-collapse>
-      <!-- {{ tempNode }} -->
-    </b-container>
-  </div>
+
+    <hr>
+  </b-collapse>
+  <!-- {{ tempNode }} -->
+</b-container>
+</div>
 </template>
 
 <script>
@@ -57,22 +89,22 @@ export default {
       jsonldProps: ['@context', 'id']
     }
   },
-  created(){
 
-  },
   methods:{
     async save(){
       console.log(this.tempNode)
       await this.$store.dispatch('core/saveNode', this.tempNode)
       await this.$store.dispatch('core/getNodes') // pose problème de rafraichissement, certainement car on a enlevé __ob & __threeObj
       this.$store.commit('core/setCurrentNode', null)
+    },
+    switchTo(id){
+      this.$store.dispatch('core/switchTo',id)
     }
 
   },
   watch:{
     currentNode(){
       this.tempNode = this.currentNode
-
     }
   },
   computed: {

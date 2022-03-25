@@ -24,7 +24,7 @@ const plugin = {
         "id": "http://local/"+uuidv4(),
         "name": options.name || "",
         type: "neurone",
-        color: "#00ff00",
+        //color: "#00ff00",
         "homepage": "http://manu.sporny.org/",
         // "knows": [{
         //   "name": "Daniele"

@@ -21,6 +21,7 @@ const plugin = {
 
       let graph = ForceGraph3D({extraRenderers: [new CSS2DRenderer()]})(options.domElement).graphData(graphData)
       graph
+      //.backgroundColor('#eafaff')
       // .nodeId('id')
       .nodeLabel('name')
       .nodeColor(node => highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : node.color)
@@ -110,7 +111,6 @@ const plugin = {
         3000  // ms transition duration
       );
       let n = store.state.core.nodes.find(n => n.id == node.id)
-      console.log(n)
       store.commit ('core/setCurrentNode', n)
 
     }

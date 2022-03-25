@@ -9,7 +9,7 @@
       <b-button-group class="mx-1">
         <b-button @click="show_node_name = !show_node_name">show node name {{ show_node_name}}</b-button>
         <b-button @click="show_link_label = !show_link_label">show link label {{show_link_label}}</b-button>
-        <b-button>Redo</b-button>
+        <b-button>Reset camera</b-button>
       </b-button-group>
       <b-button-group class="mx-1">
         <b-button>&rsaquo;</b-button>
