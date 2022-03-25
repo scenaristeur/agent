@@ -95,8 +95,8 @@ const actions = {
   },
   async saveNode(context, node){
     console.log(node)
-    delete node.__ob__
-    delete node.__threeObj
+    // delete node.__ob__
+    // delete node.__threeObj
     try{
       await idb.saveNode(node);
       await context.dispatch('getNodes') // pose problème de rafraichissement, certainement car on a enlevé __ob & __threeObj

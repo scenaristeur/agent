@@ -23,16 +23,19 @@ export default {
       this.$store.dispatch('core/saveBrain')
     },
     update(){
-      console.log(this.graph, this.nodes)
+      console.log(/*this.graph,*/ this.nodes)
+
       if (this.graph != undefined && this.nodes.length > 0){
-        this.graph.graphData({nodes: this.nodes, links: []})
+        let nodes = this.nodes.map(a => {return {...a}})
+        this.graph.graphData({nodes: nodes, links: []})
       }
 
     }
   },
   watch:{
     nodes(){
-      this.update()
+      console.log(this.nodes)
+       this.update()
     },
     graph(){
       this.update()

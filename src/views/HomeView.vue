@@ -4,6 +4,7 @@
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <ToolbarView />
     <NodeEdition />
+    <CommandInput />
     <VisualisationView />
   </div>
 </template>
@@ -18,6 +19,7 @@ export default {
     'VisualisationView': ()=>import('@/views/VisualisationView'),
     'NodeEdition': ()=>import('@/views/NodeEdition'),
     'ToolbarView': ()=>import('@/views/ToolbarView'),
+    'CommandInput': ()=>import('@/views/CommandInput'),
   },
 }
 </script>
