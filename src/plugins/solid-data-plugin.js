@@ -56,9 +56,7 @@ import * as sc from '@inrupt/solid-client-authn-browser'
 const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
-    console.log(store)
-
-
+  
     Vue.prototype.$saveBrainToSolid = async function(){
       console.log(store.state.core.nodes)
       let suggestedpath = store.state.solid.pod.storage+"agenttest/"

@@ -12,7 +12,7 @@ hoverNode= null
 const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
-    console.log(store)
+
 
 
     Vue.prototype.$graphInit = async function(options){
