@@ -1,6 +1,8 @@
 <template>
   <div>
     <b-button @click="saveBrain">save brain</b-button>
+    <b-button @click="saveBrainToSolid">save brain to Solid</b-button>
+    <SolidLogin />
     <div id="graph" ref="graph">Loading graph...
     </div>
   </div>
@@ -10,6 +12,9 @@
 
 export default {
   name: "VisualisationView",
+  components: {
+    'SolidLogin': ()=>import('@/components/SolidLogin'),
+  },
   data(){
     return {
       // graph: null
@@ -17,10 +22,14 @@ export default {
   },
   mounted(){
     this.$graphInit({domElement: this.$refs.graph})
+    this.$checkSolidSession()
   },
   methods:{
     saveBrain(){
       this.$store.dispatch('core/saveBrain')
+    },
+    saveBrainToSolid(){
+      this.$saveBrainToSolid()
     },
     update(){
       console.log(/*this.graph,*/ this.nodes)

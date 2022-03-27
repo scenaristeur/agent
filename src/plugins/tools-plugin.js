@@ -13,6 +13,7 @@ const plugin = {
         "@context": {
           "name": "http://xmlns.com/foaf/0.1/name",
           "knows": "http://xmlns.com/foaf/0.1/knows",
+          "@base": "http://local/",
           "id": "@id",
           "type": "@type",
           "reverse": "@reverse",
@@ -21,7 +22,7 @@ const plugin = {
             "@type": "@id"
           }
         },
-        "id": "http://local/"+uuidv4(),
+        "id": uuidv4(),
         "name": options.name || "",
         type: "neurone",
         //color: "#00ff00",
