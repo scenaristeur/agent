@@ -1,7 +1,9 @@
 <template>
   <div>
-    <b-button @click="saveBrain">save brain</b-button>
-    <b-button @click="saveBrainToSolid">save brain to Solid</b-button>
+    <!-- <b-button @click="saveBrain">save brain</b-button> -->
+    <b-button @click="saveBrainToSolid">Save brain to Solid</b-button>
+    <b-button @click="loadBrainFromSolid">Load brain from Solid</b-button>
+    <b-button @click="clear">Clear</b-button>
     <SolidLogin />
     <div id="graph" ref="graph">Loading graph...
     </div>
@@ -30,6 +32,15 @@ export default {
     },
     saveBrainToSolid(){
       this.$saveBrainToSolid()
+    },
+    loadBrainFromSolid(){
+      this.$loadBrainFromSolid()
+    },
+    clear(){
+      if (confirm('Are you sure you want to remove all nodes?')) {
+        this.$store.dispatch('core/removeAllNodes')
+        this.$store.commit('core/setCurrentNode', null)
+      }
     },
     update(){
       console.log(/*this.graph,*/ this.nodes)

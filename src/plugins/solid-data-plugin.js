@@ -6,18 +6,18 @@
 
 
 import {
-  // getSolidDataset,
+  getSolidDataset,
   //getThingAll,
   //getPublicAccess,
   //  getAgentAccess,
   //getSolidDatasetWithAcl,
   //getPublicAccess,
   //getAgentAccess,
-  // getFile,
+  getFile,
   // isRawData,
   // getContentType,
   //saveFileInContainer,
-  // getContainedResourceUrlAll,
+  getContainedResourceUrlAll,
   //getStringNoLocaleAll,
   // createContainerAt,
   getSourceUrl,
@@ -50,6 +50,7 @@ import {
   // setDatetime
 } from "@inrupt/solid-client";
 
+// import * as jsonld from 'jsonld';
 
 import * as sc from '@inrupt/solid-client-authn-browser'
 const plugin = {
@@ -91,6 +92,98 @@ const plugin = {
     }
 
 
+    Vue.prototype.$loadBrainFromSolid = async function(){
+      let suggestedpath = store.state.solid.pod.storage+"agenttest/"
+      console.log(suggestedpath)
+
+      let  path = prompt("Load brain from ", suggestedpath);
+
+      if(path != null){
+        console.log("load brain from", path)
+        let dataset = null
+        try{
+          dataset = await getSolidDataset( path, { fetch: sc.fetch });
+          let remotesUrl  = await getContainedResourceUrlAll(dataset,{fetch: sc.fetch} )
+          console.log(remotesUrl)
+          await loadNeurones(remotesUrl)
+          console.log("end")
+          //  return remotesUrl
+        }
+        catch(e){
+          console.log(e)
+          //return []
+        }
+
+      }
+    }
+
+    async function loadNeurones(remotesUrl){
+
+      // urls.forEach(async function (u) {
+      //   // let doc = null
+      //   console.log(u)
+      //   const file = await getFile(u, { fetch: sc.fetch });
+      //   //  console.log(file)
+      //   const reader = new FileReader();
+      //
+      //   reader.onload = async () => {
+      //     try {
+      //       //response =
+      //       // Resolve the promise with the response value
+      //       let doc = JSON.parse(reader.result)
+      //       let context = doc['@context']
+      //       console.log("result", doc);
+      //
+      //       const compacted = await jsonld.compact(doc, context);
+      //       console.log(JSON.stringify(compacted, null, 2));
+      //
+      //       await store.dispatch('core/saveNode', compacted)
+      //
+      //
+      //     } catch (err) {
+      //       console.log(err);
+      //     }
+      //   };
+      //   reader.onerror = (error) => {
+      //     console.log(error);
+      //   };
+      //   reader.readAsText(file);
+      //
+      // });
+
+    let nodes = []
+
+      const filePromises = remotesUrl.map(async function(url) {
+             // Return a promise per file
+             const file = await getFile(url, { fetch: sc.fetch });
+             return new Promise( function(resolve, reject) {
+
+               const reader = new FileReader();
+               reader.onload = async () => {
+                 try {
+                   //response =
+                   // Resolve the promise with the response value
+                   let node = JSON.parse(reader.result)
+                   await store.dispatch('core/saveNode', node)
+                   resolve(node);
+                 } catch (err) {
+                   reject(err);
+                 }
+               };
+               reader.onerror = (error) => {
+                 reject(error);
+               };
+               reader.readAsText(file);
+             });
+           });
+
+           // Wait for all promises to be resolved
+           nodes = await Promise.all(filePromises);
+
+           console.log("finito", nodes)
+           store.dispatch('core/getNodes')
+
+    }
     function lastPartOfUrl(str){
       var n = str.lastIndexOf('/');
       var result = str.substring(n + 1);

@@ -2,6 +2,8 @@ import Vue from 'vue'
 import idb from '@/api/idb-nodes';
 import { v4 as uuidv4 } from 'uuid';
 
+const vocab = "https://scenaristeur.github.io/agent/"
+
 const state = () => ({
   core: undefined,
   currentNode : undefined,
@@ -81,6 +83,8 @@ const actions = {
     context.commit('setCurrentNode', node)
   },
   async saveNode(context, node){
+    node['@context'] == undefined ? node['@context'] = {} : ""
+    node['@context']['@vocab'] == undefined ? node['@context']['@vocab'] = vocab : ""
     try{
       await idb.saveNode(node);
     }catch(e){
@@ -98,13 +102,7 @@ const actions = {
         console.log(val)
         console.log("must remove", n.id, "in",val, key);
         console.log("get each node from id ")
-
-
       }
-
-
-
-
     }
 
 
@@ -162,12 +160,28 @@ const actions = {
 
 
   },
+  async removeAllNodes(context){
+    try{
+      context.state.links = []
+      context.state.nodes.forEach(async function(n) {
+        await idb.deleteNode(n);
+
+      });
+      context.state.nodes = []
+      await context.dispatch('getNodes')
+      //  await context.dispatch('getNodes')
+    }catch(e){
+      alert(e)
+    }
+  },
   async getNodes(context) {
     let nodes = await idb.getNodes();
     let linksTemp = []
     console.log("nodes in db", nodes)
     nodes.forEach(n => {
       n.type == undefined ? n.type = "neurone" : ""
+      n['@context'] == undefined ? n['@context'] = {} : ""
+      n['@context']['@vocab'] == undefined ? n['@context']['@vocab'] = vocab : ""
       var index = context.state.nodes.findIndex(x => x.id==n.id);
 
       index === -1 ? context.state.nodes.push(n) : Object.assign(context.state.nodes[index], n)
@@ -190,11 +204,9 @@ const actions = {
     let validLinks = linksTemp.filter(l => context.state.nodes.findIndex(n => n.id==l.target) > -1 )
     let otherLinks = linksTemp.filter(l => context.state.nodes.findIndex(n => n.id==l.target) === -1 )
     console.log("validlinks, otherlinks",validLinks, otherLinks)
-
     context.commit('setLinks', validLinks)
   },
   async saveBrain(context){
-
     let {nodes, links} = context.state.graph.graphData()
     console.log(nodes, links)
     let nodes_ids = []
