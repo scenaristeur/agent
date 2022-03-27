@@ -94,7 +94,12 @@ const actions = {
     if(n.reverse){
       console.log(n.reverse)
       for (const [key, value] of Object.entries(n.reverse)) {
-        console.log("must remove", n.id, "in",value, key);
+        let val = Array.isArray(value) ? value : [value]
+        console.log(val)
+        console.log("must remove", n.id, "in",val, key);
+        console.log("get each node from id ")
+
+
       }
 
 
