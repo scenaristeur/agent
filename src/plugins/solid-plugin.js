@@ -80,7 +80,7 @@ const plugin = {
       await session.logout()
       store.commit('solid/setSession',null)
       store.commit('solid/setPod', null)
-      store.dispatch('nodes/clearStore')
+      //store.dispatch('nodes/clearStore')
     },
     Vue.prototype.$getPodInfosFromSession = async function(session){
       // try{

@@ -53,7 +53,7 @@ restore session
 
 <div v-else class="d-flex align-items-center">
   <b-button @click="logout" variant="outline-danger" size="sm">Logout</b-button>
-
+<a :href="session.webId" target="_blank">pod</a>
 </div>
 
 </span>
@@ -121,7 +121,7 @@ export default {
 </script>
 
 <style>
-.login{
+/* .login{
   float: left
-}
+} */
 </style>
