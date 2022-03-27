@@ -113,6 +113,9 @@ const plugin = {
         switch (typeof main[p]) {
           case "string":
           console.log("TODO string", main[p] )
+          // let old =
+          main[p] = [main[p]]
+          main[p].push({id: item.id, name: item.name})
           break;
           default:
           if(Array.isArray(main[p])){
