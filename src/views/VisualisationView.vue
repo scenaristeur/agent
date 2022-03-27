@@ -5,6 +5,7 @@
     <b-button @click="loadBrainFromSolid">Load brain from Solid</b-button>
     <b-button @click="clear">Clear</b-button>
     <SolidLogin />
+    
     <div id="graph" ref="graph">Loading graph...
     </div>
   </div>
