@@ -60,25 +60,31 @@ const plugin = {
 
     Vue.prototype.$saveBrainToSolid = async function(){
       console.log(store.state.core.nodes)
-      let path = store.state.solid.pod.storage+"agenttest/"
+      let suggestedpath = store.state.solid.pod.storage+"agenttest/"
+      console.log(suggestedpath)
+
+      let  path = prompt("Please confirm the path where to store the nodes", suggestedpath);
       console.log(path)
+      if(path != null){
+
+        for await (const n of store.state.core.nodes){
+          console.log(n.id, n)
+          n['@context']['@base'] = path
+
+          const savedFile = await overwriteFile(
+            path+lastPartOfUrl(n.id),
+            new Blob([JSON.stringify(n)], { type: "application/ld+json" }),
+            { contentType: "application/ld+json", fetch: sc.fetch }
+          );
+          //  console.log(savedFile)
+
+          console.log(`File saved at ${getSourceUrl(savedFile)}`);
 
 
-      for await (const n of store.state.core.nodes){
-        console.log(n.id, n)
-        n['@context']['@base'] = path
 
-        const savedFile = await overwriteFile(
-          path+lastPartOfUrl(n.id),
-          new Blob([JSON.stringify(n)], { type: "application/ld+json" }),
-          { contentType: "application/json", fetch: sc.fetch }
-        );
-        //  console.log(savedFile)
-
-        console.log(`File saved at ${getSourceUrl(savedFile)}`);
-
-
-
+        }
+      }else{
+        alert("saving to Solid Pod aborted")
       }
 
 

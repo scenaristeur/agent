@@ -14,6 +14,7 @@ const plugin = {
           "name": "http://xmlns.com/foaf/0.1/name",
           "knows": "http://xmlns.com/foaf/0.1/knows",
           "@base": "http://local/",
+          "@vocab": "https://scenaristeur.github.io/agent/",
           "id": "@id",
           "type": "@type",
           "reverse": "@reverse",
