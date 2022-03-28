@@ -6,7 +6,7 @@ import {
   //getSolidDatasetWithAcl,
   //getPublicAccess,
   //getAgentAccess,
-  //getFile,
+  // getFile,
   // isRawData,
   // getContentType,
   //saveFileInContainer,
@@ -89,14 +89,17 @@ const plugin = {
       if (pod.logged) {
         pod.webId = session.info.webId
         pod = await this.$getPodInfos(pod)
-       pod.neuroneStore == undefined ? pod.neuroneStore = pod.storage+'public/neurones/' : ""
+        pod.neuroneStore == undefined ? pod.neuroneStore = pod.storage+'public/neurones/' : ""
         pod.workspaces == undefined ? pod.workspaces = [] : ""
+
         store.commit('solid/setPod', pod)
-      //  this.$checkChanges()
+        //  this.$checkChanges()
         //this.$synchronize()
         //  await this.$getVerses(pod)
 
         if (pod.storage != null){
+          pod.brains = pod.storage+'brains.json'
+          Vue.prototype.$checkBrains()
           //  this.$setCurrentThingUrl(pod.storage)
           //  store.commit('booklice/setPath', pod.storage+'public/bookmarks/')
           //let publicTagFile = pod.storage+'public/tags.ttl'
@@ -149,6 +152,8 @@ const plugin = {
       }
       return await pod
     }
+
+
 
 
   }

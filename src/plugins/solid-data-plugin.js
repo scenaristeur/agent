@@ -1,13 +1,13 @@
 // import ForceGraph3D from '3d-force-graph';
 // import { Core /*Neurone, Brain,  Graph*/ } from '@/neurone-factory'
 //
-// import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 // let graph = undefined
 
 
 import {
   getSolidDataset,
-  //getThingAll,
+  getThingAll,
   //getPublicAccess,
   //  getAgentAccess,
   //getSolidDatasetWithAcl,
@@ -26,12 +26,12 @@ import {
   // removeAll,
   //removeStringNoLocale,
   //deleteContainer,
-  //addStringNoLocale,
-  //setThing,
-  //saveSolidDatasetAt,
+  // addStringNoLocale,
+  // setThing,
+  // saveSolidDatasetAt,
   //createSolidDataset,
-  //createThing,
-  //addUrl,
+  // createThing,
+  // addUrl,
   //buildThing,
 
   overwriteFile,
@@ -51,12 +51,13 @@ import {
 } from "@inrupt/solid-client";
 
 // import * as jsonld from 'jsonld';
+// import { RDF,  } from "@inrupt/vocab-common-rdf";
 
 import * as sc from '@inrupt/solid-client-authn-browser'
 const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
-  
+
     Vue.prototype.$saveBrainToSolid = async function(){
       console.log(store.state.core.nodes)
       let suggestedpath = store.state.solid.pod.storage+"agenttest/"
@@ -65,7 +66,7 @@ const plugin = {
       let  path = prompt("Please confirm the path where to store the nodes", suggestedpath);
       console.log(path)
       if(path != null){
-
+        path = !path.endsWith('/') ? path+= '/' : path
         for await (const n of store.state.core.nodes){
           console.log(n.id, n)
           n['@context']['@base'] = path
@@ -81,7 +82,97 @@ const plugin = {
 
 
 
+          // let brainsDataset = await getSolidDataset(
+          //   store.state.solid.pod.brains, {
+          //     fetch: sc.fetch
+          //   });
+          //
+          //   let brain = await getThing(brainsDataset, path, {fetch: sc.fetch})
+          //   console.log(brain)
+          //   if (brain == null){
+          //
+          //
+          //
+          //
+          //
+          //
+          //
+          //
+          //     // let last = lastPartOfUrl(path)
+          //     // console.log(last)
+          //     // let brainThing = createThing({ name: last });
+          //     // brainThing = addStringNoLocale(brainThing, "http://xmlns.com/foaf/0.1/name", last);
+          //     // brainThing = addUrl(brainThing, RDF.type, "https://scenaristeur.github.io/agent/brain");
+          //     // brainsDataset = setThing(brainsDataset, brainThing);
+          //     // console.log(brainsDataset)
+          //     // const savedSolidDataset = await saveSolidDatasetAt(
+          //     //   store.state.solid.pod.brains,
+          //     //   brainsDataset,
+          //     //   { fetch: sc.fetch }             // fetch from authenticated Session
+          //     // );
+          //     // console.log(savedSolidDataset)
+          //   }
+
         }
+
+        // updating brainIndex
+        //let last = lastPartOfUrl(path)
+        // console.log(last)
+        const brainsFile = await getFile(store.state.solid.pod.brains, { fetch: sc.fetch });
+        //  console.log(brainsFile)
+        const reader = new FileReader();
+        reader.onload = async () => {
+          try {
+            //response =
+            // Resolve the promise with the response value
+            let brainsIndex = JSON.parse(reader.result)
+            console.log("brains",brainsIndex)
+            let now = Date.now()
+            let currentBrain = {id: path, name: lastPartOfUrl(path), updated: now, checksum: 1000*Math.random()}
+            var index = brainsIndex.brains.findIndex(x => x.id==currentBrain.id);
+            if(index === -1){
+              currentBrain.created= now
+              brainsIndex.brains.push(currentBrain)
+            }else{
+              Object.assign(brainsIndex.brains[index], currentBrain)
+            }
+
+
+            await overwriteFile(
+              store.state.solid.pod.brains,
+
+              new Blob([JSON.stringify(brainsIndex)], { type: "application/ld+json" }),
+              { contentType: "application/ld+json", fetch: sc.fetch }
+            );
+
+
+            // let currentBrain = brainsIndex.brains.find(x => x.id == path)
+            // console.log(currentBrain)
+            // if(currentBrain == undefined) {
+            //   currentBrain = {id: path, name: lastPartOfUrl(path), created: Date.now(), updated: Date.now(), checksum: ""}
+            //   brainsIndex.brains.push(currentBrain)
+            // }else{
+            //   currentBrain.
+            // }
+            // let thisBrain = {id: path, name: last}
+
+            //  await store.dispatch('core/saveNode', node)
+            //  resolve(node);
+          } catch (err) {
+            console.log(err);
+          }
+        };
+        reader.onerror = (error) => {
+          console.log(error);
+        };
+        reader.readAsText(brainsFile);
+
+
+
+
+
+
+
       }else{
         alert("saving to Solid Pod aborted")
       }
@@ -114,6 +205,54 @@ const plugin = {
 
       }
     }
+
+
+    Vue.prototype.$checkBrains = async function(){
+      try{
+        const file = await getFile(store.state.solid.pod.brains, { fetch: sc.fetch });
+        console.log(file)
+      }catch(e){
+        let default_brains = {
+          "@context": {
+            "name": "http://xmlns.com/foaf/0.1/name",
+            "knows": "http://xmlns.com/foaf/0.1/knows",
+            "@base": "http://local/",
+            "@vocab": "https://scenaristeur.github.io/agent/",
+            "id": "@id",
+            "type": "@type",
+            "reverse": "@reverse",
+            "homepage": {
+              "@id": "http://xmlns.com/foaf/0.1/homepage",
+              "@type": "@id"
+            }
+          },
+          "id": uuidv4(),
+          "name": "Brain Index",
+          type: "brainIndex",
+          brains: [],
+          //color: "#00ff00",
+          "homepage": "https://scenaristeur.github.io/agent",
+        };
+        await overwriteFile(
+          store.state.solid.pod.brains,
+
+          new Blob([JSON.stringify(default_brains)], { type: "application/ld+json" }),
+          { contentType: "application/ld+json", fetch: sc.fetch }
+        );
+      }
+
+      try{
+        const brains_ds = await getSolidDataset( store.state.solid.pod.brains, { fetch: sc.fetch });
+        let brains = await getThingAll(brains_ds)
+        console.log(brains)
+
+
+      }catch(e){
+        console.log(e)
+      }
+    }
+
+
 
     async function loadNeurones(remotesUrl){
 
@@ -149,44 +288,43 @@ const plugin = {
       //
       // });
 
-    let nodes = []
+      let nodes = []
 
       const filePromises = remotesUrl.map(async function(url) {
-             // Return a promise per file
-             const file = await getFile(url, { fetch: sc.fetch });
-             return new Promise( function(resolve, reject) {
+        // Return a promise per file
+        const file = await getFile(url, { fetch: sc.fetch });
+        return new Promise( function(resolve, reject) {
 
-               const reader = new FileReader();
-               reader.onload = async () => {
-                 try {
-                   //response =
-                   // Resolve the promise with the response value
-                   let node = JSON.parse(reader.result)
-                   await store.dispatch('core/saveNode', node)
-                   resolve(node);
-                 } catch (err) {
-                   reject(err);
-                 }
-               };
-               reader.onerror = (error) => {
-                 reject(error);
-               };
-               reader.readAsText(file);
-             });
-           });
+          const reader = new FileReader();
+          reader.onload = async () => {
+            try {
+              //response =
+              // Resolve the promise with the response value
+              let node = JSON.parse(reader.result)
+              await store.dispatch('core/saveNode', node)
+              resolve(node);
+            } catch (err) {
+              reject(err);
+            }
+          };
+          reader.onerror = (error) => {
+            reject(error);
+          };
+          reader.readAsText(file);
+        });
+      });
 
-           // Wait for all promises to be resolved
-           nodes = await Promise.all(filePromises);
+      // Wait for all promises to be resolved
+      nodes = await Promise.all(filePromises);
 
-           console.log("finito", nodes)
-           store.dispatch('core/getNodes')
+      console.log("finito", nodes)
+      store.dispatch('core/getNodes')
 
     }
     function lastPartOfUrl(str){
       var n = str.lastIndexOf('/');
       var result = str.substring(n + 1);
-      console.log(result)
-      return result
+      return result.length == 0 ? lastPartOfUrl(str.slice(0, -1)) : result
     }
 
     // Vue.prototype.$newNode = function(options = {}){

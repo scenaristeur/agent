@@ -5,7 +5,7 @@
       <router-link to="/about">About</router-link>
     </nav>
     <router-view/>
-    <small><i>0.0.1-solid</i></small>
+    <small><i>0.0.1-solid-index</i></small>
   </div>
 </template>
 
@@ -19,6 +19,7 @@ export default {
   created(){
     this.$coreInit({name: "SuperCore"})
     this.$store.dispatch('core/getNodes')
+    this.$checkSolidSession()
   }
 }
 </script>
