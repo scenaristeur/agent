@@ -8,6 +8,8 @@ const state = () => ({
   core: undefined,
   currentNode : undefined,
   brain: undefined,
+  brains: undefined,
+  showBrainLoader: false,
   graph: undefined,
   db: undefined,
   commandHistory: [],
@@ -15,7 +17,8 @@ const state = () => ({
   nodes: [],
   links: [],
   jsonldProps: ['@context', 'id', 'reverse', 'type'],
-  graphProps: ['__ob__', '__threeObj', 'index', 'vx', 'vy', 'vz', 'x', 'y', 'z' ]
+  graphProps: ['__ob__', '__threeObj', 'index', 'vx', 'vy', 'vz', 'x', 'y', 'z' ],
+  spinner: []
 })
 
 const mutations = {
@@ -27,6 +30,13 @@ const mutations = {
   },
   setBrain(state, b){
     state.brain = b
+  },
+  setBrains(state, b){
+    state.brains = b
+    state.showBrainLoader = true
+  },
+  setShowBrainLoader(state, v){
+    state.showBrainLoader = v
   },
   setGraph(state, g){
     state.graph = g
@@ -42,6 +52,12 @@ const mutations = {
   },
   setLinks(state, l){
     state.links = l
+  },
+  spinnerAdd(state,t){
+    state.spinner.push(t)
+  },
+  spinnerRemove(state, t){
+    state.spinner = state.spinner.filter(x => x.id!=t.id )
   }
 }
 

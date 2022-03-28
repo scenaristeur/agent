@@ -1,11 +1,16 @@
 <template>
   <div id="app">
-    <nav>
+    <NavBar />
+    <hr>
+    <hr>
+    <hr>
+    <hr>
+    <!-- <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-    </nav>
+    </nav> -->
     <router-view/>
-    <small><i>0.0.1-solid-index</i></small>
+    <small><i>0.0.1-navbar & spinner</i></small>
   </div>
 </template>
 
@@ -16,6 +21,9 @@
 
 export default {
   name: 'App',
+  components: {
+    'NavBar': ()=>import('@/views/NavBar'),
+  },
   created(){
     this.$coreInit({name: "SuperCore"})
     this.$store.dispatch('core/getNodes')

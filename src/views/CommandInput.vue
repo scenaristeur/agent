@@ -1,5 +1,6 @@
 <template>
   <!-- <div> -->
+  <!-- @keyup="onChange" -->
   <b-input-group>
     <b-form-input
     id="input"
@@ -7,7 +8,6 @@
     autofocus
     v-model="main_input"
     v-on:keyup.enter="onEnter"
-    @keyup="onChange"
     title="type three words followed by a comma"
     placeholder="/h + Enter for help"></b-form-input>
     <template #append>
@@ -24,16 +24,12 @@
     <b-button @click="clear" variant="outline-danger">X</b-button>
   </template>
 </b-input-group>
-
-
 </template>
 
 <script>
 import { Command } from '@/neurone-factory'
-
 export default {
   name: "CommandInput",
-
   data() {
     return {
       main_input: "",
@@ -45,22 +41,15 @@ export default {
     clear(){
       this.main_input = ""
     },
-    onChange(){
-      console.log(this.main_input)
-      // let s = this.$refs.input.value
-      // this.$store.commit('app/setSearch', s)
-    },
+    // onChange(){
+    //   console.log(this.main_input)
+    //   // let s = this.$refs.input.value
+    //   // this.$store.commit('app/setSearch', s)
+    // },
     onEnter(){
-      //  console.log(Command)
-      console.log(this.main_input)
       let inputValue = this.main_input.trim()
       if (inputValue.length > 0){
         let inputObject = new Command({inputValue: inputValue, selected: this.selected})
-        //  var inputObject = this.getInputType(inputValue)
-        console.log("inputObject",inputObject);
-        //  this.traiteInput(inputObject);
-        //  this.updateInput(inputObject.inputNew);
-        // this.$emit('onCommand', inputObject)
         this.$store.dispatch('core/pushCommandHistory', inputObject)
         this.main_input = inputObject.inputNew
       }
@@ -83,14 +72,7 @@ export default {
         this.main_input = input + " ,"
         this.$refs.input.focus()
       }
-
-
     },
-    // nodes(){
-    //   this.options = this.nodes
-    //   this.options.unshift(this.defaultOption)
-    //   console.log("options", this.options)
-    // }
   },
   computed: {
     currentNode() {
@@ -102,7 +84,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import {
   getSolidDataset,
-  getThingAll,
+  // getThingAll,
   //getPublicAccess,
   //  getAgentAccess,
   //getSolidDatasetWithAcl,
@@ -60,154 +60,144 @@ const plugin = {
 
     Vue.prototype.$saveBrainToSolid = async function(){
       console.log(store.state.core.nodes)
-      let suggestedpath = store.state.solid.pod.storage+"agenttest/"
-      console.log(suggestedpath)
+      if(store.state.solid.pod == null){
+        alert("Please Login to your pod before trying to save this brain")
+      }else{
 
-      let  path = prompt("Please confirm the path where to store the nodes", suggestedpath);
-      console.log(path)
-      if(path != null){
-        path = !path.endsWith('/') ? path+= '/' : path
-        for await (const n of store.state.core.nodes){
-          console.log(n.id, n)
-          n['@context']['@base'] = path
+        let suggestedpath = store.state.solid.pod.storage+"agenttest/"
+        console.log(suggestedpath)
 
-          const savedFile = await overwriteFile(
-            path+lastPartOfUrl(n.id),
-            new Blob([JSON.stringify(n)], { type: "application/ld+json" }),
-            { contentType: "application/ld+json", fetch: sc.fetch }
-          );
-          //  console.log(savedFile)
+        let  path = prompt("Please confirm the path where to store the nodes", suggestedpath);
+        console.log(path)
+        if(path != null){
+          path = !path.endsWith('/') ? path+= '/' : path
 
-          console.log(`File saved at ${getSourceUrl(savedFile)}`);
+          store.state.core.nodes.forEach(n => {
+            Vue.prototype.$spinnerAdd({id: "saving "+n.id})
+          });
 
 
 
-          // let brainsDataset = await getSolidDataset(
-          //   store.state.solid.pod.brains, {
-          //     fetch: sc.fetch
-          //   });
-          //
-          //   let brain = await getThing(brainsDataset, path, {fetch: sc.fetch})
-          //   console.log(brain)
-          //   if (brain == null){
-          //
-          //
-          //
-          //
-          //
-          //
-          //
-          //
-          //     // let last = lastPartOfUrl(path)
-          //     // console.log(last)
-          //     // let brainThing = createThing({ name: last });
-          //     // brainThing = addStringNoLocale(brainThing, "http://xmlns.com/foaf/0.1/name", last);
-          //     // brainThing = addUrl(brainThing, RDF.type, "https://scenaristeur.github.io/agent/brain");
-          //     // brainsDataset = setThing(brainsDataset, brainThing);
-          //     // console.log(brainsDataset)
-          //     // const savedSolidDataset = await saveSolidDatasetAt(
-          //     //   store.state.solid.pod.brains,
-          //     //   brainsDataset,
-          //     //   { fetch: sc.fetch }             // fetch from authenticated Session
-          //     // );
-          //     // console.log(savedSolidDataset)
-          //   }
+          for await (const n of store.state.core.nodes){
+            console.log(n.id, n)
 
-        }
+            n['@context']['@base'] = path
 
-        // updating brainIndex
-        //let last = lastPartOfUrl(path)
-        // console.log(last)
-        const brainsFile = await getFile(store.state.solid.pod.brains, { fetch: sc.fetch });
-        //  console.log(brainsFile)
-        const reader = new FileReader();
-        reader.onload = async () => {
-          try {
-            //response =
-            // Resolve the promise with the response value
-            let brainsIndex = JSON.parse(reader.result)
-            console.log("brains",brainsIndex)
-            let now = Date.now()
-            let currentBrain = {id: path, name: lastPartOfUrl(path), updated: now, checksum: 1000*Math.random()}
-            var index = brainsIndex.brains.findIndex(x => x.id==currentBrain.id);
-            if(index === -1){
-              currentBrain.created= now
-              brainsIndex.brains.push(currentBrain)
-            }else{
-              Object.assign(brainsIndex.brains[index], currentBrain)
-            }
-
-
-            await overwriteFile(
-              store.state.solid.pod.brains,
-
-              new Blob([JSON.stringify(brainsIndex)], { type: "application/ld+json" }),
+            const savedFile = await overwriteFile(
+              path+lastPartOfUrl(n.id),
+              new Blob([JSON.stringify(n)], { type: "application/ld+json" }),
               { contentType: "application/ld+json", fetch: sc.fetch }
             );
+            //  console.log(savedFile)
+
+            console.log(`File saved at ${getSourceUrl(savedFile)}`);
+            Vue.prototype.$spinnerRemove({id: "saving "+n.id})
 
 
-            // let currentBrain = brainsIndex.brains.find(x => x.id == path)
-            // console.log(currentBrain)
-            // if(currentBrain == undefined) {
-            //   currentBrain = {id: path, name: lastPartOfUrl(path), created: Date.now(), updated: Date.now(), checksum: ""}
-            //   brainsIndex.brains.push(currentBrain)
-            // }else{
-            //   currentBrain.
-            // }
-            // let thisBrain = {id: path, name: last}
+            // let brainsDataset = await getSolidDataset(
+            //   store.state.solid.pod.brains, {
+            //     fetch: sc.fetch
+            //   });
+            //
+            //   let brain = await getThing(brainsDataset, path, {fetch: sc.fetch})
+            //   console.log(brain)
+            //   if (brain == null){
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //     // let last = lastPartOfUrl(path)
+            //     // console.log(last)
+            //     // let brainThing = createThing({ name: last });
+            //     // brainThing = addStringNoLocale(brainThing, "http://xmlns.com/foaf/0.1/name", last);
+            //     // brainThing = addUrl(brainThing, RDF.type, "https://scenaristeur.github.io/agent/brain");
+            //     // brainsDataset = setThing(brainsDataset, brainThing);
+            //     // console.log(brainsDataset)
+            //     // const savedSolidDataset = await saveSolidDatasetAt(
+            //     //   store.state.solid.pod.brains,
+            //     //   brainsDataset,
+            //     //   { fetch: sc.fetch }             // fetch from authenticated Session
+            //     // );
+            //     // console.log(savedSolidDataset)
+            //   }
 
-            //  await store.dispatch('core/saveNode', node)
-            //  resolve(node);
-          } catch (err) {
-            console.log(err);
           }
-        };
-        reader.onerror = (error) => {
-          console.log(error);
-        };
-        reader.readAsText(brainsFile);
+
+          Vue.prototype.$spinnerAdd({id: "saving "+store.state.solid.pod.brains})
+          const brainsFile = await getFile(store.state.solid.pod.brains, { fetch: sc.fetch });
+          //  console.log(brainsFile)
+          const reader = new FileReader();
+          reader.onload = async () => {
+            try {
+
+              let brainsIndex = JSON.parse(reader.result)
+
+              let now = Date.now()
+              let currentBrain = {id: path, name: lastPartOfUrl(path), updated: now, checksum: 1000*Math.random()}
+              var index = brainsIndex.brains.findIndex(x => x.id==currentBrain.id);
+              if(index === -1){
+                currentBrain.created= now
+                brainsIndex.brains.push(currentBrain)
+              }else{
+                Object.assign(brainsIndex.brains[index], currentBrain)
+              }
 
 
+              await overwriteFile(
+                store.state.solid.pod.brains,
 
+                new Blob([JSON.stringify(brainsIndex)], { type: "application/ld+json" }),
+                { contentType: "application/ld+json", fetch: sc.fetch }
+              );
 
+              //reload brains
+              Vue.prototype.$checkBrains()
+              Vue.prototype.$spinnerRemove({id: "saving "+store.state.solid.pod.brains})
+            } catch (err) {
+              console.log(err);
+            }
+          };
+          reader.onerror = (error) => {
+            console.log(error);
+          };
+          reader.readAsText(brainsFile);
 
-
-
-      }else{
-        alert("saving to Solid Pod aborted")
+        }else{
+          alert("saving to Solid Pod aborted")
+        }
       }
-
-
     }
 
-
-    Vue.prototype.$loadBrainFromSolid = async function(){
-      let suggestedpath = store.state.solid.pod.storage+"agenttest/"
-      console.log(suggestedpath)
-
-      let  path = prompt("Load brain from ", suggestedpath);
+    Vue.prototype.$loadBrainFromSolid = async function(path){
+      if (path == undefined){
+        let suggestedpath = store.state.solid.pod != null ? store.state.solid.pod.storage+"agenttest/" : "https://solid.provider/brain_folder or example..."
+        console.log(suggestedpath)
+        path = prompt("Load brain from ", suggestedpath);
+      }
 
       if(path != null){
         console.log("load brain from", path)
+        Vue.prototype.$spinnerAdd({id: "loading "+path})
         let dataset = null
         try{
           dataset = await getSolidDataset( path, { fetch: sc.fetch });
           let remotesUrl  = await getContainedResourceUrlAll(dataset,{fetch: sc.fetch} )
           console.log(remotesUrl)
           await loadNeurones(remotesUrl)
-          console.log("end")
-          //  return remotesUrl
         }
         catch(e){
-          console.log(e)
-          //return []
+          alert(e)
         }
-
+        Vue.prototype.$spinnerRemove({id: "loading "+path})
       }
     }
 
-
     Vue.prototype.$checkBrains = async function(){
+      Vue.prototype.$spinnerAdd({id: "checkBrains"})
       try{
         const file = await getFile(store.state.solid.pod.brains, { fetch: sc.fetch });
         console.log(file)
@@ -230,25 +220,35 @@ const plugin = {
           "name": "Brain Index",
           type: "brainIndex",
           brains: [],
-          //color: "#00ff00",
           "homepage": "https://scenaristeur.github.io/agent",
         };
         await overwriteFile(
           store.state.solid.pod.brains,
-
           new Blob([JSON.stringify(default_brains)], { type: "application/ld+json" }),
           { contentType: "application/ld+json", fetch: sc.fetch }
         );
       }
 
       try{
-        const brains_ds = await getSolidDataset( store.state.solid.pod.brains, { fetch: sc.fetch });
-        let brains = await getThingAll(brains_ds)
-        console.log(brains)
+        const file = await getFile(store.state.solid.pod.brains, { fetch: sc.fetch });
+        const reader = new FileReader();
 
-
+        reader.onload = async () => {
+          try {
+            let brainsIndex = JSON.parse(reader.result)
+            store.commit('core/setBrains',brainsIndex)
+          } catch (err) {
+            console.log(err);
+          }
+        };
+        reader.onerror = (error) => {
+          console.log(error);
+        };
+        reader.readAsText(file);
       }catch(e){
         console.log(e)
+      }finally{
+        Vue.prototype.$spinnerRemove({id: "checkBrains"})
       }
     }
 
@@ -288,10 +288,11 @@ const plugin = {
       //
       // });
 
-      let nodes = []
+      // let nodes = []
 
       const filePromises = remotesUrl.map(async function(url) {
         // Return a promise per file
+        Vue.prototype.$spinnerAdd({id: "loading "+url})
         const file = await getFile(url, { fetch: sc.fetch });
         return new Promise( function(resolve, reject) {
 
@@ -302,6 +303,7 @@ const plugin = {
               // Resolve the promise with the response value
               let node = JSON.parse(reader.result)
               await store.dispatch('core/saveNode', node)
+              Vue.prototype.$spinnerRemove({id: "loading "+url})
               resolve(node);
             } catch (err) {
               reject(err);
@@ -315,9 +317,7 @@ const plugin = {
       });
 
       // Wait for all promises to be resolved
-      nodes = await Promise.all(filePromises);
-
-      console.log("finito", nodes)
+      await Promise.all(filePromises);
       store.dispatch('core/getNodes')
 
     }

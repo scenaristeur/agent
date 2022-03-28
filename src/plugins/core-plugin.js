@@ -9,6 +9,12 @@ const plugin = {
         let core = new Core(options)
       store.commit ('core/setCore', core)
     }
+    Vue.prototype.$spinnerAdd = function(task){
+      store.commit('core/spinnerAdd', task)
+    }
+    Vue.prototype.$spinnerRemove = function(task){
+      store.commit('core/spinnerRemove', task)
+    }
   }
 }
 
