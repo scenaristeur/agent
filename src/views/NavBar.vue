@@ -95,7 +95,7 @@ export default {
 
 <style>
 #navbar{
-  z-index: 10;
+  z-index: 1000;
   position: absolute;
   left: 0px;
   width: 100%;
