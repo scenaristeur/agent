@@ -6,12 +6,12 @@
     <hr>
     <hr>
     <!-- <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav> -->
-    <router-view/>
-    <small><i>0.0.1-navbar & spinner</i></small>
-  </div>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>
+  </nav> -->
+  <router-view/>
+  <small><i>0.0.1-navbar & spinner</i></small>
+</div>
 </template>
 
 
@@ -26,8 +26,14 @@ export default {
   },
   created(){
     this.$coreInit({name: "SuperCore"})
-    this.$store.dispatch('core/getNodes')
-    this.$checkSolidSession()
+    if(this.$route.query.source){
+      let source = this.$route.query.source
+      console.log("source",source)
+      this.$loadBrainFromSolid(source)
+    }else{
+      this.$checkSolidSession()
+      this.$store.dispatch('core/getNodes')
+    }
   }
 }
 </script>
