@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showBrainLoader == true">
+  <b-container v-if="showBrainLoader == true">
     <b-button @click="loadBrainFromSolid">Choose path for loading a brain</b-button>
     <b-button @click="hide">Hide BrainLoader</b-button>
     <b-list-group v-if="brains!=undefined">
@@ -15,7 +15,7 @@
       <!-- <b-icon-share @click="share(b.id)"></b-icon-share> -->
     </b-list-group-item>
   </b-list-group>
-</div>
+</b-container>
 </template>
 
 <script>

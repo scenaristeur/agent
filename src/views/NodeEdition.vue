@@ -5,42 +5,51 @@
       <b-collapse id="collapse-1" class="mt-2">
 
 
-        Node edition
         <b-row>
-          <b-col cols="10">
-            <b-form-input v-model="tempNode.name" placeholder="name"></b-form-input>
-          </b-col>
-          <b-col cols="2">
 
-            <b-form-input type="color" v-model="tempNode.color" size="sm"></b-form-input>
+          <b-col>
+            <b-row>
+              <b-col cols="10">
+                <b-form-input v-model="tempNode.name" placeholder="name"></b-form-input>
+              </b-col>
+              <b-col cols="2">
+
+                <b-form-input type="color" v-model="tempNode.color" size="sm"></b-form-input>
+              </b-col>
+            </b-row>
+            <b-form-input v-model="tempNode.type" placeholder="type"></b-form-input>
+            <div v-for="p in Object.keys(currentNode)" :key="p">
+
+              <div v-if="!jsonldProps.includes(p) && !graphProps.includes(p) && p != 'reverse'">
+                <PropertieView :p="p" :v="currentNode[p]"/>
+              </div>
+            </div>
           </b-col>
+
+          <b-col>
+
+            <div v-if="currentNode.reverse != undefined">
+              <b-button size="sm" v-b-toggle.collapse-backlinks variant="light">Backlinks</b-button>
+              <b-collapse id="collapse-backlinks" class="mt-2">
+
+                <div v-for="(p, j) in Object.keys(currentNode.reverse)" :key="j">
+                  <PropertieView :p="p" :v="currentNode.reverse[p]"/>
+                </div>
+              </b-collapse>
+            </div>
+
+            <b-button @click="remove" variant="danger">Remove this node</b-button>
+
+          </b-col>
+
+
+
         </b-row>
-        <b-form-input v-model="tempNode.type" placeholder="type"></b-form-input>
-        <div v-for="p in Object.keys(currentNode)" :key="p">
-
-          <div v-if="!jsonldProps.includes(p) && !graphProps.includes(p) && p != 'reverse'">
-            <PropertieView :p="p" :v="currentNode[p]"/>
-          </div>
-        </div>
 
         <hr>
 
         <b-button @click="tempNode = null">Cancel</b-button>
         <b-button @click="save" variant="success">Save</b-button>
-
-        <hr>
-        <div v-if="currentNode.reverse != undefined">
-          <b-button size="sm" v-b-toggle.collapse-backlinks variant="light">Backlinks</b-button>
-          <b-collapse id="collapse-backlinks" class="mt-2">
-
-            <div v-for="(p, j) in Object.keys(currentNode.reverse)" :key="j">
-              <PropertieView :p="p" :v="currentNode.reverse[p]"/>
-            </div>
-          </b-collapse>
-        </div>
-
-        <b-button @click="remove" variant="danger">Remove this node</b-button>
-
 
       </b-collapse>
 

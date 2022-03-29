@@ -27,7 +27,7 @@ const plugin = {
         "name": options.name || "",
         type: "neurone",
         //color: "#00ff00",
-        "homepage": "http://manu.sporny.org/",
+        "homepage": "https://scenaristeur.github.io/agent/",
         // "knows": [{
         //   "name": "Daniele"
         // }, {

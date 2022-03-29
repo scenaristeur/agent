@@ -94,7 +94,7 @@ export default {
 </script>
 
 <style>
-#navbar{
+#navbarTest{
   z-index: 1000;
   position: absolute;
   left: 0px;

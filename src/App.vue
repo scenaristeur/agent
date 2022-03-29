@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <NavBar />
+    <!-- <hr>
     <hr>
     <hr>
-    <hr>
-    <hr>
+    <hr> -->
     <!-- <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
