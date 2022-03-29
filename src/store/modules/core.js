@@ -58,6 +58,9 @@ const mutations = {
   },
   spinnerRemove(state, t){
     state.spinner = state.spinner.filter(x => x.id!=t.id )
+  },
+  resetSpinner(state){
+    state.spinner = []
   }
 }
 

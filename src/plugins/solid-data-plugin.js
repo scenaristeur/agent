@@ -64,7 +64,7 @@ const plugin = {
         alert("Please Login to your pod before trying to save this brain")
       }else{
 
-        let suggestedpath = store.state.solid.pod.storage+"agenttest/"
+        let suggestedpath = store.state.solid.pod.storage+"brains/"
         console.log(suggestedpath)
 
         let  path = prompt("Please confirm the path where to store the nodes", suggestedpath);
@@ -174,7 +174,7 @@ const plugin = {
 
     Vue.prototype.$loadBrainFromSolid = async function(path){
       if (path == undefined){
-        let suggestedpath = store.state.solid.pod != null ? store.state.solid.pod.storage+"agenttest/" : "https://solid.provider/brain_folder or example..."
+        let suggestedpath = store.state.solid.pod != null ? store.state.solid.pod.storage+"brains/" : "https://solid.provider/brains_folder or example..."
         console.log(suggestedpath)
         path = prompt("Load brain from ", suggestedpath);
       }
@@ -291,6 +291,12 @@ const plugin = {
       // let nodes = []
 
       const filePromises = remotesUrl.map(async function(url) {
+
+        if(url.endsWith('/')){
+          Vue.prototype.$loadBrainFromSolid(url)
+          return
+        }
+
         // Return a promise per file
         Vue.prototype.$spinnerAdd({id: "loading "+url})
         const file = await getFile(url, { fetch: sc.fetch });

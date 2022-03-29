@@ -10,7 +10,10 @@
     <router-link to="/about">About</router-link>
   </nav> -->
   <router-view/>
-  <small><i>0.0.1-shapes</i></small>
+  <small><i>0.0.1-shapes |
+  <a href="https://github.com/scenaristeur/agent" target="_blank">contribute</a> |
+<a href="https://github.com/scenaristeur/agent/wiki" target ="_blank">help</a>
+</i></small>
 </div>
 </template>
 

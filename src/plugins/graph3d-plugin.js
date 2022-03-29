@@ -71,8 +71,8 @@ const plugin = {
         transparent: true,
         opacity: 0.75
       })
-      console.log(material)
-      console.log(node.shape)
+      // console.log(material)
+      // console.log(node.shape)
       switch (node.shape) {
         case "box":
         geometry = new THREE.BoxGeometry(Math.random() * 20, Math.random() * 20, Math.random() * 20)
