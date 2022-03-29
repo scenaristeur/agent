@@ -64,10 +64,7 @@ const plugin = {
 
 
     function nodeThreeObject(node){
-
-      const group = new THREE.Group();
-
-      let label = null
+      let shape = null
       let geometry = null
       let material =   new THREE.MeshLambertMaterial({
         color: node.color ||Math.round(Math.random() * Math.pow(2, 24)),
@@ -100,20 +97,70 @@ const plugin = {
         break;
         default:
       }
-
-      const nodeEl = document.createElement('div');
-      nodeEl.textContent = node.name //node.id;
-      nodeEl.style.color = node.color || "#ffffff";
-      nodeEl.className = 'node-label';
-      label =  new CSS2DObject(nodeEl);
-          
-      if (geometry != null){
-        group.add(new THREE.Mesh(geometry, material))
+      if(geometry == null){
+        const nodeEl = document.createElement('div');
+        nodeEl.textContent = node.name //node.id;
+        nodeEl.style.color = node.color || "#ffffff";
+        nodeEl.className = 'node-label';
+        shape =  new CSS2DObject(nodeEl);
+      }else{
+        shape = new THREE.Mesh(geometry, material)
       }
-      group.add(label)
-
-      return group
+      return shape
     }
+
+
+    // function nodeThreeObjectGroup(node){
+    //
+    //   const group = new THREE.Group();
+    //
+    //   let label = null
+    //   let geometry = null
+    //   let material =   new THREE.MeshLambertMaterial({
+    //     color: node.color ||Math.round(Math.random() * Math.pow(2, 24)),
+    //     transparent: true,
+    //     opacity: 0.75
+    //   })
+    //   // console.log(material)
+    //   // console.log(node.shape)
+    //   switch (node.shape) {
+    //     case "box":
+    //     geometry = new THREE.BoxGeometry(Math.random() * 20, Math.random() * 20, Math.random() * 20)
+    //     break;
+    //     case "cylinder":
+    //     geometry = new THREE.CylinderGeometry(Math.random() * 10, Math.random() * 10, Math.random() * 20)
+    //     break;
+    //     case "cone":
+    //     geometry = new THREE.ConeGeometry(Math.random() * 10, Math.random() * 20)
+    //     break;
+    //     case "dodecahedron":
+    //     geometry = new THREE.DodecahedronGeometry(Math.random() * 10)
+    //     break;
+    //     case "sphere":
+    //     geometry = new THREE.SphereGeometry(Math.random() * 10)
+    //     break;
+    //     case "torus":
+    //     geometry = new THREE.TorusGeometry(Math.random() * 10, Math.random() * 2)
+    //     break;
+    //     case "torusKnot":
+    //     geometry = new THREE.TorusKnotGeometry(Math.random() * 10, Math.random() * 2)
+    //     break;
+    //     default:
+    //   }
+    //
+    //   const nodeEl = document.createElement('div');
+    //   nodeEl.textContent = node.name //node.id;
+    //   nodeEl.style.color = node.color || "#ffffff";
+    //   nodeEl.className = 'node-label';
+    //   label =  new CSS2DObject(nodeEl);
+    //
+    //   if (geometry != null){
+    //     group.add(new THREE.Mesh(geometry, material))
+    //   }
+    //   group.add(label)
+    //
+    //   return group
+    // }
 
 
     // function nodeThreeObject1(node){

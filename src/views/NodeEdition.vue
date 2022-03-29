@@ -5,11 +5,11 @@
 
 
       <b-row>
-        <b-col>
+        <b-col >
           <b-button v-b-toggle.collapse-1 variant="primary">Edit {{tempNode.name || tempNode.id}}</b-button>
         </b-col>
 
-        <b-col>
+        <b-col >
           <b-button @click="remove" variant="danger">Remove {{tempNode.name || tempNode.id}}</b-button>
         </b-col>
       </b-row>
@@ -20,12 +20,12 @@
 
         <b-row>
 
-          <b-col>
+          <b-col md="6">
             <b-row>
               <b-col cols="10">
                 <b-form-input v-model="tempNode.name" placeholder="name"></b-form-input>
               </b-col>
-              <b-col cols="2">
+              <b-col cols="6" md="2">
 
                 <b-form-input type="color" v-model="tempNode.color" size="sm"></b-form-input>
               </b-col>
@@ -34,7 +34,7 @@
               <b-col cols="10">
             <b-form-input v-model="tempNode.type" placeholder="type"></b-form-input>
           </b-col>
-          <b-col cols="2">
+          <b-col cols="6" md="2">
 
           <b-form-select v-model="tempNode.shape" :options="options" size="sm"></b-form-select>
           </b-col>
