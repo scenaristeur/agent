@@ -64,7 +64,10 @@ const plugin = {
 
 
     function nodeThreeObject(node){
-      let shape = null
+
+      const group = new THREE.Group();
+
+      let label = null
       let geometry = null
       let material =   new THREE.MeshLambertMaterial({
         color: node.color ||Math.round(Math.random() * Math.pow(2, 24)),
@@ -97,16 +100,19 @@ const plugin = {
         break;
         default:
       }
-      if(geometry == null){
-        const nodeEl = document.createElement('div');
-        nodeEl.textContent = node.name //node.id;
-        nodeEl.style.color = node.color || "#ffffff";
-        nodeEl.className = 'node-label';
-        shape =  new CSS2DObject(nodeEl);
-      }else{
-        shape = new THREE.Mesh(geometry, material)
+
+      const nodeEl = document.createElement('div');
+      nodeEl.textContent = node.name //node.id;
+      nodeEl.style.color = node.color || "#ffffff";
+      nodeEl.className = 'node-label';
+      label =  new CSS2DObject(nodeEl);
+          
+      if (geometry != null){
+        group.add(new THREE.Mesh(geometry, material))
       }
-      return shape
+      group.add(label)
+
+      return group
     }
 
 
