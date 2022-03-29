@@ -10,7 +10,7 @@
     <router-link to="/about">About</router-link>
   </nav> -->
   <router-view/>
-  <small><i>0.0.1-navbar & spinner</i></small>
+  <small><i>0.0.1-shapes</i></small>
 </div>
 </template>
 
