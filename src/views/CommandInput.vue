@@ -1,6 +1,8 @@
 <template>
   <!-- <div> -->
   <!-- @keyup="onChange" -->
+  <!--v-on:paste="onPaste"-->
+      <!--v-on:input="onInput"-->
   <b-input-group>
     <b-form-input
     id="input"
@@ -9,7 +11,7 @@
     v-model="main_input"
     v-on:keyup.enter="onEnter"
     title="type three words followed by a comma"
-    placeholder="/h + Enter for help"></b-form-input>
+    placeholder="type three words followed by a comma. Or /h + Enter for help"></b-form-input>
     <template #append>
       <b-form-select
       v-if="nodes.length > 0"
@@ -18,7 +20,7 @@
       text-field="name"
       :options="nodes"
       >
-      <b-form-select-option :value="null">current nodes</b-form-select-option>
+      <b-form-select-option :value="null" disabled>current nodes</b-form-select-option>
 
     </b-form-select>
     <b-button @click="clear" variant="outline-danger">X</b-button>
@@ -38,6 +40,15 @@ export default {
     }
   },
   methods: {
+    // onInput(e){
+    //   console.log(e)
+    //   console.log(this.main_input)
+    //   console.log(this.$refs.input.value)
+    // },
+    // onPaste(e){
+    //   console.log(e)
+    //   console.log(this.$refs.input.value)
+    // },
     clear(){
       this.main_input = ""
     },
@@ -49,7 +60,7 @@ export default {
     onEnter(){
       let inputValue = this.main_input.trim()
       if (inputValue.length > 0){
-        let inputObject = new Command({inputValue: inputValue, selected: this.selected})
+        let inputObject = new Command({inputValue: inputValue/*, selected: this.selected*/})
         this.$store.dispatch('core/pushCommandHistory', inputObject)
         this.main_input = inputObject.inputNew
         if(inputValue == "/h"){

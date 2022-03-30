@@ -74,20 +74,13 @@ const actions = {
       if (c.value.predicate.startsWith('.'))
       {
         let p = c.value.predicate.slice(1)
-        console.log("add prop", p)
-        let n = Vue.prototype.$addProp({node: subjectNode, propertie: p, value: c.value.object})
-        console.log(n)
-        await context.dispatch('saveNode', n)
-
+            let n = Vue.prototype.$addProp({node: subjectNode, propertie: p, value: c.value.object})
+              await context.dispatch('saveNode', n)
         await context.dispatch('getNodes')
-
-
-
       }
       else
       {
-        let objectNode = context.state.nodes.find(x => x.name == c.value.object)
-
+        let objectNode = context.state.nodes.find(x => x.id == c.value.object || x.name == c.value.object)
         objectNode == undefined ? objectNode = Vue.prototype.$newNode({name: c.value.object}) : ""
         let nodes2save  = Vue.prototype.$addLink({subject: subjectNode, predicate:c.value.predicate, object:objectNode})
         nodes2save.forEach(async function(n) {

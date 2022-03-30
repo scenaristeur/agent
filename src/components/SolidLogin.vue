@@ -1,6 +1,6 @@
 <template>
   <span class="login">
-
+    <!-- <b-icon-person-circle></b-icon-person-circle> -->
     <div v-if="session == null || session.isLoggedIn == false" class="d-flex align-items-center">
       <b-form-group>
 
