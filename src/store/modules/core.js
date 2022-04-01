@@ -105,6 +105,7 @@ const actions = {
     node['@context'] == undefined ? node['@context'] = {} : ""
     node['@context']['@vocab'] == undefined ? node['@context']['@vocab'] = vocab : ""
     try{
+      console.log("saving", node)
       await idb.saveNode(node);
     }catch(e){
       alert(e)

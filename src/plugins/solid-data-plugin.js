@@ -264,8 +264,9 @@ const plugin = {
 
 
     async function loadExternalNeurones(sources){
+      // todo : move move outside "solid"-data-plugin
       console.log(sources)
-      let test = "json" // "jsonld"
+      let test = "jsonld" // "jsonld" || "json"
       // let test =  "jsonld"
 
       for (let s of sources){
@@ -279,15 +280,39 @@ const plugin = {
           console.log(data)
           node = data.entities[id]
           console.log(node)
+          await store.dispatch('core/saveNode', node)
           //let node = JSON.parse(reader.result)
 
         }else{
-          let jsonld = fetch("https://www.wikidata.org/wiki/Special:EntityData/"+id+".jsonld")
+          let response = await fetch("https://www.wikidata.org/wiki/Special:EntityData/"+id+".jsonld")
+          let jsonld = await response.json()
           console.log(jsonld)
           console.log(jsonld['@graph'])
+          let cpt = 100
+          for(let item of jsonld['@graph']){
+            if (cpt ==0){
+              return
+            }
+            cpt--
+            console.log(cpt)
+            console.log(item)
+            // let options = {}
+            // // item['@context'] = jsonld['@context']
+            // // item['@context'].id = '@id'
+            // // item['@context'].type = "@type"
+            // options.id = item['@id']
+            // options.name = item.about
+            // //  item.type = item['@type']
+            // console.log(options)
+            node = Vue.prototype.$newNode(item)
+            console.log(node)
+            await store.dispatch('core/saveNode', node)
+            store.dispatch('core/getNodes')
+          }
         }
 
-        await store.dispatch('core/saveNode', node)
+        console.log("done")
+
         store.dispatch('core/getNodes')
 
       }

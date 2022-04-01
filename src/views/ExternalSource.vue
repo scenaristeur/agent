@@ -21,6 +21,7 @@
 
     <vue-tags-input
     v-model="tag"
+    placeholder="Search"
     autofocus
     :tags="tags"
     :autocomplete-items="autocompleteItems"

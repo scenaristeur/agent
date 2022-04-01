@@ -23,7 +23,7 @@ const plugin = {
             "@type": "@id"
           }
         },
-        "id": uuidv4(),
+        "id": options.id || uuidv4(),
         "name": options.name || "",
         type: "neurone",
         //color: "#00ff00",
