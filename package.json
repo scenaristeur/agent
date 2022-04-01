@@ -14,6 +14,7 @@
     "@inrupt/solid-client-authn-browser": "^1.11.7",
     "@inrupt/vocab-common-rdf": "^1.0.3",
     "@inrupt/vocab-solid-common": "^0.7.5",
+    "@johmun/vue-tags-input": "^2.1.0",
     "3d-force-graph": "^1.70.9",
     "automerge": "^1.0.1-preview.7",
     "bootstrap": "^4.5.3",
@@ -22,6 +23,7 @@
     "jsonld": "^5.2.0",
     "register-service-worker": "^1.7.2",
     "three-spritetext": "^1.6.5",
+    "underscore": "^1.13.2",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"

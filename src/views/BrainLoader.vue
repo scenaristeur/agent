@@ -2,6 +2,7 @@
   <b-container v-if="showBrainLoader == true">
     <b-button @click="loadBrainFromSolid">Choose path for loading a brain</b-button>
     <b-button @click="hide">Hide BrainLoader</b-button>
+    <ExternalSource />
     <b-list-group v-if="brains!=undefined" class="scroll">
       <b-list-group-item
       v-for="b in items"
@@ -30,6 +31,9 @@ import ToastMixin from '@/mixins/ToastMixin'
 export default {
   name: "BrainLoader",
   mixins: [ToastMixin],
+  components: {
+    'ExternalSource': ()=>import('@/views/ExternalSource'),
+  },
   data(){
     return{
       items: []
