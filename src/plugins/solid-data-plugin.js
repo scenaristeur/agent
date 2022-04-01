@@ -269,7 +269,7 @@ const plugin = {
       let test = "jsonld" // "jsonld" || "json"
       // let test =  "jsonld"
 
-      for (let s of sources){
+      for await (let s of sources){
         console.log(s)
         let id = s.item.id
         let node = null
@@ -284,20 +284,24 @@ const plugin = {
           //let node = JSON.parse(reader.result)
 
         }else{
+          Vue.prototype.$spinnerAdd({id: "loading "+id})
           let response = await fetch("https://www.wikidata.org/wiki/Special:EntityData/"+id+".jsonld")
           let jsonld = await response.json()
           console.log(jsonld)
           console.log(jsonld['@graph'])
-          let cpt = 100
+          let cpt = 1000
           for(let item of jsonld['@graph']){
             if (cpt ==0){
+              store.dispatch('core/getNodes')
+              Vue.prototype.$spinnerRemove({id: "loading "+id})
               return
             }
             cpt--
+            Vue.prototype.$spinnerAdd({id: "loading "+cpt})
             console.log(cpt)
             console.log(item)
             // let options = {}
-            // // item['@context'] = jsonld['@context']
+           item['@context'] == undefined ? item['@context'] = jsonld['@context'] : ""
             // // item['@context'].id = '@id'
             // // item['@context'].type = "@type"
             // options.id = item['@id']
@@ -307,8 +311,10 @@ const plugin = {
             node = Vue.prototype.$newNode(item)
             console.log(node)
             await store.dispatch('core/saveNode', node)
-            store.dispatch('core/getNodes')
+            Vue.prototype.$spinnerRemove({id: "loading "+cpt})
+
           }
+
         }
 
         console.log("done")

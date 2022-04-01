@@ -9,22 +9,23 @@ const plugin = {
     console.log(store)
 
     Vue.prototype.$newNode = function(options = {}){
+      let context =  {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "@base": "http://local/",
+        "@vocab": "https://scenaristeur.github.io/agent/",
+        "id": "@id",
+        "type": "@type",
+        "reverse": "@reverse",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      }
       let node = {
-        "@context": {
-          "name": "http://xmlns.com/foaf/0.1/name",
-          "knows": "http://xmlns.com/foaf/0.1/knows",
-          "@base": "http://local/",
-          "@vocab": "https://scenaristeur.github.io/agent/",
-          "id": "@id",
-          "type": "@type",
-          "reverse": "@reverse",
-          "homepage": {
-            "@id": "http://xmlns.com/foaf/0.1/homepage",
-            "@type": "@id"
-          }
-        },
-        "id": options.id || uuidv4(),
-        "name": options.name || "",
+        "@context" : Object.assign(context, options['@context']),
+        "id": options['@id'] || options.id || uuidv4(),
+        "name": options.name && options.name['@value'] || options.name || "",
         type: "neurone",
         //color: "#00ff00",
         "homepage": "https://scenaristeur.github.io/agent/",
