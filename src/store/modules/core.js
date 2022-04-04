@@ -208,7 +208,7 @@ const actions = {
       for (let [p,v] of Object.entries(n)){
         if(!context.state.jsonldProps.includes(p) && !context.state.graphProps.includes(p)){
           // console.log("#", typeof v,p, v)
-          let rot = Math.PI
+          let rot = Math.random()*Math.PI
           if(Array.isArray(v)){
             for(let item of v ){
               //  console.log('##',item.id, item)
