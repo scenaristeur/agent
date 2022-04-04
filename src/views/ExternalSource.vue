@@ -79,9 +79,10 @@ export default {
       this.autocompleteItems = [];
       this.tags = newTags;
     },
-    runQueries(){
+    async runQueries(){
       console.log(this.tags)
-      this.$loadBrainsFromWikidata(this.tags)
+      await this.$loadBrainsFromWikidata(this.tags)
+      this.tags = []
     },
     // onEnter(){
     //   if (this.selected.length == 0){

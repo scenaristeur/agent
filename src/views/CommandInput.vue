@@ -62,6 +62,10 @@ export default {
     currentNode(){
       if(this.currentNode != null){
         let val = this.currentNode.name || this.currentNode.id
+        if (/\s/.test(val)) {
+          // It has any kind of whitespace
+          val = '"'+val+'"'
+        }
         this.main_input = val+ " "
         this.$refs.input.focus()
       }
@@ -71,7 +75,12 @@ export default {
       if(this.selected != null){
         let node = this.nodes.find(x => x.id == this.selected)
         console.log(node)
-        let input = this.main_input.trim() + " "+node.name || node.id
+        let val = node.name || node.id
+        if (/\s/.test(val)) {
+          // It has any kind of whitespace
+          val = '"'+val+'"'
+        }
+        let input = this.main_input.trim() + " "+val
         this.main_input = input + " ,"
         this.$refs.input.focus()
       }

@@ -175,9 +175,23 @@ const plugin = {
 
     Vue.prototype.$loadBrainsFromWikidata = async function(tags){
       console.log(tags)
+
+      tags.forEach(async function(t) {
+        console.log(t)
+        let node = {id: t.url, name: t.item.aliases && t.item.aliases[0] || t.item.label || t.text, color: "lightblue", url: t.url, source: "https://wikidata.org"}
+
+
+        await store.dispatch('core/saveNode', node)
+
+      });
+
+      await store.dispatch('core/getNodes')
+
+
+
       // let test = "https://www.wikidata.org/wiki/Special:EntityData/Q182665.jsonld"
       // console.log(test)
-      loadExternalNeurones(tags)
+      //loadExternalNeurones(tags)
 
     }
 
@@ -263,169 +277,170 @@ const plugin = {
     }
 
 
-    async function loadExternalNeurones(sources){
-      // todo : move move outside "solid"-data-plugin
-      console.log(sources)
-      let test = "jsonld" // "jsonld" || "json"
-      // let test =  "jsonld"
-
-      for await (let s of sources){
-        console.log(s)
-        let id = s.item.id
-        let node = null
-
-        if(test == "json"){
-          let response = await fetch("https://www.wikidata.org/wiki/Special:EntityData/"+id+".json")
-          let data = await response.json()
-          console.log(data)
-          node = data.entities[id]
-          console.log(node)
-          await store.dispatch('core/saveNode', node)
-          //let node = JSON.parse(reader.result)
-
-        }else{
-          Vue.prototype.$spinnerAdd({id: "loading "+id})
-          let response = await fetch("https://www.wikidata.org/wiki/Special:EntityData/"+id+".jsonld")
-          let jsonld = await response.json()
-          console.log(jsonld)
-          console.log(jsonld['@graph'])
-          let cpt = 1000
-          for(let item of jsonld['@graph']){
-            if (cpt ==0){
-              store.dispatch('core/getNodes')
-              Vue.prototype.$spinnerRemove({id: "loading "+id})
-              return
-            }
-            cpt--
-            Vue.prototype.$spinnerAdd({id: "loading "+cpt})
-            console.log(cpt)
-            console.log(item)
-            // let options = {}
-           item['@context'] == undefined ? item['@context'] = jsonld['@context'] : ""
-            // // item['@context'].id = '@id'
-            // // item['@context'].type = "@type"
-            // options.id = item['@id']
-            // options.name = item.about
-            // //  item.type = item['@type']
-            // console.log(options)
-            node = Vue.prototype.$newNode(item)
-            console.log(node)
-            await store.dispatch('core/saveNode', node)
-            Vue.prototype.$spinnerRemove({id: "loading "+cpt})
-
-          }
-
-        }
-
-        console.log("done")
-
-        store.dispatch('core/getNodes')
-
-      }
-
-
-      //     var url = "https://en.wikipedia.org/w/api.php";
-      //
-      //     var params = {
-      //         action: "query",
-      //         format: "json",
-      //         titles: "Lyon",
-      //         prop: "links"
-      //     };
-      //
-      //     url = url + "?origin=*";
-      //     Object.keys(params).forEach(function(key){url += "&" + key + "=" + params[key];});
-      //
-      //     fetch(url)
-      //         .then(function(response){return response.json();})
-      //         .then(function(response) {
-      //           console.log(response)
-      //             var pages = response.query.pages;
-      //             for (var p in pages) {
-      //                 for (var l of pages[p].links) {
-      //                     console.log(l.title);
-      //                 }
-      //             }
-      //         })
-      //         .catch(function(error){console.log(error);});
-      //
-      // }
-
-
-      // async function loadExternalNeurones1(sources){
-      //   console.log(sources)
-      //
-      //   var url = "https://wikidata.org/w/api.php";
-      //   // var url = "https://en.wikipedia.org/w/api.php";
-      //
-      //   var params = {
-      //     action: "query",
-      //     format: "json",
-      //     // titles: "Albert Einstein",
-      //     pageids: "680",
-      //     prop: "links"
-      //   };
-      //   // var params = {
-      //   //     action: "query",
-      //   //     format: "json",
-      //   //     list: "tags",
-      //   //     tgprop: "hitcount",
-      //   //     tglimit: "3"
-      //   // };
-      //
-      //   url = url + "?origin=*";
-      //   Object.keys(params).forEach(function(key){url += "&" + key + "=" + params[key];});
-      //
-      //
-      //   fetch(url)
-      //   .then(function(response){return response.json();})
-      //   .then(function(response) {
-      //     var pages = response.query.pages;
-      //     for (var p in pages) {
-      //       for (var l of pages[p].links) {
-      //         console.log(l.title);
-      //       }
-      //     }
-      //   })
-      //   .catch(function(error){console.log(error);});
-      //
-      //   // fetch(url)
-      //   //     .then(function(response){return response.json();})
-      //   //     .then(function(response) {
-      //   //         var tags = response.query.tags;
-      //   //         for (var t in tags) {
-      //   //             console.log(tags[t].name);
-      //   //         }
-      //   //     })
-      //   //     .catch(function(error){console.log(error);});
-      //
-      //
-      //   // const filePromises = sources.map(async function(s) {
-      //   //   // let url = s.url+'.jsonld'
-      //   //   let url = s.item.concepturi+".jsonld&origin*"
-      //   //   //https://www.wikidata.org/entity/Q42.jsonld
-      //   //   console.log("loading",s.text)
-      //   //   try{
-      //   //     console.log("fetching",url)
-      //   //     const res = await fetch(url)
-      //   //     const data = await res.json()
-      //   //     console.log(data)
-      //   //     // this.items = suggestions.search
-      //   //     // console.log(this.items)
-      //   //     // this.autocompleteItems = suggestions.search.map(a => {
-      //   //     //   return { text: a.match.text+" ("+a.description+")", url: a.concepturi };
-      //   //     // });
-      //   //   }catch(e){
-      //   //     alert(e)
-      //   //   }
-      //   // });
-      //   //
-      //   // // Wait for all promises to be resolved
-      //   // await Promise.all(filePromises);
-      //   //  store.dispatch('core/getNodes')
-      //
-      //
-    }
+    // async function loadExternalNeurones(sources){
+    //   // todo : move move outside "solid"-data-plugin
+    //   console.log(sources)
+    //   let test = "simple" // "jsonld" || "json"
+    //   // let test =  "jsonld"
+    //
+    //   for await (let s of sources){
+    //     console.log(s)
+    //     let id = s.item.id
+    //     let node = null
+    //
+    //     if(test == "simple"){
+    //       let response = await fetch("https://www.wikidata.org/wiki/Special:EntityData/"+id+".json")
+    //       let data = await response.json()
+    //       console.log(data)
+    //       node = data.entities[id]
+    //       console.log(node)
+    //       await store.dispatch('core/saveNode', node)
+    //       //let node = JSON.parse(reader.result)
+    //
+    //     }else{
+    //       //full loading the graph of the resource
+    //       Vue.prototype.$spinnerAdd({id: "loading "+id})
+    //       let response = await fetch("https://www.wikidata.org/wiki/Special:EntityData/"+id+".jsonld")
+    //       let jsonld = await response.json()
+    //       console.log(jsonld)
+    //       console.log(jsonld['@graph'])
+    //       let cpt = 1000
+    //       for(let item of jsonld['@graph']){
+    //         if (cpt ==0){
+    //           store.dispatch('core/getNodes')
+    //           Vue.prototype.$spinnerRemove({id: "loading "+id})
+    //           return
+    //         }
+    //         cpt--
+    //         Vue.prototype.$spinnerAdd({id: "loading "+cpt})
+    //         console.log(cpt)
+    //         console.log(item)
+    //         // let options = {}
+    //        item['@context'] == undefined ? item['@context'] = jsonld['@context'] : ""
+    //         // // item['@context'].id = '@id'
+    //         // // item['@context'].type = "@type"
+    //         // options.id = item['@id']
+    //         // options.name = item.about
+    //         // //  item.type = item['@type']
+    //         // console.log(options)
+    //         node = Vue.prototype.$newNode(item)
+    //         console.log(node)
+    //         await store.dispatch('core/saveNode', node)
+    //         Vue.prototype.$spinnerRemove({id: "loading "+cpt})
+    //
+    //       }
+    //
+    //     }
+    //
+    //     console.log("done")
+    //
+    //     store.dispatch('core/getNodes')
+    //
+    //   }
+    //
+    //
+    //   //     var url = "https://en.wikipedia.org/w/api.php";
+    //   //
+    //   //     var params = {
+    //   //         action: "query",
+    //   //         format: "json",
+    //   //         titles: "Lyon",
+    //   //         prop: "links"
+    //   //     };
+    //   //
+    //   //     url = url + "?origin=*";
+    //   //     Object.keys(params).forEach(function(key){url += "&" + key + "=" + params[key];});
+    //   //
+    //   //     fetch(url)
+    //   //         .then(function(response){return response.json();})
+    //   //         .then(function(response) {
+    //   //           console.log(response)
+    //   //             var pages = response.query.pages;
+    //   //             for (var p in pages) {
+    //   //                 for (var l of pages[p].links) {
+    //   //                     console.log(l.title);
+    //   //                 }
+    //   //             }
+    //   //         })
+    //   //         .catch(function(error){console.log(error);});
+    //   //
+    //   // }
+    //
+    //
+    //   // async function loadExternalNeurones1(sources){
+    //   //   console.log(sources)
+    //   //
+    //   //   var url = "https://wikidata.org/w/api.php";
+    //   //   // var url = "https://en.wikipedia.org/w/api.php";
+    //   //
+    //   //   var params = {
+    //   //     action: "query",
+    //   //     format: "json",
+    //   //     // titles: "Albert Einstein",
+    //   //     pageids: "680",
+    //   //     prop: "links"
+    //   //   };
+    //   //   // var params = {
+    //   //   //     action: "query",
+    //   //   //     format: "json",
+    //   //   //     list: "tags",
+    //   //   //     tgprop: "hitcount",
+    //   //   //     tglimit: "3"
+    //   //   // };
+    //   //
+    //   //   url = url + "?origin=*";
+    //   //   Object.keys(params).forEach(function(key){url += "&" + key + "=" + params[key];});
+    //   //
+    //   //
+    //   //   fetch(url)
+    //   //   .then(function(response){return response.json();})
+    //   //   .then(function(response) {
+    //   //     var pages = response.query.pages;
+    //   //     for (var p in pages) {
+    //   //       for (var l of pages[p].links) {
+    //   //         console.log(l.title);
+    //   //       }
+    //   //     }
+    //   //   })
+    //   //   .catch(function(error){console.log(error);});
+    //   //
+    //   //   // fetch(url)
+    //   //   //     .then(function(response){return response.json();})
+    //   //   //     .then(function(response) {
+    //   //   //         var tags = response.query.tags;
+    //   //   //         for (var t in tags) {
+    //   //   //             console.log(tags[t].name);
+    //   //   //         }
+    //   //   //     })
+    //   //   //     .catch(function(error){console.log(error);});
+    //   //
+    //   //
+    //   //   // const filePromises = sources.map(async function(s) {
+    //   //   //   // let url = s.url+'.jsonld'
+    //   //   //   let url = s.item.concepturi+".jsonld&origin*"
+    //   //   //   //https://www.wikidata.org/entity/Q42.jsonld
+    //   //   //   console.log("loading",s.text)
+    //   //   //   try{
+    //   //   //     console.log("fetching",url)
+    //   //   //     const res = await fetch(url)
+    //   //   //     const data = await res.json()
+    //   //   //     console.log(data)
+    //   //   //     // this.items = suggestions.search
+    //   //   //     // console.log(this.items)
+    //   //   //     // this.autocompleteItems = suggestions.search.map(a => {
+    //   //   //     //   return { text: a.match.text+" ("+a.description+")", url: a.concepturi };
+    //   //   //     // });
+    //   //   //   }catch(e){
+    //   //   //     alert(e)
+    //   //   //   }
+    //   //   // });
+    //   //   //
+    //   //   // // Wait for all promises to be resolved
+    //   //   // await Promise.all(filePromises);
+    //   //   //  store.dispatch('core/getNodes')
+    //   //
+    //   //
+    // }
 
     async function loadNeurones(remotesUrl){
 

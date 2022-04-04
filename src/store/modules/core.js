@@ -105,7 +105,7 @@ const actions = {
     node['@context'] == undefined ? node['@context'] = {} : ""
     node['@context']['@vocab'] == undefined ? node['@context']['@vocab'] = vocab : ""
     try{
-      console.log("saving", node)
+      // console.log("saving", node)
       await idb.saveNode(node);
     }catch(e){
       alert(e)
@@ -208,13 +208,14 @@ const actions = {
       for (let [p,v] of Object.entries(n)){
         if(!context.state.jsonldProps.includes(p) && !context.state.graphProps.includes(p)){
           // console.log("#", typeof v,p, v)
+          let rot = Math.PI
           if(Array.isArray(v)){
             for(let item of v ){
               //  console.log('##',item.id, item)
-              linksTemp.push({source: n.id, target: item.id, label: p})
+              linksTemp.push({source: n.id, target: item.id, label: p, curvature: .3, rotation: rot})
             }
           }else if(typeof v == "object" && v.id != undefined){
-            linksTemp.push({source: n.id, target: v.id, label: p})
+            linksTemp.push({source: n.id, target: v.id, label: p, curvature: .3, rotation: rot})
           }
         }
       }

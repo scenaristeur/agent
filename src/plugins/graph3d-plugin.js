@@ -31,6 +31,8 @@ const plugin = {
       .onLinkClick(ln => onLinkClick(ln))
       .nodeThreeObjectExtend(true)
       .nodeThreeObject(node => nodeThreeObject(node))
+      .linkCurvature('curvature')
+      .linkCurveRotation('rotation')
       .linkThreeObjectExtend(true)
       .linkThreeObject(link => {
         // extend link with text sprite
@@ -47,9 +49,9 @@ const plugin = {
       .linkPositionUpdate((sprite, { start, end }) => {
         if(sprite != undefined){
           const middlePos = Object.assign(...['x', 'y', 'z'].map(c => ({
-            [c]: start[c] + (end[c] - start[c]) / 2 // calc middle point
+            [c]: start[c] + (end[c] - start[c]) / 4 // calc middle point
           })))
-          // Position sprite
+                  // Position sprite
           Object.assign(sprite.position, middlePos);
         }
       })
