@@ -2,19 +2,16 @@
   <div>
     <b-container v-if="tempNode != null">
 
-
-
       <b-row>
         <b-col >
           <b-button v-b-toggle.collapse-1 variant="primary">Edit {{tempNode.name || tempNode.id}}</b-button>
+          <b-button @click.stop="copy(tempNode.id)"  size="sm mr-2" variant="outline-success"><b-icon-clipboard-plus></b-icon-clipboard-plus></b-button>
         </b-col>
 
         <b-col >
           <b-button @click="remove" variant="danger">Remove {{tempNode.name || tempNode.id}}</b-button>
         </b-col>
       </b-row>
-
-
 
       <b-collapse id="collapse-1" class="mt-2">
 
@@ -32,13 +29,13 @@
             </b-row>
             <b-row>
               <b-col cols="10">
-            <b-form-input v-model="tempNode.type" placeholder="type"></b-form-input>
-          </b-col>
-          <b-col cols="6" md="2">
+                <b-form-input v-model="tempNode.type" placeholder="type"></b-form-input>
+              </b-col>
+              <b-col cols="6" md="2">
 
-          <b-form-select v-model="tempNode.shape" :options="options" size="sm"></b-form-select>
-          </b-col>
-        </b-row>
+                <b-form-select v-model="tempNode.shape" :options="options" size="sm"></b-form-select>
+              </b-col>
+            </b-row>
 
             <div v-for="p in Object.keys(currentNode)" :key="p">
 
@@ -72,9 +69,11 @@
 </template>
 
 <script>
+import ToastMixin from '@/mixins/ToastMixin'
 
 export default {
   name: "NodeEdition",
+  mixins: [ToastMixin],
   components: {
     'PropertieView': ()=>import('@/views/PropertieView'),
   },
@@ -94,41 +93,58 @@ export default {
         { value: 'torus', text: 'torus' },
         { value: 'torusKnot', text: 'torus Knot' },
       ]
-  }
-},
-
-methods:{
-  async save(){
-    console.log(this.tempNode)
-    await this.$store.dispatch('core/saveNode', this.tempNode)
-    await this.$store.dispatch('core/getNodes') // pose problème de rafraichissement, certainement car on a enlevé __ob & __threeObj
-    this.$store.commit('core/setCurrentNode', null)
-  },
-  async remove(){
-    if (confirm('Are you sure you want to remove this node?')) {
-      // Save it!
-      console.log('ok to remove.', this.tempNode);
-      await this.$store.dispatch('core/removeNode', this.tempNode)
-      this.$store.commit('core/setCurrentNode', null)
     }
-  }
+  },
+
+  methods:{
+    async save(){
+      console.log(this.tempNode)
+      await this.$store.dispatch('core/saveNode', this.tempNode)
+      await this.$store.dispatch('core/getNodes') // pose problème de rafraichissement, certainement car on a enlevé __ob & __threeObj
+      this.$store.commit('core/setCurrentNode', null)
+    },
+    async remove(){
+      if (confirm('Are you sure you want to remove this node?')) {
+        // Save it!
+        console.log('ok to remove.', this.tempNode);
+        await this.$store.dispatch('core/removeNode', this.tempNode)
+        this.$store.commit('core/setCurrentNode', null)
+      }
+    },
+    copy(id){
+      let copyText = id //window.location.href
+      let app = this
+      //  !copyText.endsWith(".ttl") ?
+      //copyText = copyText+this.file.url //: ""
+      //  console.log(copyText)
+      navigator.clipboard.writeText(copyText).then(function() {
+        /* clipboard successfully set */
+        //  console.log("clipok", copyText)
+        app.makeToast("The id is in your clipboard ;-)", copyText+". Use Ctrl+V to use it", "success")
+      }, function() {
+        /* clipboard write failed */
+        //  console.log("clipERROR", copyText)
+        app.makeToast("Houston, we've got a problem with the clipboard ;-(", copyText, "warning")
+      })
+
+    }
 
 
-},
-watch:{
-  currentNode(){
-    this.tempNode = this.currentNode
-    console.log(this.tempNode)
-  }
-},
-computed: {
-  currentNode() {
-    return this.$store.state.core.currentNode
   },
-  graph() {
-    return this.$store.state.core.graph
+  watch:{
+    currentNode(){
+      this.tempNode = this.currentNode
+      console.log(this.tempNode)
+    }
   },
-},
+  computed: {
+    currentNode() {
+      return this.$store.state.core.currentNode
+    },
+    graph() {
+      return this.$store.state.core.graph
+    },
+  },
 
 
 }
