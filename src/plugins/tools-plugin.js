@@ -8,42 +8,36 @@ const plugin = {
     let store = opts.store
     console.log(store)
 
-    Vue.prototype.$newNode = function(options = {}){
-      let context =  {
-        "name": "http://xmlns.com/foaf/0.1/name",
-        "knows": "http://xmlns.com/foaf/0.1/knows",
-        "@base": "http://local/",
-        "@vocab": "https://scenaristeur.github.io/agent/",
-        "id": "@id",
-        "type": "@type",
-        "reverse": "@reverse",
-        "homepage": {
-          "@id": "http://xmlns.com/foaf/0.1/homepage",
-          "@type": "@id"
+    Vue.prototype.$newNode = async function(options = {}){
+      if (options.name.startsWith("http")){
+        console.log("search", options)
+        let node = await Vue.prototype.$loadNeurone(options.name)
+        console.log("neurone", node)
+        return node
+      }else{
+        let context =  {
+          "name": "http://xmlns.com/foaf/0.1/name",
+          "knows": "http://xmlns.com/foaf/0.1/knows",
+          "@base": "http://local/",
+          "@vocab": "https://scenaristeur.github.io/agent/",
+          "id": "@id",
+          "type": "@type",
+          "reverse": "@reverse",
+          "homepage": {
+            "@id": "http://xmlns.com/foaf/0.1/homepage",
+            "@type": "@id"
+          }
         }
+        let node = {
+          "@context" : Object.assign(context, options['@context']),
+          "id": options['@id'] || options.id || uuidv4(),
+          "name": options.name && options.name['@value'] || options.name || "",
+          type: "neurone",
+          //color: "#00ff00",
+          "homepage": "https://scenaristeur.github.io/agent/",
+        };
+        return node
       }
-      let node = {
-        "@context" : Object.assign(context, options['@context']),
-        "id": options['@id'] || options.id || uuidv4(),
-        "name": options.name && options.name['@value'] || options.name || "",
-        type: "neurone",
-        //color: "#00ff00",
-        "homepage": "https://scenaristeur.github.io/agent/",
-        // "knows": [{
-        //   "name": "Daniele"
-        // }, {
-        //   "name": "Lucio"
-        // }],
-        // "knows": [{
-        //   "id": "_:7053c150-5fea-11e3-a62e-adadc4e3df76",
-        //   "name": "Boby"
-        // }, {
-        //   "id": "_:9d2bb59d-3baf-42ff-ba5d-9f8eab34ada4",
-        //   "name": "John"
-        // }]
-      };
-
-      return node
     }
 
     Vue.prototype.$addProp = function(data){
@@ -108,24 +102,27 @@ const plugin = {
     }
     function set(main, p, item){
       console.log(typeof main[p], main[p], item)
+      let name = item.name
+      let id = item.id
+
       if(main[p] == undefined){
-        main[p] = {id: item.id, name: item.name}
+        main[p] = {id: id, name: name}
       }else{
         switch (typeof main[p]) {
           case "string":
           console.log("TODO string", main[p] )
           // let old =
           main[p] = [main[p]]
-          main[p].push({id: item.id, name: item.name})
+          main[p].push({id: id, name: name})
           break;
           default:
           if(Array.isArray(main[p])){
-            main[p].push({id: item.id, name: item.name})
+            main[p].push({id: id, name: name})
           }else{
             let old = main[p]
             main[p] = []
             main[p].push(old)
-            main[p].push({id: item.id, name: item.name})
+            main[p].push({id: id, name: name})
           }
         }
       }

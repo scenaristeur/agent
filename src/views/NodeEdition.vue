@@ -5,7 +5,7 @@
       <b-row>
         <b-col >
           <b-button v-b-toggle.collapse-1 variant="primary">Edit {{tempNode.name || tempNode.id}}</b-button>
-          <b-button @click.stop="copy(tempNode.id)"  size="sm mr-2" variant="outline-success"><b-icon-clipboard-plus></b-icon-clipboard-plus></b-button>
+          <b-button @click.stop="copy"  size="sm mr-2" variant="outline-success"><b-icon-clipboard-plus></b-icon-clipboard-plus></b-button>
         </b-col>
 
         <b-col >
@@ -111,7 +111,10 @@ export default {
         this.$store.commit('core/setCurrentNode', null)
       }
     },
-    copy(id){
+    copy(){
+      console.log(this.tempNode)
+      let id = this.tempNode.id.startsWith('http') ? this.tempNode.id : this.tempNode['@context']['@base']+this.tempNode.id
+      console.log("id", id)
       let copyText = id //window.location.href
       let app = this
       //  !copyText.endsWith(".ttl") ?

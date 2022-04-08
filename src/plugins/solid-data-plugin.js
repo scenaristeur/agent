@@ -515,6 +515,32 @@ const plugin = {
       store.dispatch('core/getNodes')
 
     }
+
+    Vue.prototype.$loadNeurone = async function(url){
+      Vue.prototype.$spinnerAdd({id: "loading "+url})
+      const file = await getFile(url, { fetch: sc.fetch });
+      return new Promise( function(resolve, reject) {
+
+        const reader = new FileReader();
+        reader.onload = async () => {
+          try {
+            //response =
+            // Resolve the promise with the response value
+            let node = JSON.parse(reader.result)
+          //  await store.dispatch('core/saveNode', node)
+            Vue.prototype.$spinnerRemove({id: "loading "+url})
+            resolve(node);
+          } catch (err) {
+            reject(err);
+          }
+        };
+        reader.onerror = (error) => {
+          reject(error);
+        };
+        reader.readAsText(file);
+      });
+    }
+
     function lastPartOfUrl(str){
       var n = str.lastIndexOf('/');
       var result = str.substring(n + 1);
