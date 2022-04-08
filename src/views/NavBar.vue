@@ -9,6 +9,7 @@
         <b-nav-item @click="newNeurone">new</b-nav-item>
         <b-nav-item @click="showBrainLoader">brains</b-nav-item>
         <b-nav-item @click="saveBrainToSolid">save</b-nav-item>
+        <UploadFile />
         <!-- <b-nav-item href="#">Link</b-nav-item> -->
         <!-- <b-nav-item @click="newNeurone">new</b-nav-item> -->
         <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
@@ -59,6 +60,7 @@ export default {
     // 'ToolbarView': ()=>import('@/views/ToolbarView'),
     'SolidLogin': ()=>import('@/components/SolidLogin'),
     'SpinnerComp': ()=>import('@/components/SpinnerComp'),
+    'UploadFile': ()=>import('@/views/UploadFile'),
   },
   data(){
     return{

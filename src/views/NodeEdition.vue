@@ -92,11 +92,12 @@ export default {
         { value: 'dodecahedron', text: 'dodecahedron' },
         { value: 'torus', text: 'torus' },
         { value: 'torusKnot', text: 'torus Knot' },
-      ]
+      ],
+
     }
   },
 
-  methods:{
+methods:{
     async save(){
       console.log(this.tempNode)
       await this.$store.dispatch('core/saveNode', this.tempNode)
@@ -138,6 +139,9 @@ export default {
     currentNode(){
       this.tempNode = this.currentNode
       console.log(this.tempNode)
+    },
+    files(){
+      this.processFiles()
     }
   },
   computed: {

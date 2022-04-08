@@ -91,7 +91,7 @@ const actions = {
     }
   },
   async newNode(context){
-    let node = Vue.prototype.$newNode()
+    let node = await Vue.prototype.$newNode()
     context.commit('setCurrentNode', node)
   },
   async saveNode(context, node){

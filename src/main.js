@@ -20,7 +20,13 @@ import SolidDataPlugin from './plugins/solid-data-plugin';
 Vue.use(SolidDataPlugin, {store: store});
 // import LevelgraphJsonLDPlugin from './plugins/levelgraphjsonld-plugin';
 // Vue.use(LevelgraphJsonLDPlugin, {store: store});
+import VueFab from 'vue-float-action-button'
 
+Vue.use(VueFab,  {
+  // opitons Optional Alibaba iconfont icon or MaterialIcons
+  iconType: 'MaterialDesign'
+  // iconType: 'iconfont'
+} )
 
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'

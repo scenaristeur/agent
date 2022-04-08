@@ -30,8 +30,20 @@
 
   </div>
   <div v-else>
-    <b> {{p}}</b> ({{ typeof v}}) :
-    {{v}}
+
+    <div v-if="p=='base64'">
+
+      <img v-if="v.startsWith('data:image')" :src="v"  width="100%"/>
+    </div>
+    <div v-else>
+
+
+
+
+
+      <b> {{p}}</b> ({{ typeof v}}) :
+      {{v}}
+    </div>
   </div>
 
   <!-- <b-button @click="addValue(p)" variant="outline-primary" size="sm">+</b-button> -->

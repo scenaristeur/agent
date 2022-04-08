@@ -9,7 +9,7 @@ const plugin = {
     console.log(store)
 
     Vue.prototype.$newNode = async function(options = {}){
-      if (options.name.startsWith("http")){
+      if (options.name != undefined && options.name.startsWith("http")){
         console.log("search", options)
         let node = await Vue.prototype.$loadNeurone(options.name)
         console.log("neurone", node)
@@ -36,6 +36,8 @@ const plugin = {
           //color: "#00ff00",
           "homepage": "https://scenaristeur.github.io/agent/",
         };
+        options.base64 != undefined ? node.base64 = options.base64 : ""
+        
         return node
       }
     }
