@@ -36,8 +36,12 @@ const plugin = {
           //color: "#00ff00",
           "homepage": "https://scenaristeur.github.io/agent/",
         };
-        options.base64 != undefined ? node.base64 = options.base64 : ""
-        
+        if(options.base64 != undefined){
+          node.shape = 'base64'
+          node.base64 = options.base64
+          node.type = options.type
+        }
+
         return node
       }
     }

@@ -34,9 +34,21 @@
     <div v-if="p=='base64'">
 
       <img v-if="v.startsWith('data:image')" :src="v"  width="100%"/>
+      <!-- <div v-if="v.startsWith('data:audio')"> -->
+      <!-- <b-button @click="play(v)">Play audio</b-button> -->
+      <audio v-else-if="v.startsWith('data:audio')" controls :src="v" />
+      <video v-else-if="v.startsWith('data:video')" controls>
+        <source :src="v" />
+        <!-- <source type="video/webm" src="data:video/webm;base64,GkXfowEAAAAAAAAfQoaBAUL3gQFC8......jVOrhB9DtnVTrIMQTPc="> -->
+        <!-- <source type="video/mp4" src="data:video/mp4;base64,AAAAHGZ0eXBtcDQyAAAAAG1wNDJpc29....../l/L+X8v5AAAAMgfDg=="> -->
+      </video>
+      <!-- </div> -->
+      <div v-else>
+        <b> {{p}}</b> {{v.split(',')[0]}}
+      </div>
     </div>
     <div v-else>
-
+      
 
 
 
@@ -60,7 +72,12 @@ export default {
   methods: {
     switchTo(id){
       this.$store.dispatch('core/switchTo',id)
-    }
+    },
+    // play(audio){
+    //   var snd = new Audio(audio);
+    //   console.log(snd)
+    //   snd.play();
+    // }
   }
 }
 </script>

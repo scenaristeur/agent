@@ -51,7 +51,7 @@ const plugin = {
           const middlePos = Object.assign(...['x', 'y', 'z'].map(c => ({
             [c]: start[c] + (end[c] - start[c]) / 4 // calc middle point
           })))
-                  // Position sprite
+          // Position sprite
           Object.assign(sprite.position, middlePos);
         }
       })
@@ -73,6 +73,7 @@ const plugin = {
         transparent: true,
         opacity: 0.75
       })
+      let image, texture, sprite = null
       // console.log(material)
       // console.log(node.shape)
       switch (node.shape) {
@@ -97,16 +98,35 @@ const plugin = {
         case "torusKnot":
         geometry = new THREE.TorusKnotGeometry(Math.random() * 10, Math.random() * 2)
         break;
+        case "base64":
+        console.log("base64",node)
+        image = new Image();
+        image.src = node.base64;
+        texture = new THREE.Texture();
+        texture.image = image;
+        image.onload = function () {
+          texture.needsUpdate = true;
+        };
+        material = new THREE.SpriteMaterial({ map: texture });
+        sprite = new THREE.Sprite(material);
+        sprite.scale.set(12, 12);
+        //return sprite;
+        break;
         default:
       }
-      if(geometry == null){
-        const nodeEl = document.createElement('div');
-        nodeEl.textContent = node.name //node.id;
-        nodeEl.style.color = node.color || "#ffffff";
-        nodeEl.className = 'node-label';
-        shape =  new CSS2DObject(nodeEl);
+      if (sprite != null){
+        shape = sprite
+        console.log("sprite", shape)
       }else{
-        shape = new THREE.Mesh(geometry, material)
+        if(geometry == null){
+          const nodeEl = document.createElement('div');
+          nodeEl.textContent = node.name //node.id;
+          nodeEl.style.color = node.color || "#ffffff";
+          nodeEl.className = 'node-label';
+          shape =  new CSS2DObject(nodeEl);
+        }else{
+          shape = new THREE.Mesh(geometry, material)
+        }
       }
       return shape
     }
