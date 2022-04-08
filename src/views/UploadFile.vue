@@ -1,17 +1,26 @@
 <template>
-  <b-form-file multiple v-model="files">
-    <template slot="file-name" slot-scope="{ names }">
+  <b-form-file multiple v-model="files" size="sm">
+    <!-- <template slot="file-name" slot-scope="{ names }">
       <b-badge variant="dark">{{ names[0] }}</b-badge>
       <b-badge v-if="names.length > 1" variant="dark" class="ml-1">
         + {{ names.length - 1 }} More files
-      </b-badge>
-    </template>
+      </b-badge> 
+    </template> -->
   </b-form-file>
+  <!-- <div>
+
+      <file-select v-model="files"></file-select>
+
+   <p v-if="files">{{files}}</p>
+ </div> -->
 </template>
 
 <script>
 export default {
   name: "UploadFile",
+  // components: {
+  //   'FileSelect': ()=>import('@/components/FileSelect'),
+  // },
   data(){
     return{
       files: []

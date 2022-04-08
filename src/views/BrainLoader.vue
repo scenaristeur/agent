@@ -93,7 +93,7 @@ export default {
   text-align: left;
 }
 .scroll{
-  max-height: 40vh;
+  max-height: 30vh;
   margin-bottom: 10px;
   overflow-y:scroll;
   -webkit-overflow-scrolling: touch;

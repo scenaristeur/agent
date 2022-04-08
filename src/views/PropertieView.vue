@@ -37,7 +37,7 @@
       <!-- <div v-if="v.startsWith('data:audio')"> -->
       <!-- <b-button @click="play(v)">Play audio</b-button> -->
       <audio v-else-if="v.startsWith('data:audio')" controls :src="v" />
-      <video v-else-if="v.startsWith('data:video')" controls>
+      <video v-else-if="v.startsWith('data:video')" controls max-width="100%" max-height="500px">
         <source :src="v" />
         <!-- <source type="video/webm" src="data:video/webm;base64,GkXfowEAAAAAAAAfQoaBAUL3gQFC8......jVOrhB9DtnVTrIMQTPc="> -->
         <!-- <source type="video/mp4" src="data:video/mp4;base64,AAAAHGZ0eXBtcDQyAAAAAG1wNDJpc29....../l/L+X8v5AAAAMgfDg=="> -->
@@ -48,7 +48,7 @@
       </div>
     </div>
     <div v-else>
-      
+
 
 
 

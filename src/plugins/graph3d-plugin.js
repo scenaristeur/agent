@@ -4,9 +4,9 @@ import SpriteText from 'three-spritetext';
 import * as THREE from 'three';
 
 // let selectedNodes = new Set(),
-let highlightNodes = new Set(),
+// let highlightNodes = new Set(),
 // highlightLinks = new Set(),
-hoverNode= null
+// hoverNode= null
 // import { Neurone/*, Brain,*/ /* Graph*/ } from '@/neurone-factory'
 
 // let graph = undefined
@@ -25,7 +25,7 @@ const plugin = {
       //.backgroundColor('#eafaff')
       // .nodeId('id')
       .nodeLabel('name')
-      .nodeColor(node => highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : node.color)
+      .nodeColor(node => /*highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' :*/ node.color)
       //.onBackgroundClick(event => onBackgroundClick(event))
       .onNodeClick(node => onNodeClick(node))
       .onLinkClick(ln => onLinkClick(ln))
@@ -99,7 +99,7 @@ const plugin = {
         geometry = new THREE.TorusKnotGeometry(Math.random() * 10, Math.random() * 2)
         break;
         case "base64":
-        console.log("base64",node)
+        //  console.log("base64",node)
         image = new Image();
         image.src = node.base64;
         texture = new THREE.Texture();
@@ -116,7 +116,7 @@ const plugin = {
       }
       if (sprite != null){
         shape = sprite
-        console.log("sprite", shape)
+        //  console.log("sprite", shape)
       }else{
         if(geometry == null){
           const nodeEl = document.createElement('div');
