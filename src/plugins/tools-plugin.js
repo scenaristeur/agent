@@ -33,6 +33,7 @@ const plugin = {
           "id": options['@id'] || options.id || uuidv4(),
           "name": options.name && options.name['@value'] || options.name || "",
           type: "neurone",
+         //'shape': 'sphere' || options.shape,
           //color: "#00ff00",
           "homepage": "https://scenaristeur.github.io/agent/",
         };

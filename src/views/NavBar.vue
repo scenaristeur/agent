@@ -88,13 +88,13 @@ export default {
     clear(){
       if (confirm('Are you sure you want to remove all nodes?')) {
         this.$store.dispatch('core/removeAllNodes')
-        let div1 = document.querySelectorAll(".node-label")
-        let css2dRenderer = div1[0].parentNode
-        console.log(div1[0].parentNode)
-        // console.log(div1)
-        div1.forEach((n) => {
-          css2dRenderer.removeChild(n)
-        });
+        // let div1 = document.querySelectorAll(".node-label")
+        // let css2dRenderer = div1[0].parentNode
+        // console.log(div1[0].parentNode)
+        // // console.log(div1)
+        // div1.forEach((n) => {
+        //   css2dRenderer.removeChild(n)
+        // });
 
 
         this.$store.commit('core/setCurrentNode', null)

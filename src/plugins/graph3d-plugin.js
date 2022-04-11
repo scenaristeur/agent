@@ -25,13 +25,14 @@ const plugin = {
       //.backgroundColor('#eafaff')
       // .nodeId('id')
       .nodeLabel('name')
+      .nodeAutoColorBy("type")
       .nodeColor(node => /*highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' :*/ node.color)
       //.onBackgroundClick(event => onBackgroundClick(event))
       .onNodeClick(node => onNodeClick(node))
       .onLinkClick(ln => onLinkClick(ln))
-      .nodeThreeObjectExtend(true)
+      .nodeThreeObjectExtend(node => node.shape == undefined || node.shape == null)
       .nodeThreeObject(node => nodeThreeObject(node))
-          // .nodeThreeObject(node => nodeThreeObjectGroup(node))
+      // .nodeThreeObject(node => nodeThreeObjectGroup(node))
       .linkCurvature('curvature')
       .linkCurveRotation('rotation')
       .linkThreeObjectExtend(true)
@@ -79,25 +80,25 @@ const plugin = {
       // console.log(node.shape)
       switch (node.shape) {
         case "box":
-        geometry = new THREE.BoxGeometry(Math.random() * 20, Math.random() * 20, Math.random() * 20)
+        geometry = new THREE.BoxGeometry( 20,  20,  20)
         break;
         case "cylinder":
-        geometry = new THREE.CylinderGeometry(Math.random() * 10, Math.random() * 10, Math.random() * 20)
+        geometry = new THREE.CylinderGeometry( 10,  10,  20)
         break;
         case "cone":
-        geometry = new THREE.ConeGeometry(Math.random() * 10, Math.random() * 20)
+        geometry = new THREE.ConeGeometry( 10,  20)
         break;
         case "dodecahedron":
-        geometry = new THREE.DodecahedronGeometry(Math.random() * 10)
+        geometry = new THREE.DodecahedronGeometry( 10)
         break;
         case "sphere":
-        geometry = new THREE.SphereGeometry(Math.random() * 10)
+        geometry = new THREE.SphereGeometry( 10)
         break;
         case "torus":
-        geometry = new THREE.TorusGeometry(Math.random() * 10, Math.random() * 2)
+        geometry = new THREE.TorusGeometry( 10,  2)
         break;
         case "torusKnot":
-        geometry = new THREE.TorusKnotGeometry(Math.random() * 10, Math.random() * 2)
+        geometry = new THREE.TorusKnotGeometry( 10,  2)
         break;
         case "base64":
         //  console.log("base64",node)
@@ -114,6 +115,8 @@ const plugin = {
         //return sprite;
         break;
         default:
+      //  geometry = null
+
       }
       if (sprite != null){
         shape = sprite
@@ -124,7 +127,12 @@ const plugin = {
           nodeEl.textContent = node.name //node.id;
           nodeEl.style.color = node.color || "#ffffff";
           nodeEl.className = 'node-label';
-          shape =  new CSS2DObject(nodeEl);
+          shape = new CSS2DObject(nodeEl);
+          // console.log(shape)
+          // nodeEl.addEventListener('pointerdown', () => {
+          //   alert(1)
+          //   console.log(shape)
+          //  })
         }else{
           shape = new THREE.Mesh(geometry, material)
         }
@@ -223,14 +231,18 @@ const plugin = {
       // }
       console.log("node",node)
 
-      const distance = 160;
-      const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
-
+      const distance = 40;
+      let pos = {x: distance, y: distance, z: distance}
+      if(node.x != 0 && node.y != 0 && node.z != 0){
+        const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+        pos = { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
+      }
       store.state.core.graph.cameraPosition(
-        { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+        pos, // new position
         node, // lookAt ({ x, y, z })
         3000  // ms transition duration
       );
+      // console.log(store.state.core.graph)
       let n = store.state.core.nodes.find(n => n.id == node.id)
       store.commit ('core/setCurrentNode', n)
 

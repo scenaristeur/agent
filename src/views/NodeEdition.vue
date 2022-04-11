@@ -17,7 +17,7 @@
 
         <b-row>
 
-          <b-col md="6">
+          <b-col md="10">
             <b-row>
               <b-col cols="10">
                 <b-form-input v-model="tempNode.name" placeholder="name"></b-form-input>
@@ -59,7 +59,7 @@
           </b-col>
         </b-row>
         <hr>
-        <b-button @click="tempNode = null">Cancel</b-button>
+        <b-button @click="cancel">Cancel</b-button>
         <b-button @click="save" variant="success">Save</b-button>
 
       </b-collapse>
@@ -97,11 +97,14 @@ export default {
     }
   },
 
-methods:{
+  methods:{
     async save(){
       console.log(this.tempNode)
       await this.$store.dispatch('core/saveNode', this.tempNode)
       await this.$store.dispatch('core/getNodes') // pose problème de rafraichissement, certainement car on a enlevé __ob & __threeObj
+      this.$store.commit('core/setCurrentNode', null)
+    },
+    cancel(){
       this.$store.commit('core/setCurrentNode', null)
     },
     async remove(){
@@ -142,7 +145,13 @@ methods:{
     },
     files(){
       this.processFiles()
-    }
+    },
+    // tempNode(){
+    //   if (this.tempNode.shape == undefined || this.tempNode.shape == null ){
+    //     delete this.tempNode.shape
+    //   }
+    //
+    // }
   },
   computed: {
     currentNode() {

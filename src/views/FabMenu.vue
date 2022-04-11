@@ -95,6 +95,43 @@ export default {
       console.log(medias)
       this.files = []
       await this.$store.dispatch('core/getNodes')
+      console.log(medias[0].id)
+      let id = medias[0].id
+
+      let n = await this.$store.state.core.nodes.find(n => n.id == id)
+            this.$store.commit ('core/setCurrentNode', n)
+
+
+// let node = await this.$store.state.core.graph.graphData().nodes.find(n => n.id == id)
+// console.log(n, node)
+//       const distance = 40;
+//       let pos = {x: distance, y: distance, z: distance}
+//       // if(node.x != 0 && node.y != 0 && node.z != 0){
+//       //   console.log(pos, node.x, node.y, node.z)
+//       //   const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+//       //   console.log(distRatio)
+//       //   pos = { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
+//       //   console.log(pos)
+//       // }
+//       console.log(pos)
+//       this.$store.state.core.graph.cameraPosition(
+//         pos, // new position
+//         node, // lookAt ({ x, y, z })
+//         3000  // ms transition duration
+//       );
+      // console.log(store.state.core.graph)
+      //  let n = store.state.core.nodes.find(n => n.id == node.id)
+
+
+
+
+
+      // console.log(n)
+      // this.$store.commit('core/setCurrentNode', n)
+      // console.log(this.$store.state.core.graph)//.onNodeClick(n)
+      //  this.$store.state.core.graph.zoomToFit(0,10,n => n.id = id)
+
+
     },
     inputChanged(){
       // console.log(e)
