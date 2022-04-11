@@ -191,6 +191,7 @@ const actions = {
     let nodes = await idb.getNodes();
     let linksTemp = []
     console.log("nodes in db", nodes)
+    let last = null
     nodes.forEach(n => {
       n.type == undefined ? n.type = "neurone" : ""
       n['@context'] == undefined ? n['@context'] = {} : ""
@@ -212,6 +213,7 @@ const actions = {
           }
         }
       }
+      last = n
     });
 
 
@@ -219,6 +221,7 @@ const actions = {
     let otherLinks = linksTemp.filter(l => context.state.nodes.findIndex(n => n.id==l.target) === -1 )
     console.log("validlinks, otherlinks",validLinks, otherLinks)
     context.commit('setLinks', validLinks)
+    console.log("last",last)
   },
   async saveBrain(context){
     let {nodes, links} = context.state.graph.graphData()
