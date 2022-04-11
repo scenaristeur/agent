@@ -2,7 +2,7 @@
   <!-- <div> -->
   <!-- @keyup="onChange" -->
   <!--v-on:paste="onPaste"-->
-      <!--v-on:input="onInput"-->
+  <!--v-on:input="onInput"-->
   <b-input-group>
     <b-form-input
     id="input"
@@ -14,11 +14,11 @@
     placeholder="type three words followed by a comma. Or /h + Enter for help"></b-form-input>
     <template #append>
       <b-form-select
-      v-if="nodes.length > 0"
+      v-if="orderedNodes.length > 0"
       v-model="selected"
       value-field="id"
       text-field="name"
-      :options="nodes"
+      :options="orderedNodes"
       >
       <b-form-select-option :value="null" disabled>current nodes</b-form-select-option>
 
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import _ from 'lodash';
 import { Command } from '@/neurone-factory'
 export default {
   name: "CommandInput",
@@ -37,6 +38,7 @@ export default {
       main_input: "",
       commandHistory: [],
       selected: null,
+      'order' : 'asc',
     }
   },
   methods: {
@@ -68,6 +70,12 @@ export default {
         }
       }
     },
+    byKey(key) {
+      return function (o) {
+        var v = parseInt(o[key], 10);
+        return isNaN(v) ? o[key] : v;
+      };
+    }
   },
   watch:{
     currentNode(){
@@ -84,7 +92,7 @@ export default {
     selected(){
       console.log("selected",this.selected)
       if(this.selected != null){
-        let node = this.nodes.find(x => x.id == this.selected)
+        let node = this.orderedNodes.find(x => x.id == this.selected)
         console.log(node)
         let val = node.name || node.id
         if (/\s/.test(val)) {
@@ -96,14 +104,18 @@ export default {
         this.$refs.input.focus()
       }
     },
+
   },
   computed: {
     currentNode() {
       return this.$store.state.core.currentNode
     },
-    nodes() {
-      return this.$store.state.core.nodes
-    }
+    // nodes() {
+    //   return this.$store.state.core.nodes
+    // },
+    orderedNodes: function () {
+      return _.orderBy(this.$store.state.core.nodes, this.byKey('name'), this.order)
+    },
   }
 }
 </script>

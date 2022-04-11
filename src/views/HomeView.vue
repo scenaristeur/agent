@@ -4,7 +4,8 @@
     <NodeEdition />
     <CommandInput />
     <VisualisationView />
-    <!-- <FabMenu /> -->
+    <FabMenu />
+    <ExternalSource />
   </div>
 </template>
 
@@ -17,7 +18,8 @@ export default {
     'NodeEdition': ()=>import('@/views/NodeEdition'),
     'BrainLoader': ()=>import('@/views/BrainLoader'),
     'CommandInput': ()=>import('@/views/CommandInput'),
-    // 'FabMenu': ()=>import('@/views/FabMenu'),
+    'FabMenu': ()=>import('@/views/FabMenu'),
+    'ExternalSource': ()=>import('@/views/ExternalSource'),
   },
 
 }
