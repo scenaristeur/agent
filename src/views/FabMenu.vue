@@ -12,7 +12,7 @@
     @clickItem="clickItem" />
   </vue-fab>
   <!-- <UploadFile ref="uploadfile" /> -->
-  <input type="file" ref="uploader" style="display: none">
+  <input type="file" ref="uploader" style="display: none"  multiple="multiple" @change="inputChanged">
 </div>
 </template>
 
@@ -60,11 +60,11 @@ export default {
         default:
         window.alert(item.idx)
       }
-      },
+    },
     async processFiles(){
       console.log(this.files)
       let app = this
-      const filePromises = this.files.map(async function(f) {
+      const filePromises = Array.from(this.files).map(async function(f) {
         console.log(f)
         // Return a promise per file
         app.$spinnerAdd({id: "loading "+f.name})
@@ -96,6 +96,11 @@ export default {
       this.files = []
       await this.$store.dispatch('core/getNodes')
     },
+    inputChanged(){
+      // console.log(e)
+      // console.log(this.$refs.uploader)
+      this.files = this.$refs.uploader.files
+    }
   },
   watch:{
     files(){

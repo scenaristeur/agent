@@ -31,6 +31,7 @@ const plugin = {
       .onLinkClick(ln => onLinkClick(ln))
       .nodeThreeObjectExtend(true)
       .nodeThreeObject(node => nodeThreeObject(node))
+          // .nodeThreeObject(node => nodeThreeObjectGroup(node))
       .linkCurvature('curvature')
       .linkCurveRotation('rotation')
       .linkThreeObjectExtend(true)

@@ -33,3 +33,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 upload button
 
 https://codepen.io/adambene/pen/xRWrXN
+
+# voir 3js
+- (three + vue3 +vite https://troisjs.github.io/examples/materials/1.html)
