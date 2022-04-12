@@ -63,7 +63,7 @@ export default {
         this.$bvModal.show("modal-external-source")
         break;
         case 3:
-        this.$store.commit('core/toggleTerminal')
+        this.$store.commit('terminal/toggleTerminal')
         break;
         default:
         window.alert(item.idx)

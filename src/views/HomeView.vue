@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     showTerminal() {
-      return this.$store.state.core.showTerminal
+      return this.$store.state.terminal.showTerminal
     }
   }
 }
