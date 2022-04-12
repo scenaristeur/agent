@@ -18,7 +18,8 @@ const state = () => ({
   links: [],
   jsonldProps: ['@context', 'id', 'reverse', 'type'],
   graphProps: ['__ob__', '__threeObj', 'index', 'vx', 'vy', 'vz', 'x', 'y', 'z' ],
-  spinner: []
+  spinner: [],
+  showTerminal: false
 })
 
 const mutations = {
@@ -61,7 +62,10 @@ const mutations = {
   },
   resetSpinner(state){
     state.spinner = []
-  }
+  },
+  toggleTerminal(state){
+    state.showTerminal = ! state.showTerminal
+  },
 }
 
 const actions = {

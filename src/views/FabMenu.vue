@@ -40,6 +40,11 @@ export default {
           icon: 'toc',
           title: 'External source',
           color: '#ff0099'
+        },
+        {
+          icon: 'terminal',
+          title: 'Terminal',
+          color: '#999999'
         }
       ],
       mainBtnColor: '#3eaf7c'
@@ -56,6 +61,9 @@ export default {
         break;
         case 2:
         this.$bvModal.show("modal-external-source")
+        break;
+        case 3:
+        this.$store.commit('core/toggleTerminal')
         break;
         default:
         window.alert(item.idx)

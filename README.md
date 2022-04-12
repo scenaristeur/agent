@@ -40,3 +40,9 @@ https://codepen.io/adambene/pen/xRWrXN
 # Solid Community server
 - https://www.npmjs.com/package/@solid/community-server
 ```docker run --rm -v ~/Solid:/data -p 3000:3000 -it solidproject/community-server:latest```
+
+# terminal
+- https://github.com/dongsuo/vue-terminal
+- autocomplete & history https://github.com/ndabAP/vue-command https://vuejsexamples.com/a-fully-working-vue-js-terminal-emulator/
+
+- https://vuejsexamples.com/component-vuejs-to-simulate-a-terminal/
