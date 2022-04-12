@@ -11,7 +11,7 @@
     v-model="main_input"
     v-on:keyup.enter="onEnter"
     title="type three words followed by a comma"
-    placeholder="type three words followed by a comma. Or /h + Enter for help"></b-form-input>
+    placeholder="three words followed by a comma, or /h +Enter for help"></b-form-input>
     <template #append>
       <b-form-select
       v-if="orderedNodes.length > 0"

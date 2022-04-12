@@ -36,3 +36,7 @@ https://codepen.io/adambene/pen/xRWrXN
 
 # voir 3js
 - (three + vue3 +vite https://troisjs.github.io/examples/materials/1.html)
+
+# Solid Community server
+- https://www.npmjs.com/package/@solid/community-server
+```docker run --rm -v ~/Solid:/data -p 3000:3000 -it solidproject/community-server:latest```
