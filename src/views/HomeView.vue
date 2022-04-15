@@ -1,13 +1,14 @@
 <template>
   <div class="home">
-
+  <GunTest v-if="showGunTest"/>
     <BrainLoader />
     <NodeEdition />
     <CommandInput />
     <VisualisationView />
-      <TerminalView v-if="showTerminal"/>
+    <TerminalView v-if="showTerminal"/>
     <FabMenu />
     <ExternalSource />
+
   </div>
 </template>
 
@@ -23,10 +24,14 @@ export default {
     'FabMenu': ()=>import('@/views/FabMenu'),
     'ExternalSource': ()=>import('@/views/ExternalSource'),
     'TerminalView': ()=>import('@/views/TerminalView'),
+    'GunTest': ()=>import('@/views/GunTest'),
   },
   computed: {
     showTerminal() {
       return this.$store.state.terminal.showTerminal
+    },
+    showGunTest() {
+      return this.$store.state.gun.showGunTest
     }
   }
 }

@@ -45,6 +45,11 @@ export default {
           icon: 'terminal',
           title: 'Terminal',
           color: '#999999'
+        },
+        {
+          icon: 'terminal',
+          title: 'GunDb (not ready yet)',
+          color: '#999999'
         }
       ],
       mainBtnColor: '#3eaf7c'
@@ -64,6 +69,9 @@ export default {
         break;
         case 3:
         this.$store.commit('terminal/toggleTerminal')
+        break;
+        case 4:
+        this.$store.commit('gun/toggleGun')
         break;
         default:
         window.alert(item.idx)
