@@ -18,6 +18,8 @@ import SolidPlugin from './plugins/solid-plugin';
 Vue.use(SolidPlugin, {store: store});
 import SolidDataPlugin from './plugins/solid-data-plugin';
 Vue.use(SolidDataPlugin, {store: store});
+import IpfsDataPlugin from './plugins/ipfs-data-plugin';
+Vue.use(IpfsDataPlugin, {store: store});
 // import LevelgraphJsonLDPlugin from './plugins/levelgraphjsonld-plugin';
 // Vue.use(LevelgraphJsonLDPlugin, {store: store});
 import VueFab from 'vue-float-action-button'

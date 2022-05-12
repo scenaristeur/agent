@@ -8,7 +8,7 @@
       <b-navbar-nav>
         <!-- <b-nav-item @click="newNeurone">new</b-nav-item> -->
         <b-nav-item @click="showBrainLoader">brains</b-nav-item>
-        <b-nav-item @click="saveBrainToSolid">save</b-nav-item>
+        <b-nav-item @click="saveBrain">save</b-nav-item>
 
         <!-- <b-nav-item href="#">Link</b-nav-item> -->
         <!-- <b-nav-item @click="newNeurone">new</b-nav-item> -->
@@ -50,6 +50,15 @@
 <SolidLogin />
 </b-navbar-nav>
 </b-collapse>
+
+<b-modal id="modal-save" title="Save Brain">
+      <b-button @click="saveBrainToSolid">to Solid Pod</b-button>
+
+      <b-button @click="saveBrainToIpfs">to IPFS</b-button>
+      <b-button @click="saveBrainToGun" disabled>to GunDb</b-button>
+      <b-button @click="saveBrainToMatrixCrdt" disabled>to Matrix-Crdt</b-button>
+  </b-modal>
+
 </b-navbar>
 </template>
 
@@ -69,9 +78,22 @@ export default {
     }
   },
   methods:{
+    saveBrainToIpfs(){
+        console.log("save")
+        this.$saveBrainToIpfs()
+    },
+    saveBrainToGun(){
+        console.log("save")
+    },
+    saveBrainToMatrixCrdt(){
+        console.log("save")
+    },
     // newNeurone(){
     //   this.$store.dispatch('core/newNode')
     // },
+    saveBrain(){
+        this.$bvModal.show('modal-save')
+    },
     saveBrainToSolid(){
       this.$saveBrainToSolid()
     },
