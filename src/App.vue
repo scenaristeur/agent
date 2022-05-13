@@ -9,8 +9,9 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav> -->
+  <div v-if="message != null"><b><hr><hr>{{message}}<hr><hr></b></div>
   <router-view/>
-  <small><i>0.0.1 - fab-fix-terminal-ls nodes |
+  <small><i>0.0.1 - ipfs-save |
   <a href="https://github.com/scenaristeur/agent" target="_blank">contribute</a> |
 <a href="https://github.com/scenaristeur/agent/wiki" target ="_blank">help</a>
 </i></small>
@@ -27,15 +28,44 @@ export default {
   components: {
     'NavBar': ()=>import('@/views/NavBar'),
   },
+  data(){
+    return{
+      message: null
+    }
+  },
   created(){
     this.$coreInit({name: "SuperCore"})
     if(this.$route.query.source){
       let source = this.$route.query.source
       console.log("source",source)
       this.$loadBrainFromSolid(source)
+    }else if(this.$route.query.cid){
+        this.loadBrainFromIpfs()
     }else{
       this.$checkSolidSession()
       this.$store.dispatch('core/getNodes')
+    }
+  },
+  methods:{
+    loadBrainFromIpfs(){
+      if(this.$route.query.cid){
+        if (this.ipfsNode != null){
+            this.$loadBrainFromIpfs(this.$route.query.cid)
+        }else{
+          this.message = "connecting to ipfs (todo : fusion avec le graph existant)"
+        }
+      }
+    }
+  },
+  watch:{
+    ipfsNode(){
+this.loadBrainFromIpfs()
+
+    }
+  },
+  computed: {
+    ipfsNode() {
+      return this.$store.state.core.ipfsNode
     }
   }
 }

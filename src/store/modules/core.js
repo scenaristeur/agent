@@ -20,12 +20,19 @@ const state = () => ({
   graphProps: ['__ob__', '__threeObj', 'index', 'vx', 'vy', 'vz', 'x', 'y', 'z' ],
   spinner: [],
   ipfsNode: null,
-  ipfs_cids: []
+  ipfs_cids: [],
+  graph_cid : null
 })
 
 const mutations = {
   setIpfsNode(state, n){
     state.ipfsNode = n
+  },
+  setGraphCid(state, c){
+    state.graph_cid = c
+  },
+  resetIpfsCid(state){
+    state.ipfs_cids = []
   },
   addIpfsCid(state, cid){
     state.ipfs_cids.push(cid)
@@ -82,8 +89,8 @@ const actions = {
       if (c.value.predicate.startsWith('.'))
       {
         let p = c.value.predicate.slice(1)
-            let n = await Vue.prototype.$addProp({node: subjectNode, propertie: p, value: c.value.object})
-              await context.dispatch('saveNode', n)
+        let n = await Vue.prototype.$addProp({node: subjectNode, propertie: p, value: c.value.object})
+        await context.dispatch('saveNode', n)
         await context.dispatch('getNodes')
       }
       else

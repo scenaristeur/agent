@@ -19,6 +19,7 @@
       <b-button @click.stop="open(b.id)" size="sm mr-2" variant="outline-success"><b-icon-eye></b-icon-eye></b-button>
       <b-button @click.stop="share(b.id)"  size="sm mr-2" variant="outline-success"><b-icon-share></b-icon-share></b-button>
 
+
       <!-- <b-icon-share @click="share(b.id)"></b-icon-share> -->
     </b-list-group-item>
   </b-list-group>
@@ -31,7 +32,6 @@ import ToastMixin from '@/mixins/ToastMixin'
 export default {
   name: "BrainLoader",
   mixins: [ToastMixin],
-
   data(){
     return{
       items: []

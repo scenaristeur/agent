@@ -18,70 +18,80 @@ const plugin = {
     console.log(ipfs,id )
     store.commit('core/setIpfsNode',id)
 
+
     Vue.prototype.$saveBrainToIpfs = async function(){
 
-  console.log("IPFS",ipfs,store.state.core.nodes)
+      console.log("IPFS",ipfs,store.state.core.nodes)
+      let nodes = store.state.core.nodes
+      let links = store.state.core.links
+      let graph = nodes.concat(links)
+      const graph_cid = await ipfs.add(JSON.stringify(graph))
 
-      const text = 'Hello, Blabla'
+      console.log(graph_cid)
+      store.commit('core/setGraphCid', graph_cid)
 
-// add your data to to IPFS - this can be a string, a Buffer,
-// a stream of Buffers, etc
-const cid = await ipfs.add(text)
-console.log(cid, cid.toString())
+    }
 
-
-const stream = ipfs.cat(cid.path)
-let data = ''
-
-for await (const chunk of stream) {
-  // chunks of data are returned as a Buffer, convert it back to a string
-  data += chunk.toString()
-}
-
-console.log(data)
-
-
-
-// let donnees = store.state.core.nodes
-
-// add your data to to IPFS - this can be a string, a Buffer,
-// a stream of Buffers, etc
-store.state.core.nodes.forEach(async function(node) {
-
-console.log(node)
-  const cid = await ipfs.add(JSON.stringify(node))
-  console.log(cid, node)
-  let c = {cid: cid.path, name: node.name, id: node.id}
-  store.commit('core/addIpfsCid', c)
+Vue.prototype.$loadBrainFromIpfs = async function(cid){
+  console.log(cid)
   let chunks = []
 
-  for await (const chunk of ipfs.cat(cid.path)) {
-     chunks.push(chunk);
-}
+  for await (const chunk of ipfs.cat(cid)) {
+    chunks.push(chunk);
+  }
 
-const data = concat(chunks)
-const decodedData = JSON.parse(new TextDecoder().decode(data).toString());
-console.log(decodedData)
-  // const cid = await ipfs.object.new(node)
-  // console.log(cid)
-});
-
-// we loop over the results because 'add' supports multiple
-// additions, but we only added one entry here so we only see
-// one log line in the output
-// for await (const { cid } of results) {
-//   // CID (Content IDentifier) uniquely addresses the data
-//   // and can be used to get it again.
-//   console.log(cid.toString())
-// }
-
-// const { cid } = await ipfs.add('Hello world')
-// console.info(cid)
-
-
-
+  const data = concat(chunks)
+  const decodedData = JSON.parse(new TextDecoder().decode(data).toString());
+  console.log("decoded",decodedData)
+  alert("comming soon",JSON.stringify(decodedData))
 
 }
+
+
+    Vue.prototype.$saveNodesToIpfs = async function(){
+
+      console.log("IPFS",ipfs,store.state.core.nodes)
+      store.commit('core/resetIpfsCid')
+
+
+      store.state.core.nodes.forEach(async function(node) {
+
+        console.log(node)
+        const cid = await ipfs.add(JSON.stringify(node))
+        console.log(cid, node)
+        let c = {cid: cid.path, name: node.name, id: node.id}
+        store.commit('core/addIpfsCid', c)
+        let chunks = []
+
+        for await (const chunk of ipfs.cat(cid.path)) {
+          chunks.push(chunk);
+        }
+
+        const data = concat(chunks)
+        const decodedData = JSON.parse(new TextDecoder().decode(data).toString());
+        console.log(decodedData)
+        // const cid = await ipfs.object.new(node)
+        // console.log(cid)
+      });
+
+
+
+      // we loop over the results because 'add' supports multiple
+      // additions, but we only added one entry here so we only see
+      // one log line in the output
+      // for await (const { cid } of results) {
+      //   // CID (Content IDentifier) uniquely addresses the data
+      //   // and can be used to get it again.
+      //   console.log(cid.toString())
+      // }
+
+      // const { cid } = await ipfs.add('Hello world')
+      // console.info(cid)
+
+
+
+
+    }
 
 
   }

@@ -10,6 +10,8 @@
         <b-nav-item @click="showBrainLoader">brains</b-nav-item>
         <b-nav-item @click="saveBrain">save</b-nav-item>
 
+        <ShareBrain style="float:left"/>
+
         <!-- <b-nav-item href="#">Link</b-nav-item> -->
         <!-- <b-nav-item @click="newNeurone">new</b-nav-item> -->
         <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
@@ -51,10 +53,10 @@
 </b-navbar-nav>
 </b-collapse>
 
-<b-modal id="modal-save" title="Save Brain">
+<b-modal id="modal-save" title="Save Brain" size="lg">
       <b-button @click="saveBrainToSolid">to Solid Pod</b-button>
 
-      <b-button @click="saveBrainToIpfs" :disabled="ipfsNode == null ? true : false">to IPFS</b-button>
+      <b-button @click="saveNodesToIpfs" :disabled="ipfsNode == null ? true : false">to IPFS</b-button>
       <b-button @click="saveBrainToFile" disabled>to File</b-button>
       <b-button @click="saveBrainToGun" disabled>to GunDb</b-button>
       <b-button @click="saveBrainToMatrixCrdt" disabled>to Matrix-Crdt</b-button>
@@ -71,25 +73,17 @@
 <a :href="'https://ipfs.io/ipfs/'+c.cid" target="_blank">{{c.name}}</a>
 </li>
 </ul>
-
-
-
 {{ipfs_cids}}
-
 <hr>
   ipfsNode : {{ipfsNode}}
-
-<!-- https://ipfs.io/ipfs/QmXgZAUWd8yo4tvjBETqzUy3wLx5YRzuDwUQnBwRGrAmAo -->
-
-
-
-
   </b-modal>
 
 </b-navbar>
 </template>
 
 <script>
+import ShareBrain from '@/components/ShareBrain.vue'
+
 export default {
   name: "NavBar",
   components: {
@@ -97,7 +91,8 @@ export default {
     'SolidLogin': ()=>import('@/components/SolidLogin'),
     'SpinnerComp': ()=>import('@/components/SpinnerComp'),
     // 'UploadFile': ()=>import('@/views/UploadFile'),
-  },
+      ShareBrain
+    },
   data(){
     return{
       show_node_name: true,
@@ -107,10 +102,18 @@ export default {
   methods:{
     save_cids(){
       console.log(this.ipfs_cids)
+      this.download(JSON.stringify(this.ipfs_cids), 'ipfs_cids_'+Date.now()+'.json', 'application/json');
     },
-    saveBrainToIpfs(){
+    download(content, fileName, contentType) {
+        var a = document.createElement("a");
+        var file = new Blob([content], {type: contentType});
+        a.href = URL.createObjectURL(file);
+        a.download = fileName;
+        a.click();
+    },
+    saveNodesToIpfs(){
         console.log("save")
-        this.$saveBrainToIpfs()
+        this.$saveNodesToIpfs()
     },
     saveBrainToGun(){
         console.log("save")
