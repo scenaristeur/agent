@@ -37,6 +37,7 @@ for await (const chunk of stream) {
 console.log(data)
 
 
+
 let donnees = store.state.core.nodes
 
 // add your data to to IPFS - this can be a string, a Buffer,
