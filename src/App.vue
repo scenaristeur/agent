@@ -11,7 +11,7 @@
   </nav> -->
   <div v-if="message != null"><b><hr><hr>{{message}}<hr><hr></b></div>
   <router-view/>
-  <small><i>0.0.1 - ipfs-save |
+  <small><i>0.0.1 - ipfs share by mail |
   <a href="https://github.com/scenaristeur/agent" target="_blank">contribute</a> |
 <a href="https://github.com/scenaristeur/agent/wiki" target ="_blank">help</a>
 </i></small>

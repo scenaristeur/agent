@@ -163,7 +163,23 @@ export default {
       graph_cid(){
         if (this.graph_cid != null){
             this.sharing.url = 'https://scenaristeur.github.io/agent?cid='+this.graph_cid.path
-            this.sharing.description = 'Check out this Agent graph :'+'https://ipfs.io/ipfs/'+this.graph_cid.path+"      contact : scenaristeur@gmail.com"
+
+
+            this.sharing.description = 'video demo youtube : https://youtu.be/YT61BcjGfwc\n'
+
+            this.sharing.description += '\n\nFrançais:\nVous pouvez visualiser mon Inter Planetary Graph à cette adresse'
+            this.sharing.description +=' (soyez patient, la connexion à ipfs peut prendre quelques dizaines de secondes) :\n'
+            this.sharing.description +='https://scenaristeur.github.io/agent?cid='+this.graph_cid.path
+            this.sharing.description += '\nles données sont stockées sur Ipfs :\n https://ipfs.io/ipfs/'+this.graph_cid.path
+            this.sharing.description += "\nContact, infos and recevoir les mises à jour : scenaristeur@gmail.com"
+
+
+            this.sharing.description += '\n\nEnglish:\nCheck out this Inter Planetary Graph  (could take 30s , be patient):\n'+'https://scenaristeur.github.io/agent?cid='+this.graph_cid.path
+            this.sharing.description += '\n data on Ipfs :\n https://ipfs.io/ipfs/'+this.graph_cid.path
+            this.sharing.description += "\nContact, infos and receive updates : scenaristeur@gmail.com"
+
+
+            this.sharing.description += '\n\n<iframe width="560" height="315" src="https://www.youtube.com/embed/YT61BcjGfwc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
         }
       }
     },
