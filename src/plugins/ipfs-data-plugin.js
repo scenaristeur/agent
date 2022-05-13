@@ -3,20 +3,24 @@
 //
 
 // import * as IPFS from 'ipfs-core' // pb webpack https://github.com/ipfs/js-ipfs/issues/1927
-const IPFS = window.IpfsCore;
 
+
+import {concat} from 'uint8arrays'
 
 // import { v4 as uuidv4 } from 'uuid';
 
 const plugin = {
   async install(Vue, opts = {}) {
     let store = opts.store
+    const IPFS = window.IpfsCore;
     const ipfs = await IPFS.create()
-    console.log(ipfs)
+    let id = await ipfs.id()
+    console.log(ipfs,id )
+    store.commit('core/setIpfsNode',id)
 
     Vue.prototype.$saveBrainToIpfs = async function(){
 
-  console.log("IPFS",store.state.core.nodes)
+  console.log("IPFS",ipfs,store.state.core.nodes)
 
       const text = 'Hello, Blabla'
 
@@ -38,12 +42,29 @@ console.log(data)
 
 
 
-let donnees = store.state.core.nodes
+// let donnees = store.state.core.nodes
 
 // add your data to to IPFS - this can be a string, a Buffer,
 // a stream of Buffers, etc
-const cidAll = await ipfs.addAll(donnees)
-console.log(cidAll)
+store.state.core.nodes.forEach(async function(node) {
+
+console.log(node)
+  const cid = await ipfs.add(JSON.stringify(node))
+  console.log(cid, node)
+  let c = {cid: cid.path, name: node.name, id: node.id}
+  store.commit('core/addIpfsCid', c)
+  let chunks = []
+
+  for await (const chunk of ipfs.cat(cid.path)) {
+     chunks.push(chunk);
+}
+
+const data = concat(chunks)
+const decodedData = JSON.parse(new TextDecoder().decode(data).toString());
+console.log(decodedData)
+  // const cid = await ipfs.object.new(node)
+  // console.log(cid)
+});
 
 // we loop over the results because 'add' supports multiple
 // additions, but we only added one entry here so we only see

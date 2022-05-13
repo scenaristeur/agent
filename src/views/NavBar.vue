@@ -54,9 +54,24 @@
 <b-modal id="modal-save" title="Save Brain">
       <b-button @click="saveBrainToSolid">to Solid Pod</b-button>
 
-      <b-button @click="saveBrainToIpfs">to IPFS</b-button>
+      <b-button @click="saveBrainToIpfs" :disabled="ipfsNode == null ? true : false">to IPFS</b-button>
       <b-button @click="saveBrainToGun" disabled>to GunDb</b-button>
       <b-button @click="saveBrainToMatrixCrdt" disabled>to Matrix-Crdt</b-button>
+
+      ipfsNode : {{ipfsNode}}
+
+      ipfs_cids: {{ipfs_cids}}
+<ul>
+<li v-for="c of ipfs_cids" :key="c.cid">
+<a :href="'https://ipfs.io/ipfs/'+c.cid" target="_blank">{{c.name}}</a>
+</li>
+</ul>
+
+<!-- https://ipfs.io/ipfs/QmXgZAUWd8yo4tvjBETqzUy3wLx5YRzuDwUQnBwRGrAmAo -->
+
+
+
+
   </b-modal>
 
 </b-navbar>
@@ -121,6 +136,14 @@ export default {
 
         this.$store.commit('core/setCurrentNode', null)
       }
+    },
+  },
+  computed: {
+    ipfsNode() {
+      return this.$store.state.core.ipfsNode
+    },
+    ipfs_cids() {
+      return this.$store.state.core.ipfs_cids
     },
   }
 }

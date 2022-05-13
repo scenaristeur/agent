@@ -19,9 +19,17 @@ const state = () => ({
   jsonldProps: ['@context', 'id', 'reverse', 'type'],
   graphProps: ['__ob__', '__threeObj', 'index', 'vx', 'vy', 'vz', 'x', 'y', 'z' ],
   spinner: [],
+  ipfsNode: null,
+  ipfs_cids: []
 })
 
 const mutations = {
+  setIpfsNode(state, n){
+    state.ipfsNode = n
+  },
+  addIpfsCid(state, cid){
+    state.ipfs_cids.push(cid)
+  },
   setCore(state, c){
     state.c = c
   },
