@@ -23,9 +23,9 @@ const plugin = {
 
       console.log("IPFS",ipfs,store.state.core.nodes)
       let nodes = store.state.core.nodes
-      let links = store.state.core.links
-      let graph = nodes.concat(links)
-      const graph_cid = await ipfs.add(JSON.stringify(graph))
+    //  let links = store.state.core.links
+    //  let graph = nodes.concat(links)
+      const graph_cid = await ipfs.add(JSON.stringify(nodes))
 
       console.log(graph_cid)
       store.commit('core/setGraphCid', graph_cid)
@@ -43,7 +43,13 @@ Vue.prototype.$loadBrainFromIpfs = async function(cid){
   const data = concat(chunks)
   const decodedData = JSON.parse(new TextDecoder().decode(data).toString());
   console.log("decoded",decodedData)
-  alert("comming soon",JSON.stringify(decodedData))
+  for await (const node of decodedData) {
+    await store.dispatch('core/saveNode', node)
+  }
+  console.log('1')
+  await store.dispatch('core/getNodes')
+  console.log('2')
+  //alert("comming soon",JSON.stringify(decodedData))
 
 }
 

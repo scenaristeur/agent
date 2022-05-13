@@ -51,8 +51,9 @@ export default {
       if(this.$route.query.cid){
         if (this.ipfsNode != null){
             this.$loadBrainFromIpfs(this.$route.query.cid)
+            this.message = null
         }else{
-          this.message = "connecting to ipfs (todo : fusion avec le graph existant)"
+          this.message = "connecting to ipfs, could take 30s, please be patient (todo : fusion avec le graph existant)"
         }
       }
     }

@@ -165,7 +165,6 @@ export default {
             this.sharing.url = 'https://scenaristeur.github.io/agent?cid='+this.graph_cid.path
             this.sharing.description = 'Check out this Agent graph :'+'https://ipfs.io/ipfs/'+this.graph_cid.path+"      contact : scenaristeur@gmail.com"
         }
-
       }
     },
     computed: {
