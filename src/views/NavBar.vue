@@ -55,17 +55,29 @@
       <b-button @click="saveBrainToSolid">to Solid Pod</b-button>
 
       <b-button @click="saveBrainToIpfs" :disabled="ipfsNode == null ? true : false">to IPFS</b-button>
+      <b-button @click="saveBrainToFile" disabled>to File</b-button>
       <b-button @click="saveBrainToGun" disabled>to GunDb</b-button>
       <b-button @click="saveBrainToMatrixCrdt" disabled>to Matrix-Crdt</b-button>
 
-      ipfsNode : {{ipfsNode}}
 
-      ipfs_cids: {{ipfs_cids}}
+
+      ipfs_cids:
+
+<div v-if="ipfs_cids.length > 0" >
+<b-button  @click="save_cids">Save Cids</b-button>
+</div>
 <ul>
 <li v-for="c of ipfs_cids" :key="c.cid">
 <a :href="'https://ipfs.io/ipfs/'+c.cid" target="_blank">{{c.name}}</a>
 </li>
 </ul>
+
+
+
+{{ipfs_cids}}
+
+<hr>
+  ipfsNode : {{ipfsNode}}
 
 <!-- https://ipfs.io/ipfs/QmXgZAUWd8yo4tvjBETqzUy3wLx5YRzuDwUQnBwRGrAmAo -->
 
@@ -93,6 +105,9 @@ export default {
     }
   },
   methods:{
+    save_cids(){
+      console.log(this.ipfs_cids)
+    },
     saveBrainToIpfs(){
         console.log("save")
         this.$saveBrainToIpfs()
@@ -114,6 +129,9 @@ export default {
     },
     showBrainLoader(){
       this.$store.commit('core/setShowBrainLoader', true)
+    },
+    saveBrainToFile(){
+      console.log(this.ipfs_cids)
     },
     // newAutomerge(){
     //   this.$store.dispatch('automerge/newDoc')
