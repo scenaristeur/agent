@@ -7,6 +7,14 @@ import store from './store'
 // import OsCorePlugin from './plugins/os-core-plugin';
 // Vue.use(OsCorePlugin, {store: store});
 
+import VueGun from 'vue-gun';
+// import SEA from 'gun/sea'; // Required for SEA functions and user authentication
+// Vue.use(SEA)
+Vue.use(VueGun, {
+  //  gun: gun // must be passed in at `gun` key
+   peers: ['https://spogg.herokuapp.com/gun'/*'http://localhost:9090/gun',*/ /*'https://gun-manhattan.herokuapp.com/gun'*//*, 'http://gunjs.herokuapp.com/gun/'*/] // run gun-starter-app on port 9090
+});
+
 import VueSocialSharing from 'vue-social-sharing'
 Vue.use(VueSocialSharing);
 
@@ -23,6 +31,12 @@ import SolidDataPlugin from './plugins/solid-data-plugin';
 Vue.use(SolidDataPlugin, {store: store});
 import IpfsDataPlugin from './plugins/ipfs-data-plugin';
 Vue.use(IpfsDataPlugin, {store: store});
+import GunDataPlugin from './plugins/gun-data-plugin';
+Vue.use(GunDataPlugin, {store: store});
+
+
+
+
 // import LevelgraphJsonLDPlugin from './plugins/levelgraphjsonld-plugin';
 // Vue.use(LevelgraphJsonLDPlugin, {store: store});
 import VueFab from 'vue-float-action-button'

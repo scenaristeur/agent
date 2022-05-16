@@ -53,36 +53,14 @@
 </b-navbar-nav>
 </b-collapse>
 
-<b-modal id="modal-save" title="Save Brain" size="lg">
-      <b-button @click="saveBrainToSolid">to Solid Pod</b-button>
-
-      <b-button @click="saveNodesToIpfs" :disabled="ipfsNode == null ? true : false">to IPFS</b-button>
-      <b-button @click="saveBrainToFile" disabled>to File</b-button>
-      <b-button @click="saveBrainToGun" disabled>to GunDb</b-button>
-      <b-button @click="saveBrainToMatrixCrdt" disabled>to Matrix-Crdt</b-button>
-
-
-
-      ipfs_cids:
-
-<div v-if="ipfs_cids.length > 0" >
-<b-button  @click="save_cids">Save Cids</b-button>
-</div>
-<ul>
-<li v-for="c of ipfs_cids" :key="c.cid">
-<a :href="'https://ipfs.io/ipfs/'+c.cid" target="_blank">{{c.name}}</a>
-</li>
-</ul>
-{{ipfs_cids}}
-<hr>
-  ipfsNode : {{ipfsNode}}
-  </b-modal>
+<SaveBrain />
 
 </b-navbar>
 </template>
 
 <script>
 import ShareBrain from '@/components/ShareBrain.vue'
+import SaveBrain from '@/views/SaveBrain.vue'
 
 export default {
   name: "NavBar",
@@ -91,7 +69,8 @@ export default {
     'SolidLogin': ()=>import('@/components/SolidLogin'),
     'SpinnerComp': ()=>import('@/components/SpinnerComp'),
     // 'UploadFile': ()=>import('@/views/UploadFile'),
-      ShareBrain
+      ShareBrain,
+      SaveBrain
     },
   data(){
     return{
@@ -100,10 +79,6 @@ export default {
     }
   },
   methods:{
-    save_cids(){
-      console.log(this.ipfs_cids)
-      this.download(JSON.stringify(this.ipfs_cids), 'ipfs_cids_'+Date.now()+'.json', 'application/json');
-    },
     download(content, fileName, contentType) {
         var a = document.createElement("a");
         var file = new Blob([content], {type: contentType});
@@ -111,31 +86,19 @@ export default {
         a.download = fileName;
         a.click();
     },
-    saveNodesToIpfs(){
-        console.log("save")
-        this.$saveNodesToIpfs()
-    },
-    saveBrainToGun(){
-        console.log("save")
-    },
-    saveBrainToMatrixCrdt(){
-        console.log("save")
-    },
+
+
     // newNeurone(){
     //   this.$store.dispatch('core/newNode')
     // },
     saveBrain(){
         this.$bvModal.show('modal-save')
     },
-    saveBrainToSolid(){
-      this.$saveBrainToSolid()
-    },
+
     showBrainLoader(){
       this.$store.commit('core/setShowBrainLoader', true)
     },
-    saveBrainToFile(){
-      console.log(this.ipfs_cids)
-    },
+
     // newAutomerge(){
     //   this.$store.dispatch('automerge/newDoc')
     // },
@@ -162,9 +125,6 @@ export default {
   computed: {
     ipfsNode() {
       return this.$store.state.core.ipfsNode
-    },
-    ipfs_cids() {
-      return this.$store.state.core.ipfs_cids
     },
   }
 }
