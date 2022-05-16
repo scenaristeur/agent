@@ -22,6 +22,7 @@ class Command extends Base {
     this.type = "url";
     this.value = iv;
     this.isFile = this.isFile(iv)
+    this.url = iv
   }else{
     // selon le premier charactère, on detecte une commande
     let firstChar = iv.charAt(0);
@@ -61,7 +62,7 @@ class Command extends Base {
   }
 
   //si termine par virgule, point, point-virgule, tiret --> triplet
-
+console.log(this)
   return this;
   }
 

@@ -1,5 +1,5 @@
 // import ForceGraph3D from '3d-force-graph';
-// import { Core /*Neurone, Brain,  Graph*/ } from '@/neurone-factory'
+import { /*Core*/ Neurone,/* Brain,  Graph*/ } from '@/neurone-factory'
 //
 import { v4 as uuidv4 } from 'uuid';
 // let graph = undefined
@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import {
   getSolidDataset,
-  // getThingAll,
+  getThingAll,
   //getPublicAccess,
   //  getAgentAccess,
   //getSolidDatasetWithAcl,
@@ -196,7 +196,15 @@ const plugin = {
     }
 
 
-    Vue.prototype.$loadBrainFromSolid = async function(path){
+    Vue.prototype.$loadBrainFromSolid = async function(path, cpt = 0){
+      let maximum_loop = 2
+      if(cpt < maximum_loop ){
+        cpt ++
+        console.log(cpt)
+      }else{
+        return
+      }
+
       if (path == undefined){
         let suggestedpath = store.state.solid.pod != null ? store.state.solid.pod.storage+"brains/" : "https://solid.provider/brains_folder or example..."
         console.log(suggestedpath)
@@ -211,7 +219,7 @@ const plugin = {
           dataset = await getSolidDataset( path, { fetch: sc.fetch });
           let remotesUrl  = await getContainedResourceUrlAll(dataset,{fetch: sc.fetch} )
           console.log(remotesUrl)
-          await loadNeurones(remotesUrl)
+          await loadNeurones(remotesUrl, cpt)
         }
         catch(e){
           alert(e)
@@ -442,7 +450,7 @@ const plugin = {
     //   //
     // }
 
-    async function loadNeurones(remotesUrl){
+    async function loadNeurones(remotesUrl, cpt=0){
 
       // urls.forEach(async function (u) {
       //   // let doc = null
@@ -481,33 +489,31 @@ const plugin = {
       const filePromises = remotesUrl.map(async function(url) {
 
         if(url.endsWith('/')){
-          Vue.prototype.$loadBrainFromSolid(url)
+          Vue.prototype.$loadBrainFromSolid(url, cpt)
           return
         }
 
         // Return a promise per file
         Vue.prototype.$spinnerAdd({id: "loading "+url})
         const file = await getFile(url, { fetch: sc.fetch });
-        return new Promise( function(resolve, reject) {
+        file.url = url
 
-          const reader = new FileReader();
-          reader.onload = async () => {
-            try {
-              //response =
-              // Resolve the promise with the response value
-              let node = JSON.parse(reader.result)
-              await store.dispatch('core/saveNode', node)
-              Vue.prototype.$spinnerRemove({id: "loading "+url})
-              resolve(node);
-            } catch (err) {
-              reject(err);
-            }
-          };
-          reader.onerror = (error) => {
-            reject(error);
-          };
-          reader.readAsText(file);
-        });
+        switch (file.type) {
+          case 'application/json':
+          await loadJson(file)
+          break;
+          // case 'text/turtle; charset=UTF-8':
+          // case 'text/turtle; charset=utf-8':
+          // case 'text/turtle':
+          case file.type.match(/^text\/turtle/)?.input :
+          console.log('load ttl')
+          await loadTtl(file)
+          break;
+          default:
+          console.log("TODO READ FILE", file)
+        }
+        Vue.prototype.$spinnerRemove({id: "loading "+file.url})
+
       });
 
       // Wait for all promises to be resolved
@@ -527,7 +533,7 @@ const plugin = {
             //response =
             // Resolve the promise with the response value
             let node = JSON.parse(reader.result)
-          //  await store.dispatch('core/saveNode', node)
+            //  await store.dispatch('core/saveNode', node)
             Vue.prototype.$spinnerRemove({id: "loading "+url})
             resolve(node);
           } catch (err) {
@@ -540,6 +546,82 @@ const plugin = {
         reader.readAsText(file);
       });
     }
+    async function loadTtl(file){
+      console.log("loading", file)
+      const ds = await getSolidDataset( file.url, { fetch: sc.fetch });
+      let things = await getThingAll(ds)
+      console.log("THINGS", things)
+
+      things.forEach(async (t) => {
+        console.log(t)
+        let n = {}
+        n.id = t.url
+        n.name = t.url
+        n.url = t.url
+        for (const [key, value] of Object.entries(t.predicates)) {
+          console.log(key, value);
+          let nameNodes = value.namedNodes
+         let literals = value.literals
+         let blankNodes = value.blankNodes
+         n[key] = []
+          nameNodes != undefined && nameNodes.forEach((_n) => {
+          console.log(_n)
+          n[key].push(_n)
+          let n_n = new Neurone({id:_n, name: _n})
+           store.dispatch('core/saveNode', n_n)
+
+          });
+
+          literals != undefined && Object.entries(literals).forEach((_n) => {
+          console.log(_n)
+          });
+
+          blankNodes != undefined && blankNodes.forEach((_n) => {
+          console.log(_n)
+          });
+
+
+
+        }
+
+
+        console.log(n)
+        let node = new Neurone(n)
+        console.log("node", node)
+        await store.dispatch('core/saveNode', node)
+
+
+
+
+      });
+
+
+
+    }
+
+    async function loadJson(file){
+      return new Promise( function(resolve, reject) {
+
+        const reader = new FileReader();
+        reader.onload = async () => {
+          try {
+            //response =
+            // Resolve the promise with the response value
+            let node = JSON.parse(reader.result)
+            await store.dispatch('core/saveNode', node)
+
+            resolve(node);
+          } catch (err) {
+            reject(err);
+          }
+        };
+        reader.onerror = (error) => {
+          reject(error);
+        };
+        reader.readAsText(file);
+      });
+    }
+
 
     function lastPartOfUrl(str){
       var n = str.lastIndexOf('/');

@@ -16,22 +16,32 @@ const plugin = {
 
     Vue.prototype.$saveBrainToGun = async function(){
       let gun = Vue.prototype.$gun
+
+      gun.get('biptest').map().on((node, key) => {
+        console.log("node",node, key)
+        // add results straight to the Vue component state
+        // and get updates when nodes are updated by GUN
+        //this.todos[key] = node;
+        //  console.log(this.todos)
+      });
       //  console.log("IPFS",ipfs,store.state.core.nodes)
       let nodes = store.state.core.nodes
       console.log(nodes, gun)
 
 
-      let mark = {
-        age: 23,
-        hacker: true,
-        name: "Mark Nadal"
-      }
-
-    let mark1 =  gun.get('biptest').set(mark)
+      // let mark = {
+      //   age: 23,
+      //   hacker: true,
+      //   name: "Mark Nadal"
+      // }
+store.state.core.nodes.forEach((n) => {
+    let mark1 =  gun.get('biptest').set(n)
       console.log(mark1)
 
-let retrieve = gun.get(mark1)
-console.log("ee",retrieve.toJSON)
+    })
+
+let retrieve = gun.get('biptest')
+console.log("retrieve",retrieve)
 // retrieve.toJSON().once(function(value, key){
 //   console.log("What is the name?", value, key);
 // })
@@ -47,13 +57,7 @@ console.log("ee",retrieve.toJSON)
       //
       //
       //
-      // gun.get('pin').map().on((node, key) => {
-      //   console.log(node, key)
-      //   // add results straight to the Vue component state
-      //   // and get updates when nodes are updated by GUN
-      //   //this.todos[key] = node;
-      //   //  console.log(this.todos)
-      // });
+
       //  let links = store.state.core.links
       //  let graph = nodes.concat(links)
       // const graph_cid = await ipfs.add(JSON.stringify(nodes))

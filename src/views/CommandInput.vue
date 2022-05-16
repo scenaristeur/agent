@@ -67,6 +67,9 @@ export default {
         this.main_input = inputObject.inputNew
         if(inputValue == "/h"){
           window.open("https://github.com/scenaristeur/agent/wiki", '_blank').focus();
+        }else if(inputObject.type == "url"){
+          console.log ("url", inputObject)
+          this.$loadBrainFromSolid(inputObject.url)
         }
       }
     },

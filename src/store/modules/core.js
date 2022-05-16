@@ -218,6 +218,9 @@ const actions = {
         if(!context.state.jsonldProps.includes(p) && !context.state.graphProps.includes(p)){
           // console.log("#", typeof v,p, v)
           let rot = Math.random()*Math.PI
+
+if(v != null){
+
           if(Array.isArray(v)){
             for(let item of v ){
               //  console.log('##',item.id, item)
@@ -227,6 +230,10 @@ const actions = {
             linksTemp.push({source: n.id, target: v.id, label: p, curvature: .3, rotation: rot})
           }
         }
+        // else{
+        //   console.log("v is null", n.id, p,v)
+        // }
+      }
       }
       last = n
     });
