@@ -7,7 +7,7 @@
     <b-button @click="saveBrainToGun" >to GunDb</b-button>
     <b-button @click="saveBrainToMatrixCrdt" disabled>to Matrix-Crdt</b-button>
 
-
+  <b-button @click="loadAllFromGun" >test load all from gun</b-button>
 
     ipfs_cids:
 
@@ -32,6 +32,9 @@ export default {
   methods:{
     pinit(){
       console.log(this.ipfs_cids)
+    },
+    loadAllFromGun(){
+      this.$loadAllFromGun()
     },
     save_cids(){
       console.log(this.ipfs_cids)

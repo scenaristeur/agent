@@ -1,7 +1,7 @@
 // import Vue from 'vue'
 
 // import { v4 as uuidv4 } from 'uuid';
-
+let gunRoot = 'biptest'
 
 const plugin = {
   async install(Vue, opts = {}) {
@@ -35,12 +35,12 @@ const plugin = {
       //   name: "Mark Nadal"
       // }
 store.state.core.nodes.forEach((n) => {
-    let mark1 =  gun.get('biptest').set(n)
+    let mark1 =  gun.get(gunRoot).set(n)
       console.log(mark1)
 
     })
 
-let retrieve = gun.get('biptest')
+let retrieve = gun.get(gunRoot)
 console.log("retrieve",retrieve)
 // retrieve.toJSON().once(function(value, key){
 //   console.log("What is the name?", value, key);
@@ -67,8 +67,23 @@ console.log("retrieve",retrieve)
 
     }
 
+Vue.prototype.$loadAllFromGun = async function(){
+  let gun = Vue.prototype.$gun
+
+  gun.get(gunRoot).map().on((node, key) => {
+    console.log("node",node, key)
+    // add results straight to the Vue component state
+    // and get updates when nodes are updated by GUN
+    //this.todos[key] = node;
+    //  console.log(this.todos)
+  });
+}
+
+
     Vue.prototype.$loadBrainFromGun = async function(id){
       console.log(id)
+
+
       // let chunks = []
       //
       // for await (const chunk of ipfs.cat(cid)) {

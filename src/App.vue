@@ -45,6 +45,7 @@ export default {
       this.$checkSolidSession()
       this.$store.dispatch('core/getNodes')
     }
+    this.$loadAllFromGun()
   },
   methods:{
     loadBrainFromIpfs(){
