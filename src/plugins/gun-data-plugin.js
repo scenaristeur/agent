@@ -1,7 +1,7 @@
 // import Vue from 'vue'
 
 // import { v4 as uuidv4 } from 'uuid';
-let gunRoot = 'biptest'
+let gunRoot = 'biptest1'
 
 const plugin = {
   async install(Vue, opts = {}) {
@@ -17,13 +17,13 @@ const plugin = {
     Vue.prototype.$saveBrainToGun = async function(){
       let gun = Vue.prototype.$gun
 
-      gun.get('biptest').map().on((node, key) => {
-        console.log("node",node, key)
-        // add results straight to the Vue component state
-        // and get updates when nodes are updated by GUN
-        //this.todos[key] = node;
-        //  console.log(this.todos)
-      });
+      // gun.get(gunRoot).map().on((node, key) => {
+      //   console.log("node",node, key)
+      //   // add results straight to the Vue component state
+      //   // and get updates when nodes are updated by GUN
+      //   //this.todos[key] = node;
+      //   //  console.log(this.todos)
+      // });
       //  console.log("IPFS",ipfs,store.state.core.nodes)
       let nodes = store.state.core.nodes
       console.log(nodes, gun)
@@ -34,20 +34,20 @@ const plugin = {
       //   hacker: true,
       //   name: "Mark Nadal"
       // }
-store.state.core.nodes.forEach((n) => {
-    let mark1 =  gun.get(gunRoot).set(n)
-      console.log(mark1)
+      store.state.core.nodes.forEach((n) => {
+        let mark1 =  gun.get(gunRoot).set(n)
+        console.log(mark1)
 
-    })
+      })
 
-let retrieve = gun.get(gunRoot)
-console.log("retrieve",retrieve)
-// retrieve.toJSON().once(function(value, key){
-//   console.log("What is the name?", value, key);
-// })
-// retrieve.get('name').once(function(value, key){
-//   console.log("What is the name?", value, key);
-// })
+      let retrieve = gun.get(gunRoot)
+      console.log("retrieve",retrieve)
+      // retrieve.toJSON().once(function(value, key){
+      //   console.log("What is the name?", value, key);
+      // })
+      // retrieve.get('name').once(function(value, key){
+      //   console.log("What is the name?", value, key);
+      // })
 
 
       // store.state.core.nodes.forEach((n) => {
@@ -67,18 +67,47 @@ console.log("retrieve",retrieve)
 
     }
 
-Vue.prototype.$loadAllFromGun = async function(){
-  let gun = Vue.prototype.$gun
+    Vue.prototype.$loadAllFromGun = async function(){
+      let gun = Vue.prototype.$gun
 
-  gun.get(gunRoot).map().on((node, key) => {
-    console.log("node",node, key)
-    // add results straight to the Vue component state
-    // and get updates when nodes are updated by GUN
-    //this.todos[key] = node;
-    //  console.log(this.todos)
-  });
-}
+      gun.get(gunRoot).map().on((node, key) => {
+      //  console.log("node",node, key)
+        rebuild(node, key)
+        // add results straight to the Vue component state
+        // and get updates when nodes are updated by GUN
+        //this.todos[key] = node;
+        //  console.log(this.todos)
+      });
+    }
 
+    async function rebuild(n){
+      let gun = Vue.prototype.$gun
+      let node = {}
+      for (const [key, value] of Object.entries(n)) {
+        console.log(key, value);
+        switch (typeof value) {
+          case "string":
+        //  console.log("string ", value)
+          node[key] = value
+          break;
+          case "object":
+        //  console.log("object ", value)
+          if (value['#'] != undefined){
+            gun.get(value['#']).once(function(value, key){
+              console.log("value of the object", value, key);
+            })
+          }else{
+            console.log("# undefined in", value)
+          }
+          break;
+          default:
+          console.log("todo  ", typeof value, value)
+        }
+      }
+console.log("rebuilded", node)
+
+
+    }
 
     Vue.prototype.$loadBrainFromGun = async function(id){
       console.log(id)
