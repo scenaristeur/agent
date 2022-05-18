@@ -1,5 +1,14 @@
 # agent
 
+# gundb group & permissions exemples
+- https://gist.github.com/alterx/4be465d63fc23e37f95639b0b8ea1739
+
+# graph vizualizer
+- https://github.com/Stefdv/gun-ui-graph
+- https://stefdv.github.io/gun-ui-graph/components/gun-ui-graph/#demo
+- https://github.com/amark/gun/issues/343
+
+
 ## Project setup
 ```
 npm install
