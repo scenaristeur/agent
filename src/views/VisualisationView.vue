@@ -55,12 +55,7 @@ a {
   color: #8ff;
 }
 
-#menu {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-  text-align: center;
-}
+
 
 .element {
   width: 120px;
@@ -106,21 +101,5 @@ a {
     color: rgba(127,255,255,0.75);
   }
 
-button {
-  color: rgba(127,255,255,0.75);
-  background: transparent;
-  outline: 1px solid rgba(127,255,255,0.75);
-  border: 0px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
 
-button:hover {
-  background-color: rgba(0,255,255,0.5);
-}
-
-button:active {
-  color: #000000;
-  background-color: rgba(0,255,255,0.75);
-}
 </style>
