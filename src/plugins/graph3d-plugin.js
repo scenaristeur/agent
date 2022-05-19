@@ -3,6 +3,7 @@ import {CSS2DRenderer, CSS2DObject} from 'three/examples/jsm/renderers/CSS2DRend
 import {CSS3DRenderer, CSS3DObject} from 'three/examples/jsm/renderers/CSS3DRenderer.js';
 import SpriteText from 'three-spritetext';
 import * as THREE from 'three';
+import * as TWEEN from '@tweenjs/tween.js';
 
 // let selectedNodes = new Set(),
 // let highlightNodes = new Set(),
@@ -14,6 +15,9 @@ import * as THREE from 'three';
 const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
+    const objects = [];
+    const targets = { table: [], sphere: [], helix: [], grid: [] };
+
 
     Vue.prototype.$testHelix = async function(){
       console.log("test")
@@ -140,9 +144,7 @@ const plugin = {
         'Og', 'Oganesson', '(294)', 18, 7
       ];
 
-      const objects = [];
-      const targets = { table: [], sphere: [], helix: [], grid: [] };
-      // table
+    // table
 
       for ( let i = 0; i < table.length; i += 5 ) {
 
@@ -239,12 +241,12 @@ const plugin = {
 
       }
 
-// for (let i = 0; i < targets.helix.length; i++){
-//   console.log(targets.helix[i])
-//   graph.scene().add(targets.helix[i]);
-// }
+      // for (let i = 0; i < targets.helix.length; i++){
+      //   console.log(targets.helix[i])
+      //   graph.scene().add(targets.helix[i]);
+      // }
 
-      //transform( targets.helix, 2000 );
+    //  transform( targets.helix, 2000, objects );
       //
 
       // renderer = new CSS3DRenderer();
@@ -304,6 +306,20 @@ const plugin = {
       graph.scene().add(mesh);
     }
 
+
+    Vue.prototype.$transformTable = async function (){
+      transform( targets.table, 2000 );
+    }
+    Vue.prototype.$transformSphere = async function (){
+      transform( targets.sphere, 2000 );
+    }
+    Vue.prototype.$transformHelix = async function (){
+      transform( targets.helix, 2000 );
+    }
+    Vue.prototype.$transformGrid = async function (){
+      transform( targets.grid, 2000 );
+    }
+
     Vue.prototype.$graphInit = async function(options){
       // console.log(options)
       let graphData={nodes: [], links: []}
@@ -350,33 +366,35 @@ const plugin = {
     }
 
 
-    //     function transform( targets, duration ) {
-    //
-    //     				TWEEN.removeAll();
-    //
-    //     				for ( let i = 0; i < objects.length; i ++ ) {
-    //
-    //     					const object = objects[ i ];
-    //     					const target = targets[ i ];
-    //
-    //     					new TWEEN.Tween( object.position )
-    //     						.to( { x: target.position.x, y: target.position.y, z: target.position.z }, Math.random() * duration + duration )
-    //     						.easing( TWEEN.Easing.Exponential.InOut )
-    //     						.start();
-    //
-    //     					new TWEEN.Tween( object.rotation )
-    //     						.to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, Math.random() * duration + duration )
-    //     						.easing( TWEEN.Easing.Exponential.InOut )
-    //     						.start();
-    //
-    //     				}
-    //
-    //     				new TWEEN.Tween( this )
-    //     					.to( {}, duration * 2 )
-    //     					.onUpdate( render )
-    //     					.start();
-    //
-    //     			}
+    function transform( targets, duration) {
+      // let graph = store.state.core.graph
+      // console.log(graph)
+      // let renderer = graph.renderer()
+      TWEEN.removeAll();
+
+      for ( let i = 0; i < objects.length; i ++ ) {
+
+        const object = objects[ i ];
+        const target = targets[ i ];
+
+        new TWEEN.Tween( object.position )
+        .to( { x: target.position.x, y: target.position.y, z: target.position.z }, Math.random() * duration + duration )
+        .easing( TWEEN.Easing.Exponential.InOut )
+        .start();
+
+        new TWEEN.Tween( object.rotation )
+        .to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, Math.random() * duration + duration )
+        .easing( TWEEN.Easing.Exponential.InOut )
+        .start();
+
+      }
+
+      new TWEEN.Tween( this )
+      .to( {}, duration * 2 )
+      .onUpdate( render )
+      .start();
+
+    }
     //
     //     			function onWindowResize() {
     //
@@ -399,11 +417,11 @@ const plugin = {
     //
     // }
     //
-    // 	function render() {
-    //
-    // 	renderer.render( scene, camera );
-    //
-    // }
+    function render() {
+      console.log("render")
+    //  renderer.render( scene, camera );
+
+    }
 
 
     function onLinkClick(ln){
