@@ -9,6 +9,7 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav> -->
+  <HelixTest />
   <div v-if="message != null"><b><hr><hr>{{message}}<hr><hr></b></div>
   <router-view/>
   <small><i>0.0.1 - ipfs share by mail |
@@ -27,6 +28,7 @@ export default {
   name: 'App',
   components: {
     'NavBar': ()=>import('@/views/NavBar'),
+    'HelixTest': ()=>import('@/components/HelixTest'),
   },
   data(){
     return{
