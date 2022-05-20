@@ -10,9 +10,14 @@ export default {
   methods:{
     update(){
       if (this.graph != undefined){
-        let nodes = this.nodes.map(a => {return {...a}})
-        let links = this.links.map(a => {return {...a}})
-        this.graph.graphData({nodes: nodes, links: links})
+        // let nodes = this.nodes.map(a => {
+        //   console.log(a)
+        //   delete a.x
+        //   return {...a}
+        // })
+        // let links = this.links.map(a => {return {...a}})
+        // console.log(nodes)
+        this.graph.graphData({nodes: this.nodes, links: this.links})
       //  console.log(this.graph.graphData())
       }
     }

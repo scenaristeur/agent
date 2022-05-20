@@ -28,10 +28,14 @@
 
 <script>
 import ToastMixin from '@/mixins/ToastMixin'
+import { BIconShare, BIconEye } from 'bootstrap-vue'
 
 export default {
   name: "BrainLoader",
   mixins: [ToastMixin],
+  components: {
+    BIconShare, BIconEye
+  },
   data(){
     return{
       items: []

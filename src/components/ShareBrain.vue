@@ -45,8 +45,14 @@ Saving on ipfs .... Pending
 </template>
 
 <script>
+
+import { BIconShare } from 'bootstrap-vue'
+
 export default {
   name: "ShareBrain",
+  components: {
+    BIconShare
+  },
   props: {
     //item: Object,
     default: {url: "https://scenaristeur.github.io/agent", name: "InterPlanetaryGraphSystem"},

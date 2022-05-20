@@ -70,12 +70,14 @@
 
 <script>
 import ToastMixin from '@/mixins/ToastMixin'
+import { BIconClipboardPlus } from 'bootstrap-vue'
 
 export default {
   name: "NodeEdition",
   mixins: [ToastMixin],
   components: {
     'PropertieView': ()=>import('@/views/PropertieView'),
+    BIconClipboardPlus
   },
   data(){
     return {

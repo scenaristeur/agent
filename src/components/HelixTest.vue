@@ -6,6 +6,7 @@
 <button @click="helix">Helix</button>
 <button @click="grid">Grid</button>
 <button @click="resetCam">reset cam</button>
+<button @click="dynamic">dynamic</button>
 
 
   </div>
@@ -32,6 +33,9 @@ methods: {
   },
   resetCam(){
     this.$resetCam()
+  },
+  dynamic(){
+    this.$dynamic()
   }
 }
 }
