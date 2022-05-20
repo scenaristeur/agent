@@ -12,7 +12,7 @@ const plugin = {
       let context =  {
         "name": "http://xmlns.com/foaf/0.1/name",
         "knows": "http://xmlns.com/foaf/0.1/knows",
-        "@base": "http://local/",
+        "@base": "http://timestamp/",
         "@vocab": "https://scenaristeur.github.io/agent/",
         "id": "@id",
         "type": "@type",
@@ -24,7 +24,7 @@ const plugin = {
       }
       let node = {
         "@context" : Object.assign(context, options['@context']),
-        "id": options['@id'] || options.id || uuidv4(),
+        "id":  "t_"+options.id ,
         "name": options.name && options.name['@value'] || options.name || "",
         type: "neurone",
         shape: "timeNode",
