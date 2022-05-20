@@ -37,7 +37,7 @@ const plugin = {
         //color: "#00ff00",
         "homepage": "https://scenaristeur.github.io/agent/",
       };
-    //  console.log(node)
+
       return node
 
 
@@ -86,7 +86,7 @@ const plugin = {
       let p = data.propertie
       let newValue = data.value
       let oldValue = n[p]
-      console.log(typeof oldValue, oldValue)
+
       if (oldValue == undefined){
         n[p] = newValue
       }else if(Array.isArray(oldValue)){
@@ -94,22 +94,10 @@ const plugin = {
       }else{
         n[p] = [oldValue, newValue]
       }
-
-      // }else if(typeof oldValue == 'object'){
-      //
-      // }else if(typeof oldValue == 'string'){
-      //   n[p] = [oldValue, newValue]
-      // }else{
-      //   console.log("todo", data)
-      // }
-
-
-
       return n
     }
 
     Vue.prototype.$addLink = function(t){
-      console.log(t)
       let s = t.subject
       let p = t.predicate
       let o = t.object
@@ -138,11 +126,11 @@ const plugin = {
           }
         }
       }
-      console.log(main)
+
       return main
     }
     function set(main, p, item){
-      console.log(typeof main[p], main[p], item)
+      //console.log(typeof main[p], main[p], item)
       let name = item.name
       let id = item.id
 
@@ -167,31 +155,9 @@ const plugin = {
           }
         }
       }
-      console.log(main)
+      //console.log(main)
       return main
     }
-
-
-    // Vue.prototype.$findNodeByName = async function(name){
-    //   console.log(name)
-    //   let nodes = store.state.nodes
-    //   console.log(nodes)
-    //
-    //
-    //
-    //
-    //
-    //
-    // }
-    //
-    // Vue.prototype.$findNodeById = async function(id){
-    //   console.log(id)
-    //   let nodes = store.state.nodes
-    //   console.log(nodes)
-    //
-    // }
-
-
   }
 }
 
