@@ -13,7 +13,7 @@ export default {
         let nodes = this.nodes.map(a => {return {...a}})
         let links = this.links.map(a => {return {...a}})
         this.graph.graphData({nodes: nodes, links: links})
-        console.log(this.graph.graphData())
+      //  console.log(this.graph.graphData())
       }
     }
   },

@@ -8,6 +8,40 @@ const plugin = {
     let store = opts.store
     console.log(store)
 
+    Vue.prototype.$newTimeNode = async function(options = {}){
+      let context =  {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "@base": "http://local/",
+        "@vocab": "https://scenaristeur.github.io/agent/",
+        "id": "@id",
+        "type": "@type",
+        "reverse": "@reverse",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      }
+      let node = {
+        "@context" : Object.assign(context, options['@context']),
+        "id": options['@id'] || options.id || uuidv4(),
+        "name": options.name && options.name['@value'] || options.name || "",
+        type: "neurone",
+        shape: "timeNode",
+        detail1: options.detail1,
+        detail2: options.detail2,
+        x: options.x,
+        y: options.y,
+        i: options.i,
+        //'shape': 'sphere' || options.shape,
+        //color: "#00ff00",
+        "homepage": "https://scenaristeur.github.io/agent/",
+      };
+    //  console.log(node)
+      return node
+
+
+    }
     Vue.prototype.$newNode = async function(options = {}){
       if (options.name != undefined && options.name.startsWith("http")){
         console.log("search", options)
@@ -33,7 +67,7 @@ const plugin = {
           "id": options['@id'] || options.id || uuidv4(),
           "name": options.name && options.name['@value'] || options.name || "",
           type: "neurone",
-         //'shape': 'sphere' || options.shape,
+          //'shape': 'sphere' || options.shape,
           //color: "#00ff00",
           "homepage": "https://scenaristeur.github.io/agent/",
         };
