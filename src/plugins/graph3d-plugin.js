@@ -27,25 +27,109 @@ import {
       const targets = { table: [], sphere: [], helix: [], grid: [] };
       let table = []
       let periode = 50
-      let count = null
+      let counting = false
+      // let time_data = []
 
 
+      function counter(){
+        let date = new Date()
+        let locale = date.toLocaleString()
+        let s_t = Math.round(date.getTime()/1000) | 0
+
+        let time = {
+          id: s_t,
+          name: locale,
+          date: date,
+          locale: locale,
+          s_t: s_t,
+          s_gp: Math.floor(s_t/10)*10,
+          s_position: s_t%10,
+          m_gp: Math.floor(s_t/60)*60,
+          t_gp: Math.floor(s_t/600)*600,
+          h_gp: Math.floor(s_t/3600)*3600,
+        }
+
+
+        //time_data.push(time)
+        return time
+
+      }
+      // function group(){
+      //   //console.log(time_data)
+      // }
+      function updateGraph(time_data){
+        //console.log(time_data)
+        const { nodes, links } = store.state.core.graph.graphData();
+        let linksnew = links
+        let nodesnew = nodes
+        time_data.x = 1000
+        time_data.y = 1000
+        time_data.z = 1000
+        nodesnew.push(time_data)
+
+      //   let last = nodesnew.find(x => x.id == time_data.id-10)
+      // //  console.log(last)
+      //   last ==  undefined ? nodesnew.push({id: time_data.id-10, name: "START", color: 'green'}) : ""
+      //   linksnew.push({ source: time_data.id, target: time_data.id-10 })
+
+        let sgp = nodesnew.find(x => x.id == time_data.s_gp)
+      //  console.log(sgp)
+        sgp ==  undefined ? nodesnew.push({id: time_data.s_gp, name: time_data.s_gp, color: 'yellow'}) : ""
+        linksnew.push({ source: time_data.id, target: time_data.s_gp })
+
+if(time_data.s_gp == time_data.id){
+        let mgp = nodesnew.length > 0 && nodesnew.find(x => x.id == time_data.m_gp)
+        //console.log(mgp)
+        mgp == undefined ?  nodesnew.push({id: time_data.m_gp, name: time_data.m_gp, color: 'orange'}) : ""
+        linksnew.push({ source: time_data.id, target: time_data.m_gp })
+      }
+
+      if(time_data.m_gp == time_data.id){
+              let tgp = nodesnew.length > 0 && nodesnew.find(x => x.id == time_data.t_gp)
+              //console.log(mgp)
+              tgp == undefined ?  nodesnew.push({id: time_data.t_gp, name: time_data.t_gp, color: 'green'}) : ""
+              linksnew.push({ source: time_data.id, target: time_data.t_gp })
+            }
+
+if(time_data.t_gp == time_data.id){
+        let hgp = nodesnew.length > 0 && nodesnew.find(x => x.id == time_data.h_gp)
+        //console.log(hgp)
+        hgp ==  undefined ?  nodesnew.push({id: time_data.h_gp, name: time_data.h_gp, color: 'red'}) : ""
+        linksnew.push({ source: time_data.id, target: time_data.h_gp })
+}
+
+console.log(nodesnew.length)
+
+
+
+        store.state.core.graph.graphData({
+          nodes: [...nodesnew, time_data],
+          links: linksnew
+        });
+
+
+      }
 
       Vue.prototype.$dynamic = function(){
-        if (count == null){
-          count = setInterval(() => {
-            const { nodes, links } = store.state.core.graph.graphData();
-            if (nodes.length == 0) nodes.push({id: 0 } )
-            const id = nodes.length;
-            store.state.core.graph.graphData({
-              nodes: [...nodes, { id }],
-              links: [...links, { source: id, target: id-1 }]
-            });
+        if (counting == false){
+          counting = setInterval(() => {
+            let time_data =counter()
+            // group()
+            updateGraph(time_data)
           }, 1000);
+          // count = setInterval(() => {
+          //   const { nodes, links } = store.state.core.graph.graphData();
+          //   if (nodes.length == 0) nodes.push({id: 0 } )
+          //   const id = nodes.length;
+          //   store.state.core.graph.graphData({
+          //     nodes: [...nodes, { id }],
+          //     links: [...links, { source: id, target: id-1 }]
+          //   });
+          // }, 1000);
         }else{
-          console.log(count)
-          clearInterval(count);
-          count = null
+          console.log(counting)
+          clearInterval(counting);
+          counting = false
         }
       }
 
