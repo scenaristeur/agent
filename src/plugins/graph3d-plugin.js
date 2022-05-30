@@ -1,6 +1,6 @@
 import ForceGraph3D from '3d-force-graph';
 import {CSS2DRenderer, CSS2DObject} from 'three/examples/jsm/renderers/CSS2DRenderer.js';
-import {CSS3DRenderer, CSS3DObject} from 'three/examples/jsm/renderers/CSS3DRenderer.js';
+import {CSS3DRenderer/*, CSS3DObject*/} from 'three/examples/jsm/renderers/CSS3DRenderer.js';
 import SpriteText from 'three-spritetext';
 import {
   MeshLambertMaterial,
@@ -31,91 +31,118 @@ import {
       // let time_data = []
 
 
-      function counter(){
-        let date = new Date()
-        let locale = date.toLocaleString()
-        let s_t = Math.round(date.getTime()/1000) | 0
-
-        let time = {
-          id: s_t,
-          name: locale,
-          date: date,
-          locale: locale,
-          s_t: s_t,
-          s_gp: Math.floor(s_t/10)*10,
-          s_position: s_t%10,
-          m_gp: Math.floor(s_t/60)*60,
-          t_gp: Math.floor(s_t/600)*600,
-          h_gp: Math.floor(s_t/3600)*3600,
-        }
-
-
-        //time_data.push(time)
-        return time
-
-      }
+      // function counter(){
+      //   let date = new Date()
+      //   let locale = date.toLocaleString()
+      //   let s_t = Math.round(date.getTime()/1000) | 0
+      //
+      //   let time = {
+      //     id: s_t,
+      //     name: locale,
+      //     date: date,
+      //     locale: locale,
+      //     s_t: s_t,
+      //     s_gp: Math.floor(s_t/10)*10,
+      //     s_position: s_t%10,
+      //     m_gp: Math.floor(s_t/60)*60,
+      //     t_gp: Math.floor(s_t/600)*600,
+      //     h_gp: Math.floor(s_t/3600)*3600,
+      //   }
+      //
+      //
+      //   //time_data.push(time)
+      //   return time
+      //
+      // }
       // function group(){
       //   //console.log(time_data)
       // }
-      function updateGraph(time_data){
-        //console.log(time_data)
-        const { nodes, links } = store.state.core.graph.graphData();
-        let linksnew = links
-        let nodesnew = nodes
-        time_data.x = 1000
-        time_data.y = 1000
-        time_data.z = 1000
-        nodesnew.push(time_data)
+//       function updateGraph(time_data){
+//         //console.log(time_data)
+//         const { nodes, links } = store.state.core.graph.graphData();
+//         //let linksnew = links
+//         let nodesnew = nodes
+//         time_data.x = 1000
+//         time_data.y = 1000
+//         time_data.z = 1000
+//         nodesnew.push(time_data)
+//
+//       //   let last = nodesnew.find(x => x.id == time_data.id-10)
+//       // //  console.log(last)
+//       //   last ==  undefined ? nodesnew.push({id: time_data.id-10, name: "START", color: 'green'}) : ""
+//       //   linksnew.push({ source: time_data.id, target: time_data.id-10 })
+//
+//         let sgp = nodesnew.find(x => x.id == time_data.s_gp)
+//       //  console.log(sgp)
+//         sgp ==  undefined ? nodesnew.push({id: time_data.s_gp, name: time_data.s_gp, color: 'yellow'}) : ""
+//         //linksnew.push({ source: time_data.id, target: time_data.s_gp })
+//
+// if(time_data.s_gp == time_data.id){
+//         let mgp = nodesnew.length > 0 && nodesnew.find(x => x.id == time_data.m_gp)
+//         //console.log(mgp)
+//         mgp == undefined ?  nodesnew.push({id: time_data.m_gp, name: time_data.m_gp, color: 'orange'}) : ""
+//         //linksnew.push({ source: time_data.id, target: time_data.m_gp })
+//       }
+//
+//       if(time_data.m_gp == time_data.id){
+//               let tgp = nodesnew.length > 0 && nodesnew.find(x => x.id == time_data.t_gp)
+//               //console.log(mgp)
+//               tgp == undefined ?  nodesnew.push({id: time_data.t_gp, name: time_data.t_gp, color: 'green'}) : ""
+//             //  linksnew.push({ source: time_data.id, target: time_data.t_gp })
+//             }
+//
+// if(time_data.t_gp == time_data.id){
+//         let hgp = nodesnew.length > 0 && nodesnew.find(x => x.id == time_data.h_gp)
+//         //console.log(hgp)
+//         hgp ==  undefined ?  nodesnew.push({id: time_data.h_gp, name: time_data.h_gp, color: 'red'}) : ""
+//         //linksnew.push({ source: time_data.id, target: time_data.h_gp })
+// }
+//
+// console.log(nodesnew.length)
+//
+//
+//
+//         // store.state.core.graph.graphData({
+//         //   nodes: [...nodesnew, time_data],
+//         //   links: linksnew
+//         // });
+//
+//
+//       }
 
-      //   let last = nodesnew.find(x => x.id == time_data.id-10)
-      // //  console.log(last)
-      //   last ==  undefined ? nodesnew.push({id: time_data.id-10, name: "START", color: 'green'}) : ""
-      //   linksnew.push({ source: time_data.id, target: time_data.id-10 })
 
-        let sgp = nodesnew.find(x => x.id == time_data.s_gp)
-      //  console.log(sgp)
-        sgp ==  undefined ? nodesnew.push({id: time_data.s_gp, name: time_data.s_gp, color: 'yellow'}) : ""
-        linksnew.push({ source: time_data.id, target: time_data.s_gp })
+async function updateTimeNodes(){
+    let date = new Date()
+    let locale = date.toLocaleString()
+    let s_t = Math.round(date.getTime()/1000) | 0
 
-if(time_data.s_gp == time_data.id){
-        let mgp = nodesnew.length > 0 && nodesnew.find(x => x.id == time_data.m_gp)
-        //console.log(mgp)
-        mgp == undefined ?  nodesnew.push({id: time_data.m_gp, name: time_data.m_gp, color: 'orange'}) : ""
-        linksnew.push({ source: time_data.id, target: time_data.m_gp })
-      }
+let timeNodes = store.state.core.nodes.filter(n => n.type == "timeNode")
 
-      if(time_data.m_gp == time_data.id){
-              let tgp = nodesnew.length > 0 && nodesnew.find(x => x.id == time_data.t_gp)
-              //console.log(mgp)
-              tgp == undefined ?  nodesnew.push({id: time_data.t_gp, name: time_data.t_gp, color: 'green'}) : ""
-              linksnew.push({ source: time_data.id, target: time_data.t_gp })
-            }
+console.log(timeNodes)
 
-if(time_data.t_gp == time_data.id){
-        let hgp = nodesnew.length > 0 && nodesnew.find(x => x.id == time_data.h_gp)
-        //console.log(hgp)
-        hgp ==  undefined ?  nodesnew.push({id: time_data.h_gp, name: time_data.h_gp, color: 'red'}) : ""
-        linksnew.push({ source: time_data.id, target: time_data.h_gp })
+    let time = {
+      id: s_t,
+      name: locale,
+      date: date,
+      locale: locale,
+      s_t: s_t,
+      s_gp: Math.floor(s_t/10)*10,
+      s_position: s_t%10,
+      m_gp: Math.floor(s_t/60)*60,
+      t_gp: Math.floor(s_t/600)*600,
+      h_gp: Math.floor(s_t/3600)*3600,
+    }
+  let timeNode = await Vue.prototype.$newTimeNode2(time)
+  await store.state.core.nodes.push(timeNode)
 }
-
-console.log(nodesnew.length)
-
-
-
-        store.state.core.graph.graphData({
-          nodes: [...nodesnew, time_data],
-          links: linksnew
-        });
-
-
-      }
 
       Vue.prototype.$dynamic = function(){
         if (counting == false){
           counting = setInterval(() => {
-            let time_data =counter()
+            //let time_data =counter()
             // group()
-            updateGraph(time_data)
+          //  updateGraph(time_data)
+          updateTimeNodes()
           }, 1000);
           // count = setInterval(() => {
           //   const { nodes, links } = store.state.core.graph.graphData();
@@ -306,7 +333,7 @@ console.log(nodesnew.length)
         }else{
           if(geometry == null){
             if(node.shape == "timeNode"){
-
+console.log(node)
               let e = node
               let i = e.i
               const element = document.createElement( 'div' );
@@ -328,50 +355,50 @@ console.log(nodesnew.length)
               details.innerHTML = e.detail1 + '<br>' + e.detail2;
               element.appendChild( details );
 
-              const objectCSS = new CSS3DObject( element );
-              objectCSS.position.x = Math.random() * 4000 - 2000;
-              objectCSS.position.y = Math.random() * 4000 - 2000;
-              objectCSS.position.z = Math.random() * 4000 - 2000;
-              objectCSS.name = "defaut_"+e.name
-              shape = objectCSS
-
-              objects.push( objectCSS );
-
-              element.parent = objectCSS;
-
-              objectCSS.element.onclick = function(evt) {
-                console.log("click", this, evt, e)
-                this.parent.position.y += 10;
-
-                onNodeClick(e);
-              };
+              // const objectCSS = new CSS3DObject( element );
+              // objectCSS.position.x = Math.random() * 4000 - 2000;
+              // objectCSS.position.y = Math.random() * 4000 - 2000;
+              // objectCSS.position.z = Math.random() * 4000 - 2000;
+              // objectCSS.name = "defaut_"+e.name
+              // shape = objectCSS
+              //
+              // objects.push( objectCSS );
+              //
+              // element.parent = objectCSS;
+              //
+              // objectCSS.element.onclick = function(evt) {
+              //   console.log("click", this, evt, e)
+              //   this.parent.position.y += 10;
+              //
+              //   onNodeClick(e);
+              // };
 
               // table
 
-              const objectTable = new Object3D();
-              objectTable.position.x = ( e.x * 140 ) - 1330;
-              objectTable.position.y = - ( e.y * 180 ) + 990;
-              objectTable.name = "table_"+e.name
-              targets.table.push( objectTable );
+              // const objectTable = new Object3D();
+              // objectTable.position.x = ( e.x * 140 ) - 1330;
+              // objectTable.position.y = - ( e.y * 180 ) + 990;
+              // objectTable.name = "table_"+e.name
+              // targets.table.push( objectTable );
 
               // sphere
 
-              const vectorSphere = new Vector3();
-              let l = table.length
-              let k = l/2+i+2
-              const phi = Math.acos( - 1 + ( 2 * k ) / l );
-              const thetaSphere = Math.sqrt( l * Math.PI ) * Math.abs(phi);
-
-              const objectSphere = new Object3D();
-
-              objectSphere.position.setFromSphericalCoords( 800, phi, thetaSphere );
-
-              vectorSphere.copy( objectSphere.position ).multiplyScalar( 2 );
-
-              objectSphere.lookAt( vectorSphere );
-              objectSphere.name = "sphere_"+e.name
-
-              targets.sphere.push( objectSphere );
+              // const vectorSphere = new Vector3();
+              // let l = table.length
+              // let k = l/2+i+2
+              // const phi = Math.acos( - 1 + ( 2 * k ) / l );
+              // const thetaSphere = Math.sqrt( l * Math.PI ) * Math.abs(phi);
+              //
+              // const objectSphere = new Object3D();
+              //
+              // objectSphere.position.setFromSphericalCoords( 800, phi, thetaSphere );
+              //
+              // vectorSphere.copy( objectSphere.position ).multiplyScalar( 2 );
+              //
+              // objectSphere.lookAt( vectorSphere );
+              // objectSphere.name = "sphere_"+e.name
+              //
+              // targets.sphere.push( objectSphere );
 
               //helix
 
@@ -393,13 +420,15 @@ console.log(nodesnew.length)
 
               targets.helix.push( objectHelix );
 
-              const objectGrid = new Object3D();
+              element.parent = objectHelix;
 
-              objectGrid.position.x = ( ( i % 7 ) * 400 ) - 800;
-              objectGrid.position.y = ( - ( Math.floor( i / 7 ) % 4 ) * 400 ) + 800;
-              objectGrid.position.z = ( Math.floor( i / 28 ) ) * 1000 - 2000;
-              objectGrid.name = "grid_"+e.name
-              targets.grid.push( objectGrid );
+              // const objectGrid = new Object3D();
+              //
+              // objectGrid.position.x = ( ( i % 7 ) * 400 ) - 800;
+              // objectGrid.position.y = ( - ( Math.floor( i / 7 ) % 4 ) * 400 ) + 800;
+              // objectGrid.position.z = ( Math.floor( i / 28 ) ) * 1000 - 2000;
+              // objectGrid.name = "grid_"+e.name
+              // targets.grid.push( objectGrid );
 
             }else{
               const nodeEl = document.createElement('div');

@@ -1,5 +1,16 @@
 # agent
 
+# First Goal
+- en: Providing to everyone a simple way to express what is in its mind, and share an universal representation of those informations.
+- fr: Fournir à chacun un moyen simple d'exprimer ce qu'il a dans la tête, et de partager une représentation universelle de ces informations
+
+
+# alternative to solid
+- [ ] Gaia-x https://www.gxfs.eu/
+
+# funding
+- https://nlnet.nl/propose/
+
 ## Project setup
 ```
 npm install
@@ -53,3 +64,15 @@ https://codepen.io/adambene/pen/xRWrXN
 - autocomplete & history https://github.com/ndabAP/vue-command https://vuejsexamples.com/a-fully-working-vue-js-terminal-emulator/
 
 - https://vuejsexamples.com/component-vuejs-to-simulate-a-terminal/
+
+# threejs
+- https://discoverthreejs.com/book/first-steps/first-scene/
+# timeline
+- https://britishmuseum.withgoogle.com/
+- https://discourse.threejs.org/t/3d-time-line-with-3js/8266
+
+# pollfish dashboard
+- https://www.pollfish.com/dashboard/survey/targeting/296641834
+
+# gundb permission example
+-https://gist.github.com/ThinkingJoules/6da18221dd7ec39058c1f9bfaff392e3

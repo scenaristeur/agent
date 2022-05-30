@@ -8,6 +8,42 @@ const plugin = {
     let store = opts.store
     console.log(store)
 
+
+    Vue.prototype.$newTimeNode2 = async function(options = {}){
+      let context =  {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "@base": "http://timestamp/",
+        "@vocab": "https://scenaristeur.github.io/agent/",
+        "id": "@id",
+        "type": "@type",
+        "reverse": "@reverse",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      }
+      let node = {
+        "@context" : Object.assign(context, options['@context']),
+        "id":  "t_"+options.id ,
+        "name": options.name && options.name['@value'] || options.name || "",
+        type: "timeNode",
+        shape: "timeNode",
+        detail1: options.detail1,
+        detail2: options.detail2,
+        x: options.x,
+        y: options.y,
+        i: options.i,
+        //'shape': 'sphere' || options.shape,
+        //color: "#00ff00",
+        "homepage": "https://scenaristeur.github.io/agent/",
+      };
+
+      return node
+
+
+    }
+
     Vue.prototype.$newTimeNode = async function(options = {}){
       let context =  {
         "name": "http://xmlns.com/foaf/0.1/name",
