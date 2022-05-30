@@ -46,3 +46,7 @@ https://codepen.io/adambene/pen/xRWrXN
 - autocomplete & history https://github.com/ndabAP/vue-command https://vuejsexamples.com/a-fully-working-vue-js-terminal-emulator/
 
 - https://vuejsexamples.com/component-vuejs-to-simulate-a-terminal/
+
+# ipfs / ipld
+- https://blog.ceramic.network/how-to-store-signed-and-encrypted-data-on-ipfs/
+- https://ipfs.io/ipfs/QmQmAh8R6xvu7cXrTXaxs28dqhJC6viDD6sBAFtt9aEDCP/_site/

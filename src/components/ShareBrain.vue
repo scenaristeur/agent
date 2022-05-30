@@ -202,6 +202,8 @@ export default {
 
         }
 
+        JSONBody.pinataMetadata.name = this.pinning_name || Date.now()
+
         let result = await this.pinJSONToIPFS(this.pinning_service.api_key,
           this.pinning_service.secret_api_key, JSONBody)
         console.log(result)
