@@ -25,6 +25,7 @@
           <b-dropdown-item disabled>Reset camera</b-dropdown-item>
           <b-dropdown-item @click="show_node_name = !show_node_name" disabled>show node name {{ show_node_name}}</b-dropdown-item>
           <b-dropdown-item @click="show_link_label = !show_link_label" disabled>show link label {{show_link_label}}</b-dropdown-item>
+          <b-dropdown-item v-b-modal.modal-gun-graph>New Gundb Graph</b-dropdown-item>
       </b-nav-item-dropdown>
 
 
