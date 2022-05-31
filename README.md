@@ -50,3 +50,12 @@ https://codepen.io/adambene/pen/xRWrXN
 # ipfs / ipld
 - https://blog.ceramic.network/how-to-store-signed-and-encrypted-data-on-ipfs/
 - https://ipfs.io/ipfs/QmQmAh8R6xvu7cXrTXaxs28dqhJC6viDD6sBAFtt9aEDCP/_site/
+
+# graphology js
+- https://graphology.github.io/
+
+# gun visualgraph
+- https://github.com/dletta/visualgraph/
+- gun graphin https://github.com/lmangani/gun-graphin/blob/99cd85c5eec001f2f4f37713132728f2f14caf60/README.md
+# awesome gun
+- https://github.com/ash0080/gun.doc.cn/blob/839b787466feac52e99d5b7b0147f9c71c97d5d6/Awesome-GUN.md

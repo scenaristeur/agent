@@ -59,7 +59,7 @@
 
       <b-button @click="saveNodesToIpfs" :disabled="ipfsNode == null ? true : false">to IPFS</b-button>
       <b-button @click="saveBrainToFile" disabled>to File</b-button>
-      <b-button @click="saveBrainToGun" disabled>to GunDb</b-button>
+      <b-button @click="saveBrainToGun" >to GunDb</b-button>
       <b-button @click="saveBrainToMatrixCrdt" disabled>to Matrix-Crdt</b-button>
 
 
@@ -118,6 +118,7 @@ export default {
     },
     saveBrainToGun(){
         console.log("save")
+        this.$saveBrainToGun()
     },
     saveBrainToMatrixCrdt(){
         console.log("save")

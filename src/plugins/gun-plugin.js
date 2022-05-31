@@ -1,6 +1,6 @@
 // import * as sc from '@inrupt/solid-client-authn-browser'
 // gun JSON https://gist.github.com/rosko/57ab2083ee4adf2f078d4d76851d9dc6
-
+import { Dfs } from '@/api/dfs';
 
 const plugin = {
   install(Vue, opts = {}) {
@@ -8,20 +8,46 @@ const plugin = {
   //  console.log(store)
 
 
+Vue.prototype.$gunSearch = async function(rootNode = 'neurones'/*'brains')*/){
+  console.log(Dfs)
+  let dfs = new Dfs(Vue.prototype.$gun)
+  dfs.search(rootNode, 'name')
+}
+
 Vue.prototype.$gunListen = async function(rootNode){
-  let gunBrains = {}
+  let gunBrains = []
   await Vue.prototype.$gun.get(rootNode).map().on(function(node,key) {
-  //  console.log(node,key)
+    console.log(node,key)
     Vue.prototype.$gun.get(key).open((doc) => {
     //console.log("doc",key,  doc)
     doc.key = key
-    //gunBrains.push(doc)
-    gunBrains[key] = doc
+    gunBrains.push(doc)
+  //  gunBrains[key] = doc
     console.log(gunBrains)
       store.commit('gun/setGunBrains', gunBrains)
     });
   })
 
+  // await Vue.prototype.$gun.get('neurones').map().on(function(node,key) {
+  // //  console.log(node,key)
+  // let gunNeurones = []
+  //   Vue.prototype.$gun.get(key).open((doc) => {
+  //   //console.log("doc",key,  doc)
+  //   doc.key = key
+  //   gunNeurones.push(doc)
+  // //  gunBrains[key] = doc
+  //   console.log(gunNeurones)
+  //     //store.commit('gun/setGunBrains', gunBrains)
+  //   });
+  // })
+
+}
+Vue.prototype.$saveBrainToGun = async function(){
+  for await (const n of store.state.core.nodes){
+    console.log(n.id, n)
+      Vue.prototype.$gun.get('neurones').set(n)
+
+  }
 }
 
 

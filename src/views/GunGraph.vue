@@ -63,7 +63,7 @@
   </b-col>
 </b-row>
 
-<b-table striped hover :items="Object.values(gunBrains)"
+<b-table striped hover :items="gunBrains"
 :fields="fields"
 :sort-by.sync="sortBy"
 :sort-desc.sync="sortDesc"
@@ -80,6 +80,8 @@ selectable
 @row-selected="onRowSelected"
 select-mode="single"
 ></b-table>
+
+<b-button @click="gunSearch">Gun Search</b-button>
 
 </b-modal>
 </template>
@@ -115,6 +117,7 @@ export default {
     onRowSelected(row){
       let obj = row[0]
       console.log(obj)
+      this.$store.commit('core/setBrain', obj)
     },
     // async explore(){
     //   let gunNodes = await this.$gunExplore('brains')
@@ -128,6 +131,9 @@ export default {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
       this.currentPage = 1
+    },
+    gunSearch(){
+      this.$gunSearch()
     },
     async createBrain(){
       let path = 'brains'
