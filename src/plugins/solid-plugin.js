@@ -150,6 +150,7 @@ const plugin = {
       {
         console.log("erreur",e, pod)
       }
+      console.log(pod)
       return await pod
     }
 

@@ -195,6 +195,23 @@ const plugin = {
 
     }
 
+    Vue.prototype.$brainsFromPod = async function(pod){
+      let path = pod.storage+"public/brains/"
+      Vue.prototype.$spinnerAdd({id: "loading "+path})
+      let dataset = null
+      try{
+        dataset = await getSolidDataset( path, { fetch: sc.fetch });
+        let remotesUrl  = await getContainedResourceUrlAll(dataset,{fetch: sc.fetch} )
+        console.log(remotesUrl)
+      //  await loadNeurones(remotesUrl)
+        return remotesUrl
+      }
+      catch(e){
+        console.log(e)
+      }
+      Vue.prototype.$spinnerRemove({id: "loading "+path})
+    }
+
 
     Vue.prototype.$loadBrainFromSolid = async function(path){
       if (path == undefined){

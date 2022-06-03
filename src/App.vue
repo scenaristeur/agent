@@ -10,6 +10,7 @@
     <router-link to="/about">About</router-link>
   </nav> -->
   <div v-if="message != null"><b><hr><hr>{{message}}<hr><hr></b></div>
+  <SolidFriends />
   <router-view/>
   <small><i>0.0.1 - ipfs share by mail + pinata / gun |
   <a href="https://github.com/scenaristeur/agent" target="_blank">contribute</a> |
@@ -28,6 +29,7 @@
 export default {
   name: 'App',
   components: {
+      'SolidFriends': ()=>import('@/views/SolidFriends'),
     'NavBar': ()=>import('@/views/NavBar'),
     'GunGraph': ()=>import('@/views/GunGraph'),
   },
