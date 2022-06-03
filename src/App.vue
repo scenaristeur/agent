@@ -10,14 +10,15 @@
     <router-link to="/about">About</router-link>
   </nav> -->
   <div v-if="message != null"><b><hr><hr>{{message}}<hr><hr></b></div>
-  <SolidFriends />
+
   <router-view/>
   <small><i>0.0.1 - ipfs share by mail + pinata / gun |
-  <a href="https://github.com/scenaristeur/agent" target="_blank">contribute</a> |
-<a href="https://github.com/scenaristeur/agent/wiki" target ="_blank">help</a> |
-<a href="https://youtu.be/YT61BcjGfwc" target ="_blank">How To use 3dmindmap Video Demo</a>
-</i></small>
-<GunGraph />
+    <a href="https://github.com/scenaristeur/agent" target="_blank">contribute</a> |
+    <a href="https://github.com/scenaristeur/agent/wiki" target ="_blank">help</a> |
+    <a href="https://youtu.be/YT61BcjGfwc" target ="_blank">How To use 3dmindmap Video Demo</a>
+  </i></small>
+  <GunGraph />
+  <SolidFriends />
 </div>
 </template>
 
@@ -29,7 +30,7 @@
 export default {
   name: 'App',
   components: {
-      'SolidFriends': ()=>import('@/views/SolidFriends'),
+    'SolidFriends': ()=>import('@/views/SolidFriends'),
     'NavBar': ()=>import('@/views/NavBar'),
     'GunGraph': ()=>import('@/views/GunGraph'),
   },
@@ -45,7 +46,7 @@ export default {
       console.log("source",source)
       this.$loadBrainFromSolid(source)
     }else if(this.$route.query.cid){
-        this.loadBrainFromIpfs()
+      this.loadBrainFromIpfs()
     }else{
       this.$checkSolidSession()
       this.$store.dispatch('core/getNodes')
@@ -55,8 +56,8 @@ export default {
     loadBrainFromIpfs(){
       if(this.$route.query.cid){
         if (this.ipfsNode != null){
-            this.$loadBrainFromIpfs(this.$route.query.cid)
-            this.message = null
+          this.$loadBrainFromIpfs(this.$route.query.cid)
+          this.message = null
         }else{
           this.message = "connecting to ipfs, could take 30s, please be patient (todo : fusion avec le graph existant)"
         }
@@ -65,7 +66,7 @@ export default {
   },
   watch:{
     ipfsNode(){
-this.loadBrainFromIpfs()
+      this.loadBrainFromIpfs()
 
     }
   },
