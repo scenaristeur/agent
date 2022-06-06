@@ -17,6 +17,7 @@
     <a href="https://github.com/scenaristeur/agent/wiki" target ="_blank">help</a> |
     <a href="https://youtu.be/YT61BcjGfwc" target ="_blank">How To use 3dmindmap Video Demo</a>
   </i></small>
+  <DataCaching />
   <GunGraph />
   <SolidFriends />
 </div>
@@ -33,6 +34,7 @@ export default {
     'SolidFriends': ()=>import('@/views/SolidFriends'),
     'NavBar': ()=>import('@/views/NavBar'),
     'GunGraph': ()=>import('@/views/GunGraph'),
+    'DataCaching': ()=>import('@/views/DataCaching'),
   },
   data(){
     return{

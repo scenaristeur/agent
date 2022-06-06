@@ -26,10 +26,14 @@ const state = () => ({
   highlightLinks: new Set(),
   // selectedNodes: new Set(),
   hoverNode: null,
-  search: null
+  search: null,
+  galaxy : null
 })
 
 const mutations = {
+  setGalaxy(state, g){
+    state.galaxy = g
+  },
   setIpfsNode(state, n){
     state.ipfsNode = n
   },

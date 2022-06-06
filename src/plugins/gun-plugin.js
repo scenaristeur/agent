@@ -15,6 +15,7 @@ Vue.prototype.$gunSearch = async function(rootNode = 'neurones'/*'brains')*/){
 }
 
 Vue.prototype.$gunListen = async function(rootNode){
+  console.log(rootNode)
   let gunBrains = []
   await Vue.prototype.$gun.get(rootNode).map().on(function(node,key) {
     console.log(node,key)

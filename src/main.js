@@ -6,6 +6,8 @@ import store from './store'
 
 // import OsCorePlugin from './plugins/os-core-plugin';
 // Vue.use(OsCorePlugin, {store: store});
+import GalaxyPlugin from './plugins/galaxy-plugin';
+Vue.use(GalaxyPlugin, {store: store});
 
 import VueSocialSharing from 'vue-social-sharing'
 Vue.use(VueSocialSharing);

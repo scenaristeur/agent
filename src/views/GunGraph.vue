@@ -110,7 +110,8 @@ export default {
     }
   },
   created(){
-    this.$gunListen('brains')
+
+  
   },
 
   methods: {
