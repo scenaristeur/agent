@@ -203,7 +203,7 @@ const plugin = {
         dataset = await getSolidDataset( path, { fetch: sc.fetch });
         let remotesUrl  = await getContainedResourceUrlAll(dataset,{fetch: sc.fetch} )
         console.log(remotesUrl)
-        await loadNeurones(remotesUrl)
+      //  await loadNeurones(remotesUrl)
         return remotesUrl
       }
       catch(e){

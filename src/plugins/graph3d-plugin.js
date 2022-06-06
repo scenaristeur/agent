@@ -19,6 +19,9 @@ const plugin = {
     Vue.prototype.$graphInit = async function(options){
       // console.log(options)
       let graphData={nodes: [], links: []}
+      let highlightNodes = store.state.core.highlightNodes
+      let highlightLinks = store.state.core.highlightLinks
+      let hoverNode = store.state.core.hoverNode
 
       let graph = ForceGraph3D({extraRenderers: [new CSS2DRenderer()]})(options.domElement).graphData(graphData)
       graph
@@ -26,7 +29,9 @@ const plugin = {
       // .nodeId('id')
       .nodeLabel('name')
       .nodeAutoColorBy("type")
-      .nodeColor(node => /*highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' :*/ node.color)
+      .nodeRelSize(9)
+      .nodeColor(node => highligth(node) ? 'yellow' : highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : node.color)
+      //.nodeColor(node => /*highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' :*/ node.color)
       //.onBackgroundClick(event => onBackgroundClick(event))
       .onNodeClick(node => onNodeClick(node))
       .onLinkClick(ln => onLinkClick(ln))
@@ -57,8 +62,66 @@ const plugin = {
           Object.assign(sprite.position, middlePos);
         }
       })
+      .linkWidth(link => highlightLinks.has(link) ? 4 : 1)
+      .linkDirectionalParticles(link => highlightLinks.has(link) ? 4 : 0)
+      .linkDirectionalParticleWidth(4)
+      .onNodeHover(node => {
+        // no state change
+        if ((!node && !highlightNodes.size) || (node && hoverNode === node)) return;
+
+        highlightNodes.clear();
+        highlightLinks.clear();
+        if (node) {
+          highlightNodes.add(node);
+          //  node.neighbors.forEach(neighbor => highlightNodes.add(neighbor));
+          //  node.links.forEach(link => highlightLinks.add(link));
+        }
+
+        hoverNode = node || null;
+
+        Vue.prototype.$updateHighlight();
+      })
+      .onLinkHover(link => {
+        highlightNodes.clear();
+        highlightLinks.clear();
+
+        if (link) {
+          highlightLinks.add(link);
+          highlightNodes.add(link.source);
+          highlightNodes.add(link.target);
+        }
+        Vue.prototype.$updateHighlight();
+      })
       // console.log(graph)
       store.commit ('core/setGraph', graph)
+    }
+
+    function highligth(node){
+      //console.log(node)
+      return store.state.core.search != null && store.state.core.search.text.length > 0 && node.name.includes(store.state.core.search.text)
+    }
+    // Vue.prototype.$onNodeSearch = async function (node, event){
+    //   console.log(node, event)
+    //     // if (event.ctrlKey || event.shiftKey || event.altKey) { // multi-selection
+    //     //   store.state.core.selectedNodes.has(node) ? store.state.core.selectedNodes.delete(node) : store.state.core.selectedNodes.add(node);
+    //     // } else { // single-selection
+    //     //   const untoggle = store.state.core.selectedNodes.has(node) && store.state.core.selectedNodes.size === 1;
+    //     //   store.state.core.selectedNodes.clear();
+    //     //   !untoggle && store.state.core.selectedNodes.add(node);
+    //     // }
+    //     store.state.core.selectedNodes.add(node)
+    //
+    //     store.state.core.graph.nodeColor(store.state.core.graph.nodeColor()); // update color of selected nodes
+    //   }
+
+    Vue.prototype.$updateHighlight = function() {
+      // trigger update of highlighted objects in scene
+      console.log(store.state.core.highlightNodes)
+      let graph = store.state.core.graph
+      graph
+      .nodeColor(graph.nodeColor())
+      .linkWidth(graph.linkWidth())
+      .linkDirectionalParticles(graph.linkDirectionalParticles());
     }
 
 
@@ -115,7 +178,7 @@ const plugin = {
         //return sprite;
         break;
         default:
-      //  geometry = null
+        //  geometry = null
 
       }
       if (sprite != null){
@@ -220,7 +283,6 @@ const plugin = {
 
 
     async function onNodeClick(node){
-
       // Aim at node from outside it
       //  console.log(node)
       //this.selectedNodes.clear()
