@@ -32,7 +32,8 @@ let worlds = [
   {name: "websocket"},
   {name: "socket.io"},
   {name: "matrix-crdt"},
-  {name: "jmv"}
+  {name: "jmv"},
+  {name: "soukai"}
 ]
 
 

@@ -24,6 +24,7 @@
     "ipfs-core": "^0.14.3",
     "jsonld": "^5.2.0",
     "register-service-worker": "^1.7.2",
+    "soukai": "^0.4.1",
     "three-spritetext": "^1.6.5",
     "underscore": "^1.13.2",
     "vue": "^2.6.14",
