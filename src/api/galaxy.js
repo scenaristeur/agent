@@ -1,27 +1,27 @@
 let worlds = [
   {
     name: "gundb",
-    onCreated: {action: "gunListen", params: "boop"},
-    onMounted: {action: "gunListen", params: "blop"}, // brains
+    onCreated: {action: "$gunListen", params: "brains"},
+    onMounted: {action: "$gunListen", params: "blop"}, // brains
     installed : null,
     version: null,
     state: null,
-    active: true
+    active: false
   },
   {name: "browser"},
   {name: "graph3d"},
   {name: 'indexeddb'},
   {name: "Solid Public"},
   {name: "Solid Pod"},
-  {name: "Solid Friends"},
+  {name: "Solid Friends", active: false},
   {name: "Solid Notification"},
   {name: "Wikidata"},
   {name: "realtime"},
   {name: "automerge"},
-  {name: "ipfs"},
+  {name: "ipfs", onCreated: {action: "$initIpfs"}, active: true},
   {name: "pinata"},
   {name: "safe"},
-  {name: "deepweb"},
+  {name: "darkweb"},
   {name: "excel/ods"},
   {name: "notion"},
   {name: "upload"},
@@ -29,6 +29,9 @@ let worlds = [
   {name: "Persée"},
   {name: "sparqlanything"},
   {name: "semapps"},
+  {name: "websocket"},
+  {name: "socket.io"},
+  {name: "matrix-crdt"},
   {name: "jmv"}
 ]
 

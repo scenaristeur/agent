@@ -12,11 +12,15 @@ import {concat} from 'uint8arrays'
 const plugin = {
   async install(Vue, opts = {}) {
     let store = opts.store
-    const IPFS = window.IpfsCore;
-    const ipfs = await IPFS.create()
-    let id = await ipfs.id()
-    console.log(ipfs,id )
-    store.commit('core/setIpfsNode',id)
+    let IPFS, ipfs
+
+    Vue.prototype.$initIpfs = async function(){
+       IPFS = window.IpfsCore;
+      ipfs = await IPFS.create()
+      let id = await ipfs.id()
+      console.log(ipfs,id )
+      store.commit('core/setIpfsNode',id)
+    }
 
 
     Vue.prototype.$saveBrainToIpfs = async function(){

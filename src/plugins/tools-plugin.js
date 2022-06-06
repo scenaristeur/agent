@@ -5,8 +5,9 @@ import { v4 as uuidv4 } from 'uuid';
 // let graph = undefined
 const plugin = {
   install(Vue, opts = {}) {
-    let store = opts.store
-    console.log(store)
+    opts ? console.log(opts): {}
+    // let store = opts.store
+    // console.log(store)
 
     Vue.prototype.$newNode = async function(options = {}){
       if (options.name != undefined && options.name.startsWith("http")){

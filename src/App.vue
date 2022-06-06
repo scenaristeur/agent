@@ -75,7 +75,7 @@ export default {
   computed: {
     ipfsNode() {
       return this.$store.state.core.ipfsNode
-    }
+    },
   }
 }
 </script>
