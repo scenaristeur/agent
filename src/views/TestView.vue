@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <b-container>
     <SoukaiTest />
     <DataCaching />
     <GunGraph />
     <SolidFriends />
-  </div>
+  </b-container>
 </template>
 
 <script>

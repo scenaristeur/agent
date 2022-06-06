@@ -4,30 +4,40 @@
     users: {{ users }}
     <hr>
     brains : {{ brains }}
+    <hr>
+    neurones : {{ neurones }}
   </div>
 </template>
 
 <script>
 
-import Soukai, { IndexedDBEngine } from 'soukai';
+let engineType = "IndexedDBEngine" // InMemoryEngine
+// import Soukai, { IndexedDBEngine } from 'soukai';
+import Soukai, { IndexedDBEngine, LogEngine, InMemoryEngine } from 'soukai';
 // class User extends Model {}
 import {User} from '@/models/User'
 import {Neurone} from '@/models/Neurone'
 import {Brain} from '@/models/Brain'
 import {Synapse} from '@/models/Synapse'
 
-Soukai.loadModels({ User, Neurone, Synapse, Brain });
-Soukai.useEngine(new IndexedDBEngine("smag0"));
+
+// Soukai.useEngine(new IndexedDBEngine("smag0"));
 
 // With Logs
-// import Soukai, { Model, LogEngine, InMemoryEngine } from 'soukai';
-//
+// import Soukai, { /*Model,*/ LogEngine, InMemoryEngine } from 'soukai';
+
 // class User extends Model {}
-//
-// const engine = new InMemoryEngine();
-//
-// Soukai.loadModel('User', User);
-// Soukai.useEngine(new LogEngine(engine));
+
+let engine = null
+
+if(engineType == "InMemoryEngine"){
+  engine = new InMemoryEngine("smagMem");
+}else{
+  engine = new IndexedDBEngine("smag0")
+}
+
+Soukai.loadModels({ User, Neurone, Synapse, Brain });
+Soukai.useEngine(new LogEngine(engine));
 
 
 
@@ -36,10 +46,11 @@ export default {
   data(){
     return {
       brains: [],
-      users: []
+      users: [],
+      neurones: []
     }
   },
-  created(){
+  async created(){
     User.create(
       { name: 'John',
       surname: 'Doe',
@@ -55,13 +66,50 @@ export default {
       this.users = users
     });
 
-    Brain.create({ name: 'RAndom', surname: 'Name' })
+    const user = new User({
+      //id: "eryty",
+      name: 'Johnny',
+      surname: 'Doux',
+      birthDate: new Date(),
+    });
+
+    let savedUser = await user.save();
+
+    console.log('User saved', savedUser);
+
+    Brain.create({ name: 'RAndom', surname: 'Name', authorId : user.id })
     .then(() => Brain.all())
     .then(models => models.map(model => model.getAttributes()))
     .then(brains => {
       console.log('brain models', brains)
       this.brains = brains
     });
+
+
+
+
+
+
+    const neurone = new Neurone({
+      name: 'Neurone1',
+      authorId : user.id
+    });
+
+    let savedNeurone = await neurone.save();
+
+    console.log('Neurone saved', savedNeurone);
+
+    const userOne = await User.find(user.id);
+
+    console.log('User with id "eryty"', userOne);
+
+    Neurone.all()
+    .then(models => models.map(model => model.getAttributes()))
+    .then(neurones => {
+      console.log('neurone models', neurones)
+      this.neurones = neurones
+    });
+
 
   }
 }

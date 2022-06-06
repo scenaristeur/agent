@@ -1,5 +1,8 @@
 import { FieldType} from 'soukai';
 import { Basic } from './Basic.js'
+import { Brain } from './Brain.js'
+import { Neurone } from './Neurone.js'
+import { Synapse } from './Synapse.js'
 
 export { User }
 
@@ -19,20 +22,17 @@ class User extends Basic {
       },
     }
   );
-  constructor(options = {}) {
-    super(options)
 
-
-    // options.type == undefined ? this.type = "brain": ""
-    // options.nodes = []
-    // options.links = []
-    // console.log('factice brain hihihi')
+  brainsRelationship() {
+    return this.hasMany(Brain, 'authorId');
   }
 
+  neuroneRelationship() {
+    return this.hasMany(Neurone, 'authorId');
+  }
 
-  // createNeurone(options = {}){
-  //   console.log("create", options)
-  //   let neurone = new Neurone(options)
-  //   return neurone
-  // }
+  synapseRelationship() {
+    return this.hasMany(Synapse, 'authorId');
+  }
+
 }

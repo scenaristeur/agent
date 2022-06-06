@@ -1,13 +1,9 @@
 import { Model, FieldType} from 'soukai';
+import { User } from './User.js'
+
+
 export { Basic }
 class Basic extends Model {
-  // constructor(options = {}) {
-  //   super(options)
-  //   // options.type == undefined ? this.type = "brain": ""
-  //   // options.nodes = []
-  //   // options.links = []
-  //   // console.log('factice brain hihihi')
-  // }
 
   static fields = {
     name: FieldType.String,
@@ -18,10 +14,8 @@ class Basic extends Model {
     },
 
   };
+  authorRelationship() {
+      return this.belongsToOne(User, 'authorId');
+  }
 
-  // createNeurone(options = {}){
-  //   console.log("create", options)
-  //   let neurone = new Neurone(options)
-  //   return neurone
-  // }
 }
