@@ -15,12 +15,10 @@
   <small><i>0.0.1 - ipfs share by mail + pinata / gun |
     <a href="https://github.com/scenaristeur/agent" target="_blank">contribute</a> |
     <a href="https://github.com/scenaristeur/agent/wiki" target ="_blank">help</a> |
-    <a href="https://youtu.be/YT61BcjGfwc" target ="_blank">How To use 3dmindmap Video Demo</a>
+    <a href="https://youtu.be/YT61BcjGfwc" target ="_blank">How To use 3dmindmap Video Demo</a> |
+    <router-link to="/test">Test</router-link>
   </i></small>
-  <SoukaiTest />
-  <DataCaching />
-  <GunGraph />
-  <SolidFriends />
+
 </div>
 </template>
 
@@ -32,11 +30,7 @@
 export default {
   name: 'App',
   components: {
-    'SolidFriends': ()=>import('@/views/SolidFriends'),
     'NavBar': ()=>import('@/views/NavBar'),
-    'GunGraph': ()=>import('@/views/GunGraph'),
-    'DataCaching': ()=>import('@/views/DataCaching'),
-    'SoukaiTest': ()=>import('@/views/SoukaiTest'),
   },
   data(){
     return{

@@ -40,7 +40,14 @@ export default {
     }
   },
   created(){
-    User.create({ name: 'John', surname: 'Doe', birthDate: new Date(), interests : ["Solid", "dev"], contact : {email: "jhgj@ku.juyg", phone: "01234567890"} })
+    User.create(
+      { name: 'John',
+      surname: 'Doe',
+      birthDate: new Date(),
+      interests : ["Solid", "dev"],
+      contact : {email: "jhgj@ku.juyg", phone: "01234567890"},
+      blop: "youhou"
+    })
     .then(() => User.all())
     .then(models => models.map(model => model.getAttributes()))
     .then(users => {
