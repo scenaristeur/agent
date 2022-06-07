@@ -1,6 +1,8 @@
 <template>
   <div>
     <vue-command class="scroll"
+    id="term-std"
+    ref="term-std"
     :autocompletion-resolver="autocompletionResolver"
     :built-in="builtIn"
     :commands="commands"
@@ -330,7 +332,7 @@ export default {
   <style lang="scss">
   $border-radius: 8px;
   body {
-    display: grid;
+  /*  display: grid;
     place-items: center;
     height: 95vh;
     margin: 0;
@@ -338,7 +340,7 @@ export default {
       margin: 1rem;
       max-width: 400px;
       width: calc(100% - 2rem);
-    }
+    } */
     h1,
     h2,
     h3 {

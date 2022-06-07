@@ -13,7 +13,7 @@
         </b-col>
       </b-row>
 
-      <b-collapse id="collapse-1" class="mt-2">
+      <b-collapse id="collapse-1" visible class="mt-2">
 
         <b-row>
 

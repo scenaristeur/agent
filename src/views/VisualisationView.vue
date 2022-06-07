@@ -1,5 +1,5 @@
 <template>
-    <div id="graph" ref="graph">Loading graph...</div>
+    <div id="graph" width="100px" ref="graph">Loading graph...</div>
 </template>
 <script>
 export default {

@@ -1,14 +1,23 @@
 <template>
-  <div class="home">
+  <div>
+    <CommandInput fluid="sm" />
+    <b-row>
+      <b-col md="6">
+        <VisualisationView />
+      </b-col>
+      <b-col md="6">
 
-    <BrainLoader />
-    <NodeEdition />
-    <CommandInput />
-    <VisualisationView />
-      <TerminalView v-if="showTerminal"/>
+        <BrainLoader />
+        <NodeEdition sm="6"/>
+        <TerminalView v-if="showTerminal"/>
+      </b-col>
+    </b-row>
     <FabMenu />
     <ExternalSource />
   </div>
+
+
+
 </template>
 
 <script>
