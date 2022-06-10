@@ -3,6 +3,10 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
+import Graph3dPlugin from './plugins/graph3d-plugin';
+Vue.use(Graph3dPlugin, {store: store});
+import SoukaiPlugin from './plugins/soukai-plugin';
+Vue.use(SoukaiPlugin, {store: store});
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 

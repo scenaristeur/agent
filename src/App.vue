@@ -2,6 +2,7 @@
   <div>
     <NavBar />
     <b-container>
+      <CommandInput />
       <b-row>
         <b-col md="6">
           <GraphView />
@@ -23,6 +24,7 @@ export default {
   name: "App",
   components: {
     'NavBar': ()=>import('@/views/NavBar'),
+    'CommandInput': ()=>import('@/views/CommandInput'),
     'GraphView': ()=>import('@/views/GraphView'),
     'SideView': ()=>import('@/views/SideView'),
     'FooTer': ()=>import('@/views/FooTer'),

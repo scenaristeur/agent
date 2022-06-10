@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import core from './modules/core'
+import graph3D from './modules/graph3D'
 
 Vue.use(Vuex)
 
@@ -14,6 +15,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    core
+    core, graph3D
   }
 })
