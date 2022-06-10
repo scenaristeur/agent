@@ -10,7 +10,6 @@
     autofocus
     v-model="main_input"
     v-on:keyup.enter="onEnter"
-    @keyup="onChange"
     v-on:paste="onPaste"
     v-on:input="onInput"
     title="type three words followed by a comma"
@@ -45,9 +44,7 @@ export default {
     }
   },
   methods: {
-    async onInput(e){
-      console.log(e)
-      console.log(this.main_input)
+    async onInput(){
       let params = {}
       params.text = this.main_input.trim()
       params.searchById = false
@@ -70,11 +67,11 @@ export default {
     clear(){
       this.main_input = ""
     },
-    onChange(){
-      console.log(this.main_input)
-      // let s = this.$refs.input.value
-      // this.$store.commit('app/setSearch', s)
-    },
+    // onChange(){
+    //   console.log(this.main_input)
+    //   // let s = this.$refs.input.value
+    //   // this.$store.commit('app/setSearch', s)
+    // },
     onEnter(){
       let inputValue = this.main_input.trim()
       if (inputValue.length > 0){

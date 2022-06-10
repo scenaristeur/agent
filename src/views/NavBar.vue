@@ -3,7 +3,7 @@
     <!-- <b-navbar-brand href="#">NavBar</b-navbar-brand> -->
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-<SpinnerComp />
+    <SpinnerComp />
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
         <!-- <b-nav-item @click="newNeurone">new</b-nav-item> -->
@@ -25,8 +25,8 @@
           <b-dropdown-item disabled>Reset camera</b-dropdown-item>
           <b-dropdown-item @click="show_node_name = !show_node_name" disabled>show node name {{ show_node_name}}</b-dropdown-item>
           <b-dropdown-item @click="show_link_label = !show_link_label" disabled>show link label {{show_link_label}}</b-dropdown-item>
-          <b-dropdown-item v-b-modal.modal-gun-graph>New Gundb Graph</b-dropdown-item>
-      </b-nav-item-dropdown>
+
+        </b-nav-item-dropdown>
 
 
         <!-- <ToolbarView /> -->
@@ -55,29 +55,29 @@
 </b-collapse>
 
 <b-modal id="modal-save" title="Save Brain" size="lg">
-      <b-button @click="saveBrainToSolid">to Solid Pod</b-button>
+  <b-button @click="saveBrainToSolid">to Solid Pod</b-button>
 
-      <b-button @click="saveNodesToIpfs" :disabled="ipfsNode == null ? true : false">to IPFS</b-button>
-      <b-button @click="saveBrainToFile" disabled>to File</b-button>
-      <b-button @click="saveBrainToGun" >to GunDb</b-button>
-      <b-button @click="saveBrainToMatrixCrdt" disabled>to Matrix-Crdt</b-button>
+  <b-button @click="saveNodesToIpfs" :disabled="ipfsNode == null ? true : false">to IPFS</b-button>
+  <b-button @click="saveBrainToFile" disabled>to File</b-button>
+
+  <b-button @click="saveBrainToMatrixCrdt" disabled>to Matrix-Crdt</b-button>
 
 
 
-      ipfs_cids:
+  ipfs_cids:
 
-<div v-if="ipfs_cids.length > 0" >
-<b-button  @click="save_cids">Save Cids</b-button>
-</div>
-<ul>
-<li v-for="c of ipfs_cids" :key="c.cid">
-<a :href="'https://ipfs.io/ipfs/'+c.cid" target="_blank">{{c.name}}</a>
-</li>
-</ul>
-{{ipfs_cids}}
-<hr>
+  <div v-if="ipfs_cids.length > 0" >
+    <b-button  @click="save_cids">Save Cids</b-button>
+  </div>
+  <ul>
+    <li v-for="c of ipfs_cids" :key="c.cid">
+      <a :href="'https://ipfs.io/ipfs/'+c.cid" target="_blank">{{c.name}}</a>
+    </li>
+  </ul>
+  {{ipfs_cids}}
+  <hr>
   ipfsNode : {{ipfsNode}}
-  </b-modal>
+</b-modal>
 
 </b-navbar>
 </template>
@@ -92,8 +92,8 @@ export default {
     'SolidLogin': ()=>import('@/components/SolidLogin'),
     'SpinnerComp': ()=>import('@/components/SpinnerComp'),
     // 'UploadFile': ()=>import('@/views/UploadFile'),
-      ShareBrain
-    },
+    ShareBrain
+  },
   data(){
     return{
       show_node_name: true,
@@ -106,28 +106,25 @@ export default {
       this.download(JSON.stringify(this.ipfs_cids), 'ipfs_cids_'+Date.now()+'.json', 'application/json');
     },
     download(content, fileName, contentType) {
-        var a = document.createElement("a");
-        var file = new Blob([content], {type: contentType});
-        a.href = URL.createObjectURL(file);
-        a.download = fileName;
-        a.click();
+      var a = document.createElement("a");
+      var file = new Blob([content], {type: contentType});
+      a.href = URL.createObjectURL(file);
+      a.download = fileName;
+      a.click();
     },
     saveNodesToIpfs(){
-        console.log("save")
-        this.$saveNodesToIpfs()
+      console.log("save")
+      this.$saveNodesToIpfs()
     },
-    saveBrainToGun(){
-        console.log("save")
-        this.$saveBrainToGun()
-    },
+
     saveBrainToMatrixCrdt(){
-        console.log("save")
+      console.log("save")
     },
     // newNeurone(){
     //   this.$store.dispatch('core/newNode')
     // },
     saveBrain(){
-        this.$bvModal.show('modal-save')
+      this.$bvModal.show('modal-save')
     },
     saveBrainToSolid(){
       this.$saveBrainToSolid()

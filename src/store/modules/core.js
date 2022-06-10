@@ -149,6 +149,7 @@ const actions = {
     try{
       // console.log("saving", node)
       await idb.saveNode(node);
+      await Vue.prototype.$saveNodeToGun(node)
     }catch(e){
       alert(e)
     }

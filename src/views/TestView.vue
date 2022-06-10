@@ -1,10 +1,13 @@
 <template>
   <b-container>
+
     <SoukaiSolidTest />
     <!-- <SoukaiTest /> -->
-    <DataCaching />
-    <GunGraph />
+    <!-- <DataCaching /> -->
+
     <SolidFriends />
+    <SolidBrains />
+    <IpfsBrains />
   </b-container>
 </template>
 
@@ -13,10 +16,12 @@ export default {
   name: "TestView",
   components: {
     'SolidFriends': ()=>import('@/views/experiments/SolidFriends'),
-    'GunGraph': ()=>import('@/views/experiments/GunGraph'),
-    'DataCaching': ()=>import('@/views/experiments/DataCaching'),
+
+    // 'DataCaching': ()=>import('@/views/experiments/DataCaching'),
     // 'SoukaiTest': ()=>import('@/views/experiments/SoukaiTest'),
     'SoukaiSolidTest': ()=>import('@/views/experiments/SoukaiSolidTest'),
+    'SolidBrains': ()=>import('@/views/experiments/SolidBrains'),
+    'IpfsBrains': ()=>import('@/views/experiments/IpfsBrains'),
   },
 }
 </script>

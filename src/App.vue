@@ -18,7 +18,7 @@
     <a href="https://youtu.be/YT61BcjGfwc" target ="_blank">How To use 3dmindmap Video Demo</a> |
     <router-link to="/test">Test</router-link>
   </i></small>
-
+  <DataCaching />
 </div>
 </template>
 
@@ -31,6 +31,7 @@ export default {
   name: 'App',
   components: {
     'NavBar': ()=>import('@/views/NavBar'),
+    'DataCaching': ()=>import('@/views/experiments/DataCaching'),
   },
   data(){
     return{

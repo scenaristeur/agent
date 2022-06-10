@@ -1,10 +1,11 @@
 let worlds = [
   {
     name: "gundb",
-    onCreated: {action: "$gunListen", params: "brains"},
-    onMounted: {action: "$gunListen", params: "blop"}, // brains
+    onCreated: {action: "$gunListen"/*, params: "brains"*/},
+  //  onMounted: {action: "$gunListen", params: "blop"}, // brains
     installed : null,
     version: null,
+    type: "gundb",
     state: null,
     active: false
   },

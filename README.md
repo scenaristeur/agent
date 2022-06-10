@@ -1,4 +1,11 @@
 # agent
+3d mindmap on your Solid Pod
+
+
+[![3D mindmap Demo](https://www.youtube.com/watch?v=YT61BcjGfwc/0.jpg)](https://www.youtube.com/watch?v=YT61BcjGfwc "3D mindmap on your Solid Pod")
+
+
+
 
 ## Project setup
 ```

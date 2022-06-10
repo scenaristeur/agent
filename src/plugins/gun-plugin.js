@@ -5,60 +5,75 @@ import { Dfs } from '@/api/dfs';
 const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
-  //  console.log(store)
+    //  console.log(store)
 
 
-Vue.prototype.$gunSearch = async function(rootNode = 'neurones'/*'brains')*/){
-  console.log(Dfs)
-  let dfs = new Dfs(Vue.prototype.$gun)
-  dfs.search(rootNode, 'name')
-}
+    Vue.prototype.$gunSearch = async function(/*'brains')*/){
+      console.log(Dfs)
+      let dfs = new Dfs(Vue.prototype.$gun)
+      dfs.search(store.state.gun.rootNode, 'name')
+    }
 
-Vue.prototype.$gunListen = async function(rootNode){
-  console.log(rootNode)
-  let gunBrains = []
-  await Vue.prototype.$gun.get(rootNode).map().on(function(node,key) {
-    console.log(node,key)
-    Vue.prototype.$gun.get(key).open((doc) => {
-    //console.log("doc",key,  doc)
-    doc.key = key
-    gunBrains.push(doc)
-  //  gunBrains[key] = doc
-    console.log(gunBrains)
-      store.commit('gun/setGunBrains', gunBrains)
-    });
-  })
-
-  // await Vue.prototype.$gun.get('neurones').map().on(function(node,key) {
-  // //  console.log(node,key)
-  // let gunNeurones = []
-  //   Vue.prototype.$gun.get(key).open((doc) => {
-  //   //console.log("doc",key,  doc)
-  //   doc.key = key
-  //   gunNeurones.push(doc)
-  // //  gunBrains[key] = doc
-  //   console.log(gunNeurones)
-  //     //store.commit('gun/setGunBrains', gunBrains)
-  //   });
-  // })
-
-}
-Vue.prototype.$saveBrainToGun = async function(){
-  for await (const n of store.state.core.nodes){
-    console.log(n.id, n)
-      Vue.prototype.$gun.get('neurones').set(n)
-
-  }
-}
+    Vue.prototype.$gunListen = async function(){
+      // let gunBrains = []
+      console.log("Map",await Vue.prototype.$gun.get(store.state.gun.rootNode).map())
+      await Vue.prototype.$gun.get(store.state.gun.rootNode).map().on(
+        (node, key) => store.commit('gun/addGunBrains', {node:node, key: key})
+      )
+      //   function(node,key) {
+      //   console.log(node,key)
+      //   Vue.prototype.$gun.get(key).open((doc) => {
+      //   //console.log("doc",key,  doc)
+      //   doc.key = key
+      //   gunBrains.push(doc)
+      // //  gunBrains[key] = doc
+      //   console.log(gunBrains)
+      //     store.commit('gun/setGunBrains', gunBrains)
+      //   });
+    }
 
 
-Vue.prototype.$gunSet = async function(rootNode, object){
-  console.log(rootNode, object)
-  Vue.prototype.$gun.get(rootNode).set(object)
-}
 
-    Vue.prototype.$gunExplore = async function(rootNode){
+    // await Vue.prototype.$gun.get('neurones').map().on(function(node,key) {
+    // //  console.log(node,key)
+    // let gunNeurones = []
+    //   Vue.prototype.$gun.get(key).open((doc) => {
+    //   //console.log("doc",key,  doc)
+    //   doc.key = key
+    //   gunNeurones.push(doc)
+    // //  gunBrains[key] = doc
+    //   console.log(gunNeurones)
+    //     //store.commit('gun/setGunBrains', gunBrains)
+    //   });
+    // })
+
+    // }
+    Vue.prototype.$saveBrainToGun = async function(){
+      let path = Vue.prototype.$gun.get(store.state.gun.rootNode).get(store.state.core.brain.key).get('nodes')
+      for await (const n of store.state.core.nodes){
+        delete n['@context']
+        console.error("must not be used , use store.rootNode",n.id, n)
+        path.set(n)
+
+      }
+    }
+
+    Vue.prototype.$saveNodeToGun = async function(node){
+      console.log("Brain", store.state.core.brain, store.state.core.galaxy, store.state.core.galaxy.worlds, node)
+      // if (store.state.brain != null){
+      //
+      // }
+
+    }
+
+    Vue.prototype.$gunSet = async function(object){
+      console.log(store.state.gun.rootNode, object)
+      Vue.prototype.$gun.get(store.state.gun.rootNode).set(object)
+    }
+
+    Vue.prototype.$gunExplore = async function(){
       // inspiration https://github.com/Stefdv/gun-ui-graph/blob/master/gun-ui-graph.html
+      let rootNode = store.state.gun.rootNode
       console.log(rootNode)
       console.log('build gun._.graph')
       // var self = this
@@ -80,23 +95,23 @@ Vue.prototype.$gunSet = async function(rootNode, object){
       console.log("graph", graph)
       console.log(Vue.prototype.$gun)
       Vue.prototype.$gun.get(rootNode).open((doc) => {
-      console.log("doc", doc)
+        console.log("doc", doc)
       });
       return graph
 
     }
     async function processNode(n){
       let gunNodes = []
-       var soul = n._['#'];
-       console.log("soul", soul)
-       n.map().once((node) => {
-         //console.log(key, node)
-         gunNodes.push(node)
-         // add results straight to the Vue component state
-         // and get updates when nodes are updated by GUN
-         // this.todos[key] = node;
-         //  console.log(this.todos)
-       });
+      var soul = n._['#'];
+      console.log("soul", soul)
+      n.map().once((node) => {
+        //console.log(key, node)
+        gunNodes.push(node)
+        // add results straight to the Vue component state
+        // and get updates when nodes are updated by GUN
+        // this.todos[key] = node;
+        //  console.log(this.todos)
+      });
       //let isSet = await _isSet(soul)
       //console.log(isSet)
       // console.log(gunNodes)
@@ -104,64 +119,64 @@ Vue.prototype.$gunSet = async function(rootNode, object){
     }
 
 
-    Vue.prototype.$createBrain = async function(brain){
+    // Vue.prototype.$createBrain = async function(brain){
+    //
+    //   console.log("creation",brain)
+    //   let brains = []
+    //   let rootNode = null
+    //   switch (brain.world) {
+    //     case "gun":
+    //     if (brain.privacy == "user"){
+    //       rootNode = Vue.prototype.$gun.user().get('brains')
+    //     }else {
+    //       rootNode = Vue.prototype.$gun.get('brains')
+    //     }
+    //
+    //
+    //
+    //     rootNode.map().on((node, key) => {
+    //       console.log(key, node)
+    //       brains.push({key: key, node: node})
+    //       // add results straight to the Vue component state
+    //       // and get updates when nodes are updated by GUN
+    //       // this.todos[key] = node;
+    //       //  console.log(this.todos)
+    //     });
+    //
+    //     rootNode.set({name: brain.name, created: Date.now(), type: brain.type})
+    //
+    //
+    //     brain.brains = brains
+    //     console.log("brains",brain.brains)
+    //
+    //
+    //
+    //     break;
+    //     default:
+    //     console.log("todo")
+    //   }
+    //
+    //   //store.commit('app/setBrain', brain)
+    //   return brain
+    // }
 
-      console.log("creation",brain)
-      let brains = []
-      let rootNode = null
-      switch (brain.world) {
-        case "gun":
-        if (brain.privacy == "user"){
-          rootNode = Vue.prototype.$gun.user().get('brains')
-        }else {
-          rootNode = Vue.prototype.$gun.get('brains')
-        }
-
-
-
-        rootNode.map().on((node, key) => {
-          console.log(key, node)
-          brains.push({key: key, node: node})
-          // add results straight to the Vue component state
-          // and get updates when nodes are updated by GUN
-          // this.todos[key] = node;
-          //  console.log(this.todos)
-        });
-
-        rootNode.set({name: brain.name, created: Date.now(), type: brain.type})
-
-
-        brain.brains = brains
-        console.log("brains",brain.brains)
-
-
-
-        break;
-        default:
-        console.log("todo")
-      }
-
-      //store.commit('app/setBrain', brain)
-      return brain
-    }
-
-    Vue.prototype.$gunGet = async function(brain){
-      let gunNodes = []
-      Vue.prototype.$gun.get(brain.name).map().on((node, key) => {
-        console.log(key, node)
-        gunNodes.push({key: key, node: node})
-        // add results straight to the Vue component state
-        // and get updates when nodes are updated by GUN
-        // this.todos[key] = node;
-        //  console.log(this.todos)
-      });
-      console.log(gunNodes)
-      brain.gunNodes = gunNodes
-      console.log(brain)
-      store.commit('app/setBrain', brain)
-      //  Vue.prototype.$listenNeurones(brain)
-      return brain
-    }
+    // Vue.prototype.$gunGet = async function(brain){
+    //   let gunNodes = []
+    //   Vue.prototype.$gun.get(brain.name).map().on((node, key) => {
+    //     console.log(key, node)
+    //     gunNodes.push({key: key, node: node})
+    //     // add results straight to the Vue component state
+    //     // and get updates when nodes are updated by GUN
+    //     // this.todos[key] = node;
+    //     //  console.log(this.todos)
+    //   });
+    //   console.log(gunNodes)
+    //   brain.gunNodes = gunNodes
+    //   console.log(brain)
+    //   store.commit('app/setBrain', brain)
+    //   //  Vue.prototype.$listenNeurones(brain)
+    //   return brain
+    // }
 
 
 
