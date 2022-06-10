@@ -13,6 +13,7 @@ import {Neurone} from '@/models/Neurone'
 const plugin = {
   install(Vue, opts = {}) {
     opts ? console.log(opts): {}
+    let store = opts.store
 
     let engine = null
 
@@ -26,7 +27,7 @@ const plugin = {
     Soukai.useEngine(new LogEngine(engine));
 
     Vue.prototype.$createNeurone = async function(n){
-      Neurone.create(n)
+      await Neurone.create(n)
       .then(() => Neurone.all())
       .then(models => models.map(model => model.getAttributes()))
       .then(neurones => {
@@ -36,7 +37,9 @@ const plugin = {
 
 
       let all = await Neurone.all()
-      console.log(all)
+      let neurones = all.map(model => model.getAttributes())
+      console.log("all neurones",neurones)
+      store.commit('soukai/setNeurones', neurones)
     }
 
     //

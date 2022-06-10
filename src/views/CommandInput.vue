@@ -1,13 +1,13 @@
 <template>
   <div>
-    ComandInput
     <b-button @click="create">Create</b-button>
+    command {{ soukaiNeurones }}
   </div>
 </template>
 
 <script>
 export default {
-  name: "CommandInput",
+  name: 'CommandInput',
   methods: {
     create(){
       let n = { name: 'John',
@@ -18,8 +18,14 @@ export default {
       blop: "youhou"
     }
     this.$createNeurone(n)
+  },
+},
+computed: {
+  soukaiNeurones() {
+    return this.$store.state.soukai.neurones
   }
 }
+
 }
 </script>
 
