@@ -1,12 +1,12 @@
 <template>
   <div>
-    nav
+    graph
   </div>
 </template>
 
 <script>
 export default {
-  name: "NavBar"
+  name: "GraphView"
 }
 </script>
 

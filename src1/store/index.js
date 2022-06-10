@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import core from './modules/core'
+import solid from './modules/solid'
+import terminal from './modules/terminal'
+import gun from './modules/gun'
+// import automerge from './modules/automerge'
 
 Vue.use(Vuex)
 
@@ -14,6 +18,6 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    core
+    core, solid, terminal, gun /*automerge*/
   }
 })
