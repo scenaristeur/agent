@@ -27,6 +27,8 @@ import IpfsDataPlugin from './plugins/ipfs-data-plugin';
 Vue.use(IpfsDataPlugin, {store: store});
 import SearchPlugin from './plugins/search-plugin';
 Vue.use(SearchPlugin, {store: store});
+import BrainPlugin from './plugins/brain-plugin';
+Vue.use(BrainPlugin, {store: store});
 // import LevelgraphJsonLDPlugin from './plugins/levelgraphjsonld-plugin';
 // Vue.use(LevelgraphJsonLDPlugin, {store: store});
 import VueFab from 'vue-float-action-button'

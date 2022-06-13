@@ -14,7 +14,7 @@ const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
     let size = getSize()
-    
+
     function getSize(){
       //768 = medium bootstrap
       return {w: window.innerWidth > 768 ? window.innerWidth/2 : window.innerWidth,
@@ -44,7 +44,7 @@ const plugin = {
         // .nodeId('id')
         .nodeLabel('name')
         .nodeAutoColorBy("type")
-        .nodeRelSize(9)
+        //.nodeRelSize(9)
         .nodeColor(node => highligth(node) ? 'yellow' : highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : node.color)
         //.nodeColor(node => /*highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' :*/ node.color)
         //.onBackgroundClick(event => onBackgroundClick(event))

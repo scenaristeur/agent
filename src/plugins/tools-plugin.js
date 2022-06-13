@@ -33,7 +33,7 @@ const plugin = {
           "@context" : Object.assign(context, options['@context']),
           "id": options['@id'] || options.id || uuidv4(),
           "name": options.name && options.name['@value'] || options.name || "",
-          type: "neurone",
+          type: options.type || "neurone",
          //'shape': 'sphere' || options.shape,
           //color: "#00ff00",
           "homepage": "https://scenaristeur.github.io/agent/",
@@ -42,6 +42,9 @@ const plugin = {
           node.shape = 'base64'
           node.base64 = options.base64
           node.type = options.type
+        }
+        if (options.neurones != undefined ){
+          node.neurones = options.neurones
         }
 
         return node
