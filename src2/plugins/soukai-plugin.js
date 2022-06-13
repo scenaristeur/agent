@@ -32,8 +32,8 @@ const plugin = {
       .then(models => models.map(model => model.getAttributes()))
       .then(neurones => {
         console.log('neurones models', neurones)
-        Vue.prototype.$loadSoukaiNeurones()
-        });
+        Vue.prototype.$soukai_findAll()
+      });
     }
 
     Vue.prototype.$soukai_findAll = async function(){
@@ -41,6 +41,14 @@ const plugin = {
       let neurones = all.map(model => model.getAttributes())
       console.log("all neurones",neurones)
       store.commit('soukai/setNeurones', neurones)
+    }
+
+    Vue.prototype.$soukaiRemove = async function(item){
+      console.log(item)
+      let neurone = await Neurone.find(item.id)
+      await neurone.delete()
+      Vue.prototype.$soukai_findAll()
+
     }
 
     //

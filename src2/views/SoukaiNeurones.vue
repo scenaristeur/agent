@@ -1,30 +1,38 @@
 <template>
   <div>
-    <b-button @click="update">Update</b-button>
+    <!-- <b-button @click="findAll">Update</b-button> -->
+    <b-input v-model="n.name" placeholder="name" />
     <b-button @click="create">Create</b-button>
-    command {{ soukaiNeurones }}
+
+    <CrudList :items="soukaiNeurones" />
   </div>
 </template>
 
 <script>
 export default {
   name: "SoukaiNeurones",
-  created(){
-    this.update()
+  components: {
+    'CrudList': ()=>import('@/components/crud/CrudList'),
   },
-  methods: {
-    create(){
-      let n = { name: 'John',
+  data(){
+    return {
+      n :{ name: 'John',
       surname: 'Doe',
-      birthDate: new Date(),
       interests : ["Solid", "dev"],
       contact : {email: "jhgj@ku.juyg", phone: "01234567890"},
       blop: "youhou"
     }
-    this.$createNeurone(n)
+  }
+},
+created(){
+  this.findAll()
+},
+methods: {
+  create(){
+    this.$soukai_create(this.n)
   },
-  update(){
-    this.$loadSoukaiNeurones()
+  findAll(){
+    this.$soukai_findAll()
   }
 },
 computed: {

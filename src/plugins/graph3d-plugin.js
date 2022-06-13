@@ -14,17 +14,17 @@ const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
     let size = getSize()
-
+    
     function getSize(){
       //768 = medium bootstrap
       return {w: window.innerWidth > 768 ? window.innerWidth/2 : window.innerWidth,
         h: window.innerWidth > 768 ? window.innerHeight*.9 : window.innerHeight*.8}
       }
       window.addEventListener('resize', function(){
-        if (store.state.graph3D.graph != null){
+        if (store.state.core.graph != null){
           size = getSize()
-          store.state.graph3D.graph.width(size.w)
-          store.state.graph3D.graph.height(size.h)
+          store.state.core.graph.width(size.w)
+          store.state.core.graph.height(size.h)
         }
       } );
 
@@ -32,9 +32,9 @@ const plugin = {
       Vue.prototype.$graphInit = async function(options){
         // console.log(options)
         let graphData={nodes: [], links: []}
-        let highlightNodes = store.state.graph3D.highlightNodes
-        let highlightLinks = store.state.graph3D.highlightLinks
-        let hoverNode = store.state.graph3D.hoverNode
+        let highlightNodes = store.state.core.highlightNodes
+        let highlightLinks = store.state.core.highlightLinks
+        let hoverNode = store.state.core.hoverNode
 
         let graph = ForceGraph3D({extraRenderers: [new CSS2DRenderer()]})(options.domElement).graphData(graphData)
         graph
@@ -71,7 +71,7 @@ const plugin = {
         .linkPositionUpdate((sprite, { start, end }) => {
           if(sprite != undefined){
             const middlePos = Object.assign(...['x', 'y', 'z'].map(c => ({
-              [c]: start[c] + (end[c] - start[c]) / 3 // calc middle point
+              [c]: start[c] + (end[c] - start[c]) / 4 // calc middle point
             })))
             // Position sprite
             Object.assign(sprite.position, middlePos);
@@ -108,31 +108,31 @@ const plugin = {
           Vue.prototype.$updateHighlight();
         })
         // console.log(graph)
-        store.commit ('graph3D/setGraph', graph)
+        store.commit ('core/setGraph', graph)
       }
 
       function highligth(node){
         //console.log(node)
-        return store.state.graph3D.search != null && store.state.graph3D.search.text.length > 0 && node.name.includes(store.state.graph3D.search.text)
+        return store.state.core.search != null && store.state.core.search.text.length > 0 && node.name.includes(store.state.core.search.text)
       }
       // Vue.prototype.$onNodeSearch = async function (node, event){
       //   console.log(node, event)
       //     // if (event.ctrlKey || event.shiftKey || event.altKey) { // multi-selection
-      //     //   store.state.graph3D.selectedNodes.has(node) ? store.state.graph3D.selectedNodes.delete(node) : store.state.graph3D.selectedNodes.add(node);
+      //     //   store.state.core.selectedNodes.has(node) ? store.state.core.selectedNodes.delete(node) : store.state.core.selectedNodes.add(node);
       //     // } else { // single-selection
-      //     //   const untoggle = store.state.graph3D.selectedNodes.has(node) && store.state.graph3D.selectedNodes.size === 1;
-      //     //   store.state.graph3D.selectedNodes.clear();
-      //     //   !untoggle && store.state.graph3D.selectedNodes.add(node);
+      //     //   const untoggle = store.state.core.selectedNodes.has(node) && store.state.core.selectedNodes.size === 1;
+      //     //   store.state.core.selectedNodes.clear();
+      //     //   !untoggle && store.state.core.selectedNodes.add(node);
       //     // }
-      //     store.state.graph3D.selectedNodes.add(node)
+      //     store.state.core.selectedNodes.add(node)
       //
-      //     store.state.graph3D.graph.nodeColor(store.state.graph3D.graph.nodeColor()); // update color of selected nodes
+      //     store.state.core.graph.nodeColor(store.state.core.graph.nodeColor()); // update color of selected nodes
       //   }
 
       Vue.prototype.$updateHighlight = function() {
         // trigger update of highlighted objects in scene
-      //  console.log(store.state.graph3D.highlightNodes)
-        let graph = store.state.graph3D.graph
+      //  console.log(store.state.core.highlightNodes)
+        let graph = store.state.core.graph
         graph
         .nodeColor(graph.nodeColor())
         .linkWidth(graph.linkWidth())
@@ -314,14 +314,14 @@ const plugin = {
           const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
           pos = { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
         }
-        store.state.graph3D.graph.cameraPosition(
+        store.state.core.graph.cameraPosition(
           pos, // new position
           node, // lookAt ({ x, y, z })
           3000  // ms transition duration
         );
-        // console.log(store.state.graph3D.graph)
-        let n = store.state.graph3D.nodes.find(n => n.id == node.id)
-        store.commit ('graph3D/setCurrentNode', n)
+        // console.log(store.state.core.graph)
+        let n = store.state.core.nodes.find(n => n.id == node.id)
+        store.commit ('core/setCurrentNode', n)
 
       }
 
@@ -339,7 +339,7 @@ const plugin = {
       //   //   }
       //   // )
       //   console.log(event)
-      //   store.dispatch('graph3D/newNode')
+      //   store.dispatch('core/newNode')
       //   // console.log("new", node)
       //   //  Vue.prototype.$bvModal.show("modal-node")
       //

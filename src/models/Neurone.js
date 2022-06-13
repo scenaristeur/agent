@@ -1,19 +1,20 @@
-import { Model, FieldType} from 'soukai';
-
+import { FieldType} from 'soukai';
+import { Basic } from './Basic.js'
+// import { User } from './User.js'
 export { Neurone }
-class Neurone extends Model {
-
+class Neurone extends Basic {
   static fields = {
-    name: FieldType.String,
-
-    other: {
-      type: FieldType.Array,
-      items: FieldType.String,
-    },
-
+    authorId: FieldType.Key,
   };
-  // authorRelationship() {
-  //     return this.belongsToOne(User, 'authorId');
-  // }
+
+  async initialize(attributes, exists) {
+    super.initialize(attributes, exists);
+
+    //console.log('this is fine', this.getAttribute('name'));
+
+    //      await this.loadRelation('author');
+
+    //    console.log('this is also fine', await this.getRelationModels('author'));
+  }
 
 }
