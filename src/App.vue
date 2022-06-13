@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavBar />
-    <b-container>
+    <b-container fluid >
       <CommandInput />
       <b-row>
         <b-col md="6">
@@ -12,8 +12,6 @@
 
         </b-col>
       </b-row>
-
-
     </b-container>
     <FooTer />
   </div>

@@ -1,12 +1,16 @@
 <template>
   <div>
     side
+    <SoukaiNeurones />
   </div>
 </template>
 
 <script>
 export default {
-  name: "SideView"
+  name: "SideView",
+  components: {
+    'SoukaiNeurones': ()=>import('@/views/SoukaiNeurones'),
+  }
 }
 </script>
 

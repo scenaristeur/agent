@@ -26,16 +26,17 @@ const plugin = {
     Soukai.loadModels({ Neurone });
     Soukai.useEngine(new LogEngine(engine));
 
-    Vue.prototype.$createNeurone = async function(n){
+    Vue.prototype.$soukai_create = async function(n){
       await Neurone.create(n)
       .then(() => Neurone.all())
       .then(models => models.map(model => model.getAttributes()))
       .then(neurones => {
         console.log('neurones models', neurones)
-        // this.users = neurones
-      });
+        Vue.prototype.$loadSoukaiNeurones()
+        });
+    }
 
-
+    Vue.prototype.$soukai_findAll = async function(){
       let all = await Neurone.all()
       let neurones = all.map(model => model.getAttributes())
       console.log("all neurones",neurones)
