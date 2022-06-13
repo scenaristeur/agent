@@ -33,7 +33,7 @@ const plugin = {
       };
 
       db.jsonld.put(manu, function(err, obj) {
-        console.log(err, obj)
+        console.log("LEVELGRAPHJSONLD",err, obj)
       });
     }
 

@@ -18,7 +18,9 @@
     <a href="https://youtu.be/YT61BcjGfwc" target ="_blank">How To use 3dmindmap Video Demo</a> |
     <router-link to="/test">Test</router-link>
   </i></small>
+    <!-- <LevelgraphJsonld /> -->
   <DataCaching />
+
 </div>
 </template>
 
@@ -32,6 +34,7 @@ export default {
   components: {
     'NavBar': ()=>import('@/views/NavBar'),
     'DataCaching': ()=>import('@/views/experiments/DataCaching'),
+    // 'LevelgraphJsonld': ()=>import('@/views/experiments/LevelgraphJsonld'),
   },
   data(){
     return{

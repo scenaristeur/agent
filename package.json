@@ -23,6 +23,8 @@
     "core-js": "^3.8.3",
     "ipfs-core": "^0.14.3",
     "jsonld": "^5.2.0",
+    "level": "^8.0.0",
+    "levelgraph-jsonld": "github:scenaristeur/levelgraph-jsonld#patch-1",
     "node-polyfill-webpack-plugin": "^1.1.4",
     "register-service-worker": "^1.7.2",
     "soukai": "^0.4.1",
