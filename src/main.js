@@ -80,19 +80,35 @@ Vue.use(VueFab,  {
 // });
 
 
-import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+import { BootstrapVue,
+  // BIconLink,
+  // BIconEye,
+  // BIconShare,
+  // BIconFileArrowUp,
+  // BIconFileArrowDown,
+  // BIconClipboardPlus,
+  // BIconCloudUpload
+  BootstrapVueIcons
+ } from 'bootstrap-vue'
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+  import 'bootstrap/dist/css/bootstrap.css'
+  import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-Vue.use(BootstrapVue)
-Vue.use(BootstrapVueIcons)
+  Vue.use(BootstrapVue)
+  // Vue.use(BIconLink)
+  // Vue.use(BIconEye)
+  // Vue.use(BIconShare)
+  // Vue.use(BIconFileArrowUp)
+  // Vue.use(BIconFileArrowDown)
+  // Vue.use(BIconClipboardPlus)
+  // Vue.use(BIconCloudUpload)
+  Vue.use(BootstrapVueIcons)
 
 
-Vue.config.productionTip = false
+  Vue.config.productionTip = false
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+  new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount('#app')

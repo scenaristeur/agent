@@ -7,8 +7,13 @@ module.exports = defineConfig({
   transpileDependencies: true,
   // options...
   publicPath: publicPath,
+
   configureWebpack: {
     // plugins: [new NodePolyfillPlugin()],
+    watchOptions: {
+      ignored: /node_modules/,
+      poll: 1000,
+    },
     optimization: {
       splitChunks: {
         chunks: "all",
