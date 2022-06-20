@@ -1,8 +1,8 @@
 <template>
   <div>
-  <div v-if="brain != undefined" >Brain: {{ brain }}</div>
+    <div v-if="brain != undefined" >Brain: {{ brain }}</div>
     <!-- <GunGraph v-if="showGunGraph"/> -->
-    <IpfsConnector />
+    <!-- <IpfsConnector /> -->
     <BrainLoader />
     <NodeEdition sm="6"/>
     <TerminalView v-if="showTerminal"/>
@@ -17,7 +17,7 @@ export default {
     'BrainLoader': ()=>import('@/views/BrainLoader'),
     'TerminalView': ()=>import('@/views/TerminalView'),
     // 'GunGraph': ()=>import('@/views/experiments/GunGraph'),
-      'IpfsConnector': ()=>import('@/views/connectors/IpfsConnector'),
+    // 'IpfsConnector': ()=>import('@/views/connectors/IpfsConnector'),
   },
   computed: {
     showTerminal() {

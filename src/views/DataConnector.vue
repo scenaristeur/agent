@@ -10,8 +10,8 @@
       <!-- <p class="my-4">Load / save brains & synchronize</p> -->
       <b-container>
       <LocalConnector />
-      <RemoteConnector />
-      <SocialConnector />
+      <!-- <RemoteConnector /> -->
+      <!-- <SocialConnector /> -->
       <SolidConnector />
       <!-- <IpfsConnector /> -->
 </b-container>
@@ -26,8 +26,8 @@ export default {
   components: {
     // 'ToolbarView': ()=>import('@/views/ToolbarView'),
     'LocalConnector': ()=>import('@/views/connectors/LocalConnector'),
-    'RemoteConnector': ()=>import('@/views/connectors/RemoteConnector'),
-    'SocialConnector': ()=>import('@/views/connectors/SocialConnector'),
+    // 'RemoteConnector': ()=>import('@/views/connectors/RemoteConnector'),
+    // 'SocialConnector': ()=>import('@/views/connectors/SocialConnector'),
     'SolidConnector': ()=>import('@/views/connectors/SolidConnector'),
     // 'IpfsConnector': ()=>import('@/views/connectors/IpfsConnector'),
   }

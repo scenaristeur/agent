@@ -11,7 +11,7 @@
         <b-nav-item @click="saveBrain">save</b-nav-item>
         <DataConnector />
 
-        <ShareBrain style="float:left"/>
+
 
         <!-- <b-nav-item href="#">Link</b-nav-item> -->
         <!-- <b-nav-item @click="newNeurone">new</b-nav-item> -->
@@ -51,50 +51,38 @@
   <b-dropdown-item href="#">Profile</b-dropdown-item>
   <b-dropdown-item href="#">Sign Out</b-dropdown-item>
 </b-nav-item-dropdown> -->
-<SolidLogin />
+
 </b-navbar-nav>
 </b-collapse>
 
 <b-modal id="modal-save" title="Save Brain" size="lg">
   <b-button @click="saveBrainToSolid">to Solid Pod</b-button>
 
-  <b-button @click="saveNodesToIpfs" :disabled="ipfsNode == null ? true : false">to IPFS</b-button>
-  <b-button @click="saveBrainToFile" disabled>to File</b-button>
 
-  <b-button @click="saveBrainToMatrixCrdt" disabled>to Matrix-Crdt</b-button>
+  <!-- <b-button @click="saveBrainToFile" disabled>to File</b-button>
+
+  <b-button @click="saveBrainToMatrixCrdt" disabled>to Matrix-Crdt</b-button> -->
 
 
 
-  ipfs_cids:
 
-  <div v-if="ipfs_cids.length > 0" >
-    <b-button  @click="save_cids">Save Cids</b-button>
-  </div>
-  <ul>
-    <li v-for="c of ipfs_cids" :key="c.cid">
-      <a :href="'https://ipfs.io/ipfs/'+c.cid" target="_blank">{{c.name}}</a>
-    </li>
-  </ul>
-  {{ipfs_cids}}
-  <hr>
-  ipfsNode : {{ipfsNode}}
 </b-modal>
 
 </b-navbar>
 </template>
 
 <script>
-import ShareBrain from '@/components/ShareBrain.vue'
+// import ShareBrain from '@/components/ShareBrain.vue'
 
 export default {
   name: "NavBar",
   components: {
     // 'ToolbarView': ()=>import('@/views/ToolbarView'),
-    'SolidLogin': ()=>import('@/components/SolidLogin'),
+    // 'SolidLogin': ()=>import('@/components/SolidLogin'),
     'SpinnerComp': ()=>import('@/components/SpinnerComp'),
     // 'UploadFile': ()=>import('@/views/UploadFile'),
-    ShareBrain,
-      'DataConnector': ()=>import('@/views/DataConnector'),
+    // ShareBrain,
+    'DataConnector': ()=>import('@/views/DataConnector'),
   },
   data(){
     return{
@@ -103,25 +91,10 @@ export default {
     }
   },
   methods:{
-    save_cids(){
-      console.log(this.ipfs_cids)
-      this.download(JSON.stringify(this.ipfs_cids), 'ipfs_cids_'+Date.now()+'.json', 'application/json');
-    },
-    download(content, fileName, contentType) {
-      var a = document.createElement("a");
-      var file = new Blob([content], {type: contentType});
-      a.href = URL.createObjectURL(file);
-      a.download = fileName;
-      a.click();
-    },
-    saveNodesToIpfs(){
-      console.log("save")
-      this.$saveNodesToIpfs()
-    },
 
-    saveBrainToMatrixCrdt(){
-      console.log("save")
-    },
+
+
+
     // newNeurone(){
     //   this.$store.dispatch('core/newNode')
     // },
@@ -160,14 +133,7 @@ export default {
       }
     },
   },
-  computed: {
-    ipfsNode() {
-      return this.$store.state.core.ipfsNode
-    },
-    ipfs_cids() {
-      return this.$store.state.core.ipfs_cids
-    },
-  }
+
 }
 </script>
 
