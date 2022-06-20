@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkagent"]=self["webpackChunkagent"]||[]).push([[57],{30057:function(n,e,t){t.r(e),t.d(e,{default:function(){return c}});var r=function(){var n=this,e=n.$createElement,t=n._self._c||e;return t("div",[n._v(" Solid Brains ")])},u=[],a={name:"SolidBrains"},l=a,i=t(1001),s=(0,i.Z)(l,r,u,!1,null,"2b34337b",null),c=s.exports}}]);
+//# sourceMappingURL=57-legacy.ec22bde9.js.map

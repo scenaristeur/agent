@@ -19,7 +19,7 @@
     <router-link to="/test">Test</router-link>
   </i></small>
     <!-- <LevelgraphJsonld /> -->
-  <DataCaching />
+  <!-- <DataCaching /> -->
 
 </div>
 </template>
@@ -33,7 +33,7 @@ export default {
   name: 'App',
   components: {
     'NavBar': ()=>import('@/views/NavBar'),
-    'DataCaching': ()=>import('@/views/experiments/DataCaching'),
+    // 'DataCaching': ()=>import('@/views/experiments/DataCaching'),
     // 'LevelgraphJsonld': ()=>import('@/views/experiments/LevelgraphJsonld'),
   },
   data(){

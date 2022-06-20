@@ -9,6 +9,7 @@
         <!-- <b-nav-item @click="newNeurone">new</b-nav-item> -->
         <b-nav-item @click="showBrainLoader">brains</b-nav-item>
         <b-nav-item @click="saveBrain">save</b-nav-item>
+        <DataConnector />
 
         <ShareBrain style="float:left"/>
 
@@ -92,7 +93,8 @@ export default {
     'SolidLogin': ()=>import('@/components/SolidLogin'),
     'SpinnerComp': ()=>import('@/components/SpinnerComp'),
     // 'UploadFile': ()=>import('@/views/UploadFile'),
-    ShareBrain
+    ShareBrain,
+      'DataConnector': ()=>import('@/views/DataConnector'),
   },
   data(){
     return{

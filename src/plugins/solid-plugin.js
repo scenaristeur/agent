@@ -52,7 +52,7 @@ const plugin = {
 
     Vue.prototype.$checkSolidSession = async function(){
       await sc.handleIncomingRedirect({
-        restorePreviousSession: true
+        //restorePreviousSession: true
       }).then((info) => {
         if(info.isLoggedIn ==  true){
           console.log(`Logged in with WebID [${info.webId}]`)

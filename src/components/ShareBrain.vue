@@ -1,10 +1,10 @@
 <template>
   <div>
-    <!-- <b-button v-b-modal.share_current>Share</b-button> -->
-    <b-button v-if="ipfsNode!= null" size="sm" :variant="'outline-'+variant"  @click.stop="share()">
+    <!-- <b-button v-b-modal.share_current>Share</b-button> v-if="ipfsNode!= null" -->
+    <b-button  size="sm" :variant="'outline-'+variant"  @click.stop="share()">
       <b-icon-share @click.stop="share()" :variant="variant" ></b-icon-share>
     </b-button>
-    <b-button v-else variant="light" disable size="sm">Connecting to ipfs..</b-button>
+    <!-- <b-button v-else variant="light" disable size="sm">Connecting to ipfs..</b-button> -->
 
 
 

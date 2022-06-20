@@ -44,7 +44,7 @@ const plugin = {
         // .nodeId('id')
         .nodeLabel('name')
         .nodeAutoColorBy("type")
-        //.nodeRelSize(9)
+        //.nodeRelSize(5)
         .nodeColor(node => highligth(node) ? 'yellow' : highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : node.color)
         //.nodeColor(node => /*highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' :*/ node.color)
         //.onBackgroundClick(event => onBackgroundClick(event))
@@ -189,7 +189,7 @@ const plugin = {
           };
           material = new THREE.SpriteMaterial({ map: texture });
           sprite = new THREE.Sprite(material);
-          sprite.scale.set(12, 12);
+          sprite.scale.set(2, 2);
           //return sprite;
           break;
           default:
