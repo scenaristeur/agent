@@ -6,8 +6,8 @@ import store from './store'
 
 // import OsCorePlugin from './plugins/os-core-plugin';
 // Vue.use(OsCorePlugin, {store: store});
-import GalaxyPlugin from './plugins/galaxy-plugin';
-Vue.use(GalaxyPlugin, {store: store});
+// import GalaxyPlugin from './plugins/galaxy-plugin';
+// Vue.use(GalaxyPlugin, {store: store});
 
 import VueSocialSharing from 'vue-social-sharing'
 Vue.use(VueSocialSharing);
@@ -23,12 +23,12 @@ import SolidPlugin from './plugins/solid-plugin';
 Vue.use(SolidPlugin, {store: store});
 import SolidDataPlugin from './plugins/solid-data-plugin';
 Vue.use(SolidDataPlugin, {store: store});
-import IpfsDataPlugin from './plugins/ipfs-data-plugin';
-Vue.use(IpfsDataPlugin, {store: store});
+// import IpfsDataPlugin from './plugins/ipfs-data-plugin';
+// Vue.use(IpfsDataPlugin, {store: store});
 import SearchPlugin from './plugins/search-plugin';
 Vue.use(SearchPlugin, {store: store});
-import BrainPlugin from './plugins/brain-plugin';
-Vue.use(BrainPlugin, {store: store});
+// import BrainPlugin from './plugins/brain-plugin';
+// Vue.use(BrainPlugin, {store: store});
 // import LevelgraphJsonLDPlugin from './plugins/levelgraphjsonld-plugin';
 // Vue.use(LevelgraphJsonLDPlugin, {store: store});
 import VueFab from 'vue-float-action-button'
@@ -40,29 +40,53 @@ Vue.use(VueFab,  {
 } )
 
 
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+// import { LayoutPlugin,
+//   ModalPlugin,
+//   IconsPlugin,
+//   NavbarPlugin,
+//   CollapsePlugin,
+//   FormPlugin,
+//   BInputGroup,
+//
+//
+// } from 'bootstrap-vue'
+//
+// // Import Bootstrap an BootstrapVue CSS files (order is important)
+// import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap-vue/dist/bootstrap-vue.css'
+//
+//
+//
+// // Make BootstrapVue available throughout your project
+// Vue.use(LayoutPlugin)
+// Vue.use(ModalPlugin)
+// Vue.use(NavbarPlugin)
+// Vue.use(CollapsePlugin)
+// Vue.use(FormPlugin)
+// Vue.use(BInputGroup)
+// // Optionally install the BootstrapVue icon components plugin
+// Vue.use(IconsPlugin)
 
-// Import Bootstrap an BootstrapVue CSS files (order is important)
+// import GunPlugin from './plugins/gun-plugin';
+// Vue.use(GunPlugin, {store: store});
+//
+// import VueGun from 'vue-gun';
+// import('gun/lib/load.js')
+// // import SEA from 'gun/sea'; // Required for SEA functions and user authentication
+// // Vue.use(SEA)
+// Vue.use(VueGun, {
+//   //  gun: gun // must be passed in at `gun` key
+//    peers: ['https://spogg.herokuapp.com/gun',/*'http://localhost:9090/gun',*/ 'https://gun-manhattan.herokuapp.com/gun'/*, 'http://gunjs.herokuapp.com/gun/'*/] // run gun-starter-app on port 9090
+// });
+
+
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-// Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
-
-import GunPlugin from './plugins/gun-plugin';
-Vue.use(GunPlugin, {store: store});
-
-import VueGun from 'vue-gun';
-import('gun/lib/load.js')
-// import SEA from 'gun/sea'; // Required for SEA functions and user authentication
-// Vue.use(SEA)
-Vue.use(VueGun, {
-  //  gun: gun // must be passed in at `gun` key
-   peers: ['https://spogg.herokuapp.com/gun',/*'http://localhost:9090/gun',*/ 'https://gun-manhattan.herokuapp.com/gun'/*, 'http://gunjs.herokuapp.com/gun/'*/] // run gun-starter-app on port 9090
-});
-
+Vue.use(BootstrapVueIcons)
 
 
 Vue.config.productionTip = false

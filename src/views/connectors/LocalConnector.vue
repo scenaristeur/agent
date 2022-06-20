@@ -1,7 +1,11 @@
 <template>
-  <div>Local:
-    <b-button @click="download" size="sm" variant="primary" class="ml-2">Download</b-button>
-    <b-button @click="openFileUpload()" variant="primary" size="sm" class="ml-2">Upload Brains</b-button>
+  <div>
+    <b-button @click="download" variant="primary">
+      <b-icon-file-arrow-down></b-icon-file-arrow-down>
+    </b-button>
+    <b-button @click="openFileUpload()" variant="primary">
+      <b-icon-file-arrow-up></b-icon-file-arrow-up>
+    </b-button>
     <input ref="fileUpload" type="file" multiple hidden @change="loadFiles" />
   </div>
 </template>

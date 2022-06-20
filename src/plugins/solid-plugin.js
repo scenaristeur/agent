@@ -51,8 +51,9 @@ const plugin = {
     let store = opts.store
 
     Vue.prototype.$checkSolidSession = async function(){
+      console.log("check session")
       await sc.handleIncomingRedirect({
-        //restorePreviousSession: true
+        restorePreviousSession: true
       }).then((info) => {
         if(info.isLoggedIn ==  true){
           console.log(`Logged in with WebID [${info.webId}]`)

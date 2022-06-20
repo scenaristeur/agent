@@ -1,0 +1,58 @@
+<template>
+  <b-card>
+    <div>
+      <b-button-toolbar key-nav aria-label="Toolbar with button groups">
+        <b-button-group class="mx-1">
+          <LocalConnector />
+        </b-button-group>
+
+        <b-input-group size="sm">
+          <b-form-input value="100" class="text-right mt-1"></b-form-input>
+          <b-button :disabled="pod == null" size="sm" variant="primary" @click="saveBrainToSolid" title="Save to Solid pod"><b-icon-cloud-upload></b-icon-cloud-upload></b-button>
+        </b-input-group>
+        
+        <b-button-group class="mx-1">
+
+
+
+          <b-button>Edit</b-button>
+          <b-button>Undo</b-button>
+          <b-button>Redo</b-button>
+        </b-button-group>
+        <b-button-group class="mx-1">
+          <b-button>&rsaquo;</b-button>
+          <b-button>&raquo;</b-button>
+        </b-button-group>
+      </b-button-toolbar>
+    </div>
+
+    <!-- <b-button :disabled="pod == null" size="sm" variant="primary" >Save to Solid pod</b-button> -->
+    <small><i>podbrowser</i></small>
+    {{pod}}
+
+  </b-card>
+</template>
+
+<script>
+export default {
+  name: "PodBrowser",
+  components: {
+    // 'ToolbarView': ()=>import('@/views/ToolbarView'),
+    'LocalConnector': ()=>import('@/views/connectors/LocalConnector'),
+  },
+  methods:{
+    saveBrainToSolid(){
+      this.$saveBrainToSolid()
+    },
+  },
+  computed: {
+    pod(){
+      return this.$store.state.solid.pod
+    },
+  }
+}
+</script>
+
+<style>
+
+</style>

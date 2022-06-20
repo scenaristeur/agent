@@ -2,7 +2,7 @@
   <b-container v-if="showBrainLoader == true">
     <b-button @click="loadBrainFromSolid">Choose path for loading a brain</b-button>
     <b-button @click="hide">Hide BrainLoader</b-button>
-    <b-button @click="createBrain">Create Brain</b-button>
+    <!-- <b-button @click="createBrain">Create Brain</b-button> -->
     <b-list-group v-if="brains!=undefined" class="scroll">
       <b-list-group-item
       v-for="b in items"
@@ -23,6 +23,7 @@
       <!-- <b-icon-share @click="share(b.id)"></b-icon-share> -->
     </b-list-group-item>
   </b-list-group>
+  <PodBrowser />
 </b-container>
 </template>
 
@@ -31,6 +32,11 @@ import ToastMixin from '@/mixins/ToastMixin'
 
 export default {
   name: "BrainLoader",
+  components: {
+    'PodBrowser': ()=>import('@/views/PodBrowser'),
+    // 'DataCaching': ()=>import('@/views/experiments/DataCaching'),
+    // 'LevelgraphJsonld': ()=>import('@/views/experiments/LevelgraphJsonld'),
+  },
   mixins: [ToastMixin],
   data(){
     return{
@@ -69,9 +75,9 @@ export default {
     open(id){
       window.open(id, '_blank').focus();
     },
-    createBrain(){
-      this.$brain_create()
-    }
+    // createBrain(){
+    //   this.$brain_create()
+    // }
   },
   watch:{
     brains(){

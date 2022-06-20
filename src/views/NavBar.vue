@@ -7,11 +7,11 @@
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
         <!-- <b-nav-item @click="newNeurone">new</b-nav-item> -->
-        <b-nav-item @click="showBrainLoader">brains</b-nav-item>
-        <b-nav-item @click="saveBrain">save</b-nav-item>
-        <DataConnector />
+
+        <!-- <b-nav-item @click="saveBrain">save</b-nav-item> -->
 
 
+<SolidLogin />
 
         <!-- <b-nav-item href="#">Link</b-nav-item> -->
         <!-- <b-nav-item @click="newNeurone">new</b-nav-item> -->
@@ -23,6 +23,8 @@
 
         <b-nav-item-dropdown text="graph" right>
           <b-dropdown-item @click="clear">clear</b-dropdown-item>
+          <DataConnector />
+          <b-dropdown-item @click="showBrainLoader">Solid brains</b-dropdown-item>
           <b-dropdown-item disabled>Reset camera</b-dropdown-item>
           <b-dropdown-item @click="show_node_name = !show_node_name" disabled>show node name {{ show_node_name}}</b-dropdown-item>
           <b-dropdown-item @click="show_link_label = !show_link_label" disabled>show link label {{show_link_label}}</b-dropdown-item>
@@ -55,18 +57,18 @@
 </b-navbar-nav>
 </b-collapse>
 
-<b-modal id="modal-save" title="Save Brain" size="lg">
-  <b-button @click="saveBrainToSolid">to Solid Pod</b-button>
+<!-- <b-modal id="modal-save" title="Save Brain" size="lg">
+<b-button @click="saveBrainToSolid">to Solid Pod</b-button>-->
 
 
-  <!-- <b-button @click="saveBrainToFile" disabled>to File</b-button>
+<!-- <b-button @click="saveBrainToFile" disabled>to File</b-button>
 
-  <b-button @click="saveBrainToMatrixCrdt" disabled>to Matrix-Crdt</b-button> -->
-
-
+<b-button @click="saveBrainToMatrixCrdt" disabled>to Matrix-Crdt</b-button> -->
 
 
-</b-modal>
+
+
+<!--</b-modal> -->
 
 </b-navbar>
 </template>
@@ -78,7 +80,7 @@ export default {
   name: "NavBar",
   components: {
     // 'ToolbarView': ()=>import('@/views/ToolbarView'),
-    // 'SolidLogin': ()=>import('@/components/SolidLogin'),
+    'SolidLogin': ()=>import('@/components/SolidLogin'),
     'SpinnerComp': ()=>import('@/components/SpinnerComp'),
     // 'UploadFile': ()=>import('@/views/UploadFile'),
     // ShareBrain,
@@ -98,18 +100,18 @@ export default {
     // newNeurone(){
     //   this.$store.dispatch('core/newNode')
     // },
-    saveBrain(){
-      this.$bvModal.show('modal-save')
-    },
-    saveBrainToSolid(){
-      this.$saveBrainToSolid()
-    },
+    // saveBrain(){
+    //   this.$bvModal.show('modal-save')
+    // },
+    // saveBrainToSolid(){
+    //   this.$saveBrainToSolid()
+    // },
     showBrainLoader(){
       this.$store.commit('core/setShowBrainLoader', true)
     },
-    saveBrainToFile(){
-      console.log(this.ipfs_cids)
-    },
+    // saveBrainToFile(){
+    //   console.log(this.ipfs_cids)
+    // },
     // newAutomerge(){
     //   this.$store.dispatch('automerge/newDoc')
     // },

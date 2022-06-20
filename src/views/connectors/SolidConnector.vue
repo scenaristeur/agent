@@ -1,5 +1,5 @@
 <template>
-  <b-row  > Solid : <SolidLogin /></b-row>
+  <b-row  > Solid : <SolidLogin /> </b-row>
 </template>
 
 <script>
@@ -8,8 +8,7 @@ export default {
   components: {
     // 'ToolbarView': ()=>import('@/views/ToolbarView'),
     'SolidLogin': ()=>import('@/components/SolidLogin'),
-  }
-
+  },
 }
 </script>
 

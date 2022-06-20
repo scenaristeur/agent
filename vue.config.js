@@ -1,14 +1,14 @@
 const publicPath = process.env.NODE_ENV === 'production' ? '/agent/' : '/'
 
 const { defineConfig } = require('@vue/cli-service')
-const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+// const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 module.exports = defineConfig({
   transpileDependencies: true,
   // options...
   publicPath: publicPath,
   configureWebpack: {
-    plugins: [new NodePolyfillPlugin()],
+    // plugins: [new NodePolyfillPlugin()],
     optimization: {
       splitChunks: {
         chunks: "all",
