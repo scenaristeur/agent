@@ -11,6 +11,7 @@
     v-model="main_input"
     v-on:keyup.enter="onEnter"
     v-on:keyup.tab="onEnter"
+    v-on:keydown="onKeyDown"
     v-on:paste="onPaste"
     v-on:input="onInput"
     title="type three words followed by a comma"
@@ -45,9 +46,9 @@ export default {
     }
   },
   methods: {
-    // onKeyDown(event){
-    //   alert(event.key)
-    // },
+    onKeyDown(event){
+      alert(event.key)
+    },
     async onInput(){
 
       let params = {}
