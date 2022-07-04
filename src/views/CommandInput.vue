@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     onKeyDown(event){
-      alert(event.key)
+      alert(event)
     },
     async onInput(){
 
