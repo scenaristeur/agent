@@ -78,8 +78,8 @@ export default {
       this.dismissCountDown = dismissCountDown
     },
     onKeyDown(event){
-      console.log(JSON.stringify(event.key))
-      this.events.push(event.key)
+    //  console.log(JSON.stringify(event.key))
+      this.events.push(JSON.stringify(event))
       this.dismissCountDown = this.dismissSecs
     },
     async onInput(){
