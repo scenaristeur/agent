@@ -3,6 +3,10 @@
   <!-- @keyup="onChange" -->
   <!--v-on:paste="onPaste"-->
   <!--v-on:input="onInput"-->
+  <form
+  ref="form"
+  @submit="checkForm"
+  >
   <b-input-group>
     <b-form-input
     id="input"
@@ -12,6 +16,7 @@
     v-on:keyup.enter="onEnter"
     v-on:paste="onPaste"
     v-on:input="onInput"
+    @submit="onEnter"
     title="type three words followed by a comma"
     placeholder="three words followed by a comma, or /h +Enter for help"></b-form-input>
     <template #append>
@@ -28,6 +33,7 @@
     <b-button @click="clear" variant="outline-danger">X</b-button>
   </template>
 </b-input-group>
+</form>
 </template>
 
 <script>
@@ -44,6 +50,11 @@ export default {
     }
   },
   methods: {
+    checkForm(e){
+      e.preventDefault();
+      // this.$refs.form.$el.submit()
+      this.onEnter()
+    },
     async onInput(){
       let params = {}
       params.text = this.main_input.trim()
