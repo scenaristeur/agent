@@ -3,25 +3,22 @@
   <!-- @keyup="onChange" -->
   <!--v-on:paste="onPaste"-->
   <!--v-on:input="onInput"-->
-  <form
-  ref="form"
-  @submit="checkForm"
-  >
   <b-input-group>
     <b-form-input
     id="input"
     ref="input"
     autofocus
     v-model="main_input"
-    v-on:keyup.enter="onEnter"
+    v-on:keydown.enter="onEnter"
+    v-on:keydown.tab.prevent="onEnter"
+    @keyup="onChange"
     v-on:paste="onPaste"
     v-on:input="onInput"
-    @submit="onEnter"
     title="type three words followed by a comma"
     placeholder="three words followed by a comma, or /h +Enter for help"></b-form-input>
     <template #append>
       <b-form-select
-      v-if="orderedNodes.length > 0"
+      v-if="orderedNodes.lengtuph > 0"
       v-model="selected"
       value-field="id"
       text-field="name"
@@ -33,7 +30,6 @@
     <b-button @click="clear" variant="outline-danger">X</b-button>
   </template>
 </b-input-group>
-</form>
 </template>
 
 <script>
@@ -50,17 +46,14 @@ export default {
     }
   },
   methods: {
-    checkForm(e){
-      e.preventDefault();
-      // this.$refs.form.$el.submit()
-      this.onEnter()
-    },
-    async onInput(){
+    async onInput(e){
+      console.log(e)
+      console.log(this.main_input)
       let params = {}
       params.text = this.main_input.trim()
       params.searchById = false
       this.$store.commit('core/setSearch', params)
-      // if (params.text.length > 0){
+      // if (params.tevent.preventDefault()ext.length > 0){
       //   let results = await this.$search(params)
       //   console.log(results)
       //   this.$store.commit('core/setHighlightNodes', results)
@@ -78,11 +71,11 @@ export default {
     clear(){
       this.main_input = ""
     },
-    // onChange(){
-    //   console.log(this.main_input)
-    //   // let s = this.$refs.input.value
-    //   // this.$store.commit('app/setSearch', s)
-    // },
+    onChange(){
+      console.log(this.main_input)
+      // let s = this.$refs.input.value
+      // this.$store.commit('app/setSearch', s)
+    },
     onEnter(){
       let inputValue = this.main_input.trim()
       if (inputValue.length > 0){
