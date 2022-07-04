@@ -3,33 +3,51 @@
   <!-- @keyup="onChange" -->
   <!--v-on:paste="onPaste"-->
   <!--v-on:input="onInput"-->
-  <b-input-group>
-    <b-form-input
-    id="input"
-    ref="input"
-    autofocus
-    v-model="main_input"
-    v-on:keyup.enter="onEnter"
-    v-on:keyup.tab="onEnter"
-    v-on:keydown="onKeyDown"
-    v-on:paste="onPaste"
-    v-on:input="onInput"
-    title="type three words followed by a comma"
-    placeholder="three words followed by a comma, or /h +Enter for help"></b-form-input>
-    <template #append>
-      <b-form-select
-      v-if="orderedNodes.length > 0"
-      v-model="selected"
-      value-field="id"
-      text-field="name"
-      :options="orderedNodes"
-      >
-      <b-form-select-option :value="null" disabled>current nodes</b-form-select-option>
+  <div>
+    <b-input-group>
+      <b-form-input
+      id="input"
+      ref="input"
+      autofocus
+      v-model="main_input"
+      v-on:keyup.enter="onEnter"
+      v-on:keyup.tab="onEnter"
+      v-on:keydown="onKeyDown"
+      v-on:paste="onPaste"
+      v-on:input="onInput"
+      title="type three words followed by a comma"
+      placeholder="three words followed by a comma, or /h +Enter for help"></b-form-input>
+      <template #append>
+        <b-form-select
+        v-if="orderedNodes.length > 0"
+        v-model="selected"
+        value-field="id"
+        text-field="name"
+        :options="orderedNodes"
+        >
+        <b-form-select-option :value="null" disabled>current nodes</b-form-select-option>
 
-    </b-form-select>
-    <b-button @click="clear" variant="outline-danger">X</b-button>
-  </template>
-</b-input-group>
+      </b-form-select>
+      <b-button @click="clear" variant="outline-danger">X</b-button>
+    </template>
+
+  </b-input-group>
+
+  <b-alert
+  :show="dismissCountDown"
+  dismissible
+  variant="warning"
+  @dismissed="dismissCountDown=0"
+  @dismiss-count-down="countDownChanged"
+  >
+  {{events}}
+</b-alert>
+<b-button @click="showAlert" variant="info" class="m-1">
+  Show alert with count-down timer
+</b-button>
+<b-button @click="reset">reset</b-button>
+
+</div>
 </template>
 
 <script>
@@ -43,11 +61,26 @@ export default {
       commandHistory: [],
       selected: null,
       'order' : 'asc',
+      dismissSecs: 10,
+      dismissCountDown: 0,
+      showDismissibleAlert: false,
+      events: []
     }
   },
   methods: {
+    reset(){
+      this.events = []
+    },
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs
+    },
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown
+    },
     onKeyDown(event){
-      alert(JSON.stringify(event.key))
+      console.log(JSON.stringify(event.key))
+      this.events.push(event.key)
+      this.dismissCountDown = this.dismissSecs
     },
     async onInput(){
 
