@@ -3,51 +3,31 @@
   <!-- @keyup="onChange" -->
   <!--v-on:paste="onPaste"-->
   <!--v-on:input="onInput"-->
-  <div>
-    <b-input-group>
-      <b-form-input
-      id="input"
-      ref="input"
-      autofocus
-      v-model="main_input"
-      v-on:keyup.enter="onEnter"
-      v-on:keyup.tab="onEnter"
-      v-on:keydown="onKeyDown"
-      v-on:paste="onPaste"
-      v-on:input="onInput"
-      title="type three words followed by a comma"
-      placeholder="three words followed by a comma, or /h +Enter for help"></b-form-input>
-      <template #append>
-        <b-form-select
-        v-if="orderedNodes.length > 0"
-        v-model="selected"
-        value-field="id"
-        text-field="name"
-        :options="orderedNodes"
-        >
-        <b-form-select-option :value="null" disabled>current nodes</b-form-select-option>
+  <b-input-group>
+    <b-form-input
+    id="input"
+    ref="input"
+    autofocus
+    v-model="main_input"
+    v-on:keyup.enter="onEnter"
+    v-on:paste="onPaste"
+    v-on:input="onInput"
+    title="type three words followed by a comma"
+    placeholder="three words followed by a comma, or /h +Enter for help"></b-form-input>
+    <template #append>
+      <b-form-select
+      v-if="orderedNodes.length > 0"
+      v-model="selected"
+      value-field="id"
+      text-field="name"
+      :options="orderedNodes"
+      >
+      <b-form-select-option :value="null" disabled>current nodes</b-form-select-option>
 
-      </b-form-select>
-      <b-button @click="clear" variant="outline-danger">X</b-button>
-    </template>
-
-  </b-input-group>
-
-  <b-alert
-  :show="dismissCountDown"
-  dismissible
-  variant="warning"
-  @dismissed="dismissCountDown=0"
-  @dismiss-count-down="countDownChanged"
-  >
-  {{events}}
-</b-alert>
-<b-button @click="showAlert" variant="info" class="m-1">
-  Show alert with count-down timer
-</b-button>
-<b-button @click="reset">reset</b-button>
-
-</div>
+    </b-form-select>
+    <b-button @click="clear" variant="outline-danger">X</b-button>
+  </template>
+</b-input-group>
 </template>
 
 <script>
@@ -61,35 +41,14 @@ export default {
       commandHistory: [],
       selected: null,
       'order' : 'asc',
-      dismissSecs: 10,
-      dismissCountDown: 0,
-      showDismissibleAlert: false,
-      events: []
     }
   },
   methods: {
-    reset(){
-      this.events = []
-    },
-    showAlert() {
-      this.dismissCountDown = this.dismissSecs
-    },
-    countDownChanged(dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
-    },
-    onKeyDown(event){
-    //  console.log(JSON.stringify(event.key))
-      this.events.push(JSON.stringify(event))
-      this.dismissCountDown = this.dismissSecs
-    },
     async onInput(){
-
       let params = {}
       params.text = this.main_input.trim()
-
       params.searchById = false
       this.$store.commit('core/setSearch', params)
-
       // if (params.text.length > 0){
       //   let results = await this.$search(params)
       //   console.log(results)
@@ -115,7 +74,6 @@ export default {
     // },
     onEnter(){
       let inputValue = this.main_input.trim()
-
       if (inputValue.length > 0){
         let inputObject = new Command({inputValue: inputValue/*, selected: this.selected*/})
         this.$store.dispatch('core/pushCommandHistory', inputObject)
