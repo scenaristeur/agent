@@ -23,7 +23,7 @@
       <!-- <b-icon-share @click="share(b.id)"></b-icon-share> -->
     </b-list-group-item>
   </b-list-group>
-  <!-- <PodBrowser /> -->
+  <PodBrowser />
 </b-container>
 </template>
 
@@ -32,11 +32,11 @@ import ToastMixin from '@/mixins/ToastMixin'
 
 export default {
   name: "BrainLoader",
-  // components: {
-  //   'PodBrowser': ()=>import('@/views/PodBrowser'),
-  //   // 'DataCaching': ()=>import('@/views/experiments/DataCaching'),
-  //   // 'LevelgraphJsonld': ()=>import('@/views/experiments/LevelgraphJsonld'),
-  // },
+  components: {
+    'PodBrowser': ()=>import('@/views/PodBrowser'),
+    //   // 'DataCaching': ()=>import('@/views/experiments/DataCaching'),
+    //   // 'LevelgraphJsonld': ()=>import('@/views/experiments/LevelgraphJsonld'),
+  },
   mixins: [ToastMixin],
   data(){
     return{
