@@ -18,7 +18,7 @@
     placeholder="three words followed by a comma, or /h +Enter for help"></b-form-input>
     <template #append>
       <b-form-select
-      v-if="orderedNodes.lengtuph > 0"
+      v-if="orderedNodes.length > 0"
       v-model="selected"
       value-field="id"
       text-field="name"
