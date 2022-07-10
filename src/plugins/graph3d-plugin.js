@@ -14,7 +14,7 @@ const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
     let size = getSize()
-    
+
     function getSize(){
       //768 = medium bootstrap
       return {w: window.innerWidth > 768 ? window.innerWidth/2 : window.innerWidth,

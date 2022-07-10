@@ -86,30 +86,6 @@ const mutations = {
   },
   resetSpinner(state){
     state.spinner = []
-  },
-  setSearch(state, params){
-    state.search = params
-    Vue.prototype.$updateHighlight();
-  },
-  // setSelectedNodes(state, nodes){
-  //   //state.selectedNodes.clear();
-  //   nodes.forEach(item => {
-  //     console.log(item)
-  //     //state.selectedNodes.add(item)
-  //     let event = {}
-  //     event.ctrlKey = true
-  //     Vue.prototype.$onNodeSearch(item,event)
-  //   })
-  //   //state.graph.nodeColor(state.graph.nodeColor()); // update color of selected nodes
-  // },
-  setHighlightNodes(state, nodes){
-    state.highlightNodes.clear();
-    state.highlightLinks.clear();
-    nodes.forEach(item => {
-      console.log(item)
-      state.highlightNodes.add(item)
-    })
-    Vue.prototype.$updateHighlight()
   }
 }
 
