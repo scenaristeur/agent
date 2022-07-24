@@ -3,6 +3,7 @@
     <input
     placeholder="test"
     v-on:keyup.enter="onEnter"
+    tabindex="-1"
 
 
 

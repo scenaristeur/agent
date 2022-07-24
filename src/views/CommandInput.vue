@@ -7,6 +7,7 @@
     <b-input
     id="input"
     ref="input"
+    tabindex="-1"
     autofocus
     v-model="main_input"
     v-on:keyup.enter="onEnter"
