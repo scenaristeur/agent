@@ -4,7 +4,7 @@
   <!--v-on:paste="onPaste"-->
   <!--v-on:input="onInput"-->
   <b-input-group>
-    <b-form-input
+    <b-input
     id="input"
     ref="input"
     autofocus
@@ -15,7 +15,8 @@
     v-on:paste="onPaste"
     v-on:input="onInput"
     title="type three words followed by a comma"
-    placeholder="three words followed by a comma, or /h +Enter for help"></b-form-input>
+    placeholder="three words followed by a comma, or /h +Enter for help">
+  </b-input>
     <template #append>
       <b-form-select
       v-if="orderedNodes.length > 0"
