@@ -58,10 +58,10 @@
             </div>
           </b-col>
         </b-row>
-        <hr>
+
         <b-button @click="cancel">Cancel</b-button>
         <b-button @click="save" variant="success">Save</b-button>
-
+        <hr>
       </b-collapse>
 
     </b-container>
