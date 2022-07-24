@@ -11,6 +11,7 @@
   <b-input
   id="input"
   ref="input"
+  type="search"
   autocomplete="off"
   v-model="main_input"
   v-on:keydown.9.prevent="onEnter"
