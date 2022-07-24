@@ -1,7 +1,8 @@
 <template>
   <div>
-    <CommandeInput fluid="sm" />
+
     <CommandInput fluid="sm" />
+    <CommandeInput fluid="sm" />
     <b-row>
       <b-col md="6">
         <VisualisationView />
