@@ -90,6 +90,7 @@ const mutations = {
   setSearch(state, params){
     state.search = params
     Vue.prototype.$updateHighlight();
+    Vue.prototype.$zoomToFit();
   },
   // setSelectedNodes(state, nodes){
   //   //state.selectedNodes.clear();

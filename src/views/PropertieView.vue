@@ -72,6 +72,10 @@ export default {
   methods: {
     switchTo(id){
       this.$store.dispatch('core/switchTo',id)
+        let gData = this.$store.state.core.graph.graphData()
+      //  console.log(nodes, links)
+        let n = gData.nodes.filter(n => n.id == id)
+        this.$nodeFocus(n[0])
     },
     // play(audio){
     //   var snd = new Audio(audio);

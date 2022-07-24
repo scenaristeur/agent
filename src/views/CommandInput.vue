@@ -3,35 +3,37 @@
   <!-- @keyup="onChange" -->
   <!--v-on:paste="onPaste"-->
   <!--v-on:input="onInput"-->
-  <b-input-group>
-    <b-input
-    id="input"
-    ref="input"
-    tabindex="-1"
-    type="search"
-    autofocus
-    v-model="main_input"
-    v-on:keyup.enter="onEnter"
-    @keydown.tab.prevent="onTab"
-    @keyup="onChange"
-    v-on:paste="onPaste"
-    v-on:input="onInput"
-    title="type three words followed by a comma"
-    placeholder="three words followed by a comma, or /h +Enter for help">
-  </b-input>
-    <template #append>
-      <b-form-select
-      v-if="orderedNodes.length > 0"
-      v-model="selected"
-      value-field="id"
-      text-field="name"
-      :options="orderedNodes"
-      >
-      <b-form-select-option :value="null" disabled>current nodes</b-form-select-option>
+  <!--     tabindex="-1"
+  type="search"
+  @keydown="onChange"
+-->
+<b-input-group>
+  <b-input
+  id="input"
+  ref="input"
+  autocomplete="off"
+  v-model="main_input"
+  v-on:keydown.9.prevent="onEnter"
+  v-on:keydown.enter="onEnter"
 
-    </b-form-select>
-    <b-button @click="clear" variant="outline-danger">X</b-button>
-  </template>
+  v-on:paste="onPaste"
+  v-on:input="onInput"
+  title="type three words followed by a comma"
+  placeholder="three words followed by a comma, or /h +Enter for help">
+</b-input>
+<template #append>
+  <b-form-select
+  v-if="orderedNodes.length > 0"
+  v-model="selected"
+  value-field="id"
+  text-field="name"
+  :options="orderedNodes"
+  >
+  <b-form-select-option :value="null" disabled>current nodes</b-form-select-option>
+
+</b-form-select>
+<b-button @click="clear" variant="outline-danger">X</b-button>
+</template>
 </b-input-group>
 </template>
 
@@ -49,9 +51,9 @@ export default {
     }
   },
   methods: {
-    async onInput(e){
-      console.log(e)
-      console.log(this.main_input)
+    async onInput(){
+      //  console.log(e)
+      //  console.log(this.main_input)
       let params = {}
       params.text = this.main_input.trim()
       params.searchById = false
@@ -74,16 +76,20 @@ export default {
     clear(){
       this.main_input = ""
     },
-    onChange(){
-      console.log(this.main_input)
-      // let s = this.$refs.input.value
-      // this.$store.commit('app/setSearch', s)
-    },
-    onTab(){
-      console.log('tab')
-      alert('tab')
-      this.onEnter()
-    },
+    // onChange(e){
+    //   console.log(this.main_input,e)
+    //   // if (e.key == "Tab"){
+    //   //   e.preventDefault()
+    //   //   this.onEnter()
+    //   // }
+    //   // let s = this.$refs.input.value
+    //   // this.$store.commit('app/setSearch', s)
+    // },
+    // onTab(){
+    //   console.log('tab')
+    //   alert('tab')
+    //   this.onEnter()
+    // },
     onEnter(){
       let inputValue = this.main_input.trim()
       if (inputValue.length > 0){

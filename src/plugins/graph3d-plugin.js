@@ -28,6 +28,18 @@ const plugin = {
         }
       } );
 
+Vue.prototype.$zoomToFit = function(/*params*/){
+  // console.log(params.text)
+
+store.state.core.graph.zoomToFit(10,10, node =>{
+
+   store.state.core.search == null || store.state.core.search.text.length > 0 && node.name.includes(store.state.core.search.text)
+// let show = node.name.includes(store.state.core.search.text)
+// console.log(node.name, show)
+//    return show
+})
+}
+
 
       Vue.prototype.$graphInit = async function(options){
         // console.log(options)
@@ -45,7 +57,7 @@ const plugin = {
         .nodeLabel('name')
         .nodeAutoColorBy("type")
         //.nodeRelSize(5)
-        .nodeColor(node => highligth(node) ? 'yellow' : highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : node.color)
+        .nodeColor(node => highlight(node) ? 'yellow' : highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : node.color)
         //.nodeColor(node => /*highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' :*/ node.color)
         //.onBackgroundClick(event => onBackgroundClick(event))
         .onNodeClick(node => onNodeClick(node))
@@ -111,7 +123,7 @@ const plugin = {
         store.commit ('core/setGraph', graph)
       }
 
-      function highligth(node){
+      function highlight(node){
         //console.log(node)
         return store.state.core.search != null && store.state.core.search.text.length > 0 && node.name.includes(store.state.core.search.text)
       }
@@ -128,6 +140,26 @@ const plugin = {
       //
       //     store.state.core.graph.nodeColor(store.state.core.graph.nodeColor()); // update color of selected nodes
       //   }
+
+      Vue.prototype.$nodeFocus = function(node) {
+      //  console.log("node",node)
+
+        const distance = 50;
+        let pos = {x: distance, y: distance, z: distance}
+        if(node.x != 0 && node.y != 0 && node.z != 0){
+          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+          pos = { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
+        }
+        store.state.core.graph.cameraPosition(
+          pos, // new position
+          node, // lookAt ({ x, y, z })
+          3000  // ms transition duration
+        );
+        // console.log(store.state.core.graph)
+        let n = store.state.core.nodes.find(n => n.id == node.id)
+        store.commit ('core/setCurrentNode', n)
+
+      }
 
       Vue.prototype.$updateHighlight = function() {
         // trigger update of highlighted objects in scene
@@ -306,22 +338,7 @@ const plugin = {
         // if(node.url != undefined && node.url.startsWith('http')){
         //   app.$store.commit ('app/mustExplore', node.url)
         // }
-        console.log("node",node)
-
-        const distance = 40;
-        let pos = {x: distance, y: distance, z: distance}
-        if(node.x != 0 && node.y != 0 && node.z != 0){
-          const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
-          pos = { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }
-        }
-        store.state.core.graph.cameraPosition(
-          pos, // new position
-          node, // lookAt ({ x, y, z })
-          3000  // ms transition duration
-        );
-        // console.log(store.state.core.graph)
-        let n = store.state.core.nodes.find(n => n.id == node.id)
-        store.commit ('core/setCurrentNode', n)
+  Vue.prototype.$nodeFocus(node)
 
       }
 

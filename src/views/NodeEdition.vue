@@ -2,70 +2,96 @@
   <div>
     <b-container v-if="tempNode != null">
 
-      <b-row>
-        <b-col >
-          <b-button v-b-toggle.collapse-1 variant="primary">Edit {{tempNode.name || tempNode.id}}</b-button>
-          <b-button @click.stop="copy"  size="sm mr-2" variant="outline-success"><b-icon-clipboard-plus></b-icon-clipboard-plus></b-button>
-        </b-col>
+      <div>
+        <b-button-toolbar key-nav aria-label="Toolbar with button groups">
+          <b-button-group class="mx-1">
+            <b-button v-b-toggle.collapse-1 variant="primary"><b-icon-pen></b-icon-pen><!-- {{tempNode.name || tempNode.id}}--></b-button>
+            <b-button @click.stop="copy"  size="sm mr-2" variant="outline-success"><b-icon-clipboard-plus></b-icon-clipboard-plus></b-button>
 
-        <b-col >
-          <b-button @click="remove" variant="danger">Remove {{tempNode.name || tempNode.id}}</b-button>
-        </b-col>
-      </b-row>
+          </b-button-group>
+          <b-button-group class="mx-1">
+            <b-form-input type="color" v-model="tempNode.color" size="sm"></b-form-input>
+            <b-form-select v-model="tempNode.shape" :options="options" size="sm"></b-form-select>
 
-      <b-collapse id="collapse-1" visible class="mt-2">
+            <!--
+            <b-button>Edit</b-button>
+            <b-button>Undo</b-button>
+            <b-button>Redo</b-button> -->
+          </b-button-group>
+          <b-button @click="remove" variant="danger"><b-icon-trash></b-icon-trash> <!--{{tempNode.name || tempNode.id}}--></b-button>
 
-        <b-row>
+          <!-- <b-button-group class="mx-1">
+          <b-button>&rsaquo;</b-button>
+          <b-button>&raquo;</b-button>
+        </b-button-group> -->
+      </b-button-toolbar>
+    </div>
 
-          <b-col md="10">
-            <b-row>
-              <b-col cols="10">
-                <b-form-input v-model="tempNode.name" placeholder="name"></b-form-input>
-              </b-col>
-              <b-col cols="6" md="2">
 
-                <b-form-input type="color" v-model="tempNode.color" size="sm"></b-form-input>
-              </b-col>
-            </b-row>
-            <b-row>
-              <b-col cols="10">
-                <b-form-input v-model="tempNode.type" placeholder="type"></b-form-input>
-              </b-col>
-              <b-col cols="6" md="2">
 
-                <b-form-select v-model="tempNode.shape" :options="options" size="sm"></b-form-select>
-              </b-col>
-            </b-row>
+    <!-- <b-row>
+    <b-col >
+    <b-button v-b-toggle.collapse-1 variant="primary">Edit {{tempNode.name || tempNode.id}}</b-button>
+    <b-button @click.stop="copy"  size="sm mr-2" variant="outline-success"><b-icon-clipboard-plus></b-icon-clipboard-plus></b-button>
+  </b-col>
 
-            <div v-for="p in Object.keys(currentNode)" :key="p">
+  <b-col >
+  <b-button @click="remove" variant="danger">Remove {{tempNode.name || tempNode.id}}</b-button>
+</b-col>
+</b-row> -->
 
-              <div v-if="!jsonldProps.includes(p) && !graphProps.includes(p) && p != 'reverse'">
-                <PropertieView :p="p" :v="currentNode[p]"/>
-              </div>
-            </div>
-          </b-col>
+<b-collapse id="collapse-1" visible class="mt-2">
 
-          <b-col>
+  <!-- <b-row>
 
-            <div v-if="currentNode.reverse != undefined">
-              <b-button size="sm" v-b-toggle.collapse-backlinks variant="light">Backlinks</b-button>
-              <b-collapse id="collapse-backlinks" class="mt-2">
+  <b-col md="10">
+  <b-row>
+  <b-col cols="10"> -->
+  <b-form-input v-model="tempNode.name" placeholder="name"></b-form-input>
+  <!-- </b-col>
+  <b-col cols="6" md="2">
 
-                <div v-for="(p, j) in Object.keys(currentNode.reverse)" :key="j">
-                  <PropertieView :p="p" :v="currentNode.reverse[p]"/>
-                </div>
-              </b-collapse>
-            </div>
-          </b-col>
-        </b-row>
+  <b-form-input type="color" v-model="tempNode.color" size="sm"></b-form-input>
+</b-col>
+</b-row>
+<b-row>
+<b-col cols="10"> -->
+<b-form-input v-model="tempNode.type" placeholder="type"></b-form-input>
+<!-- </b-col>
+<b-col cols="6" md="2"> -->
 
-        <b-button @click="cancel">Cancel</b-button>
-        <b-button @click="save" variant="success">Save</b-button>
-        <hr>
-      </b-collapse>
+<!-- </b-col>
+</b-row> -->
 
-    </b-container>
+<div v-for="p in Object.keys(currentNode)" :key="p">
+
+  <div v-if="!jsonldProps.includes(p) && !graphProps.includes(p) && p != 'reverse'">
+    <PropertieView :p="p" :v="currentNode[p]"/>
   </div>
+</div>
+<!-- </b-col>
+
+<b-col> -->
+
+  <div v-if="currentNode.reverse != undefined">
+    <b-button size="sm" v-b-toggle.collapse-backlinks variant="light">Backlinks</b-button>
+    <b-collapse id="collapse-backlinks" class="mt-2">
+
+      <div v-for="(p, j) in Object.keys(currentNode.reverse)" :key="j">
+        <PropertieView :p="p" :v="currentNode.reverse[p]"/>
+      </div>
+    </b-collapse>
+  </div>
+<!-- </b-col>
+</b-row> -->
+
+<b-button @click="cancel">Cancel</b-button>
+<b-button @click="save" variant="success">Save</b-button>
+<hr>
+</b-collapse>
+
+</b-container>
+</div>
 </template>
 
 <script>
@@ -141,7 +167,6 @@ export default {
   watch:{
     currentNode(){
       this.tempNode = this.currentNode
-      console.log(this.tempNode)
     },
     files(){
       this.processFiles()

@@ -45,14 +45,22 @@ import { FOAF, /*LDP,*/ VCARD, /*RDF,*/ AS, /*RDFS, OWL*/  } from "@inrupt/vocab
 import { WS, SOLID } from "@inrupt/vocab-solid-common";
 
 import * as sc from '@inrupt/solid-client-authn-browser'
+const LOCAL_STORAGE_KEY__SOLID_SESSION_RESTORE_URL = "solid_session_restore_url"
 
 const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
 
     Vue.prototype.$checkSolidSession = async function(){
-      console.log("check session", document.location)
-      localStorage.setItem(Date.now, document.location)
+          localStorage.setItem(LOCAL_STORAGE_KEY__SOLID_SESSION_RESTORE_URL, window.location.toString())
+      // console.log("check session", document.location)
+      // localStorage.setItem(Date.now, document.location)
+
+      sc.onSessionRestore((url) => {
+         history.replaceState(null, "", url)
+       });
+
+
       await sc.handleIncomingRedirect({
         restorePreviousSession: true
       }).then((info) => {
@@ -61,6 +69,8 @@ const plugin = {
           store.commit('solid/setSession',info)
           let session = sc.getDefaultSession()
           this.$getPodInfosFromSession(session)
+          // This line is not reached until you are successfully logged in
+    localStorage.setItem(LOCAL_STORAGE_KEY__SOLID_SESSION_RESTORE_URL, "")
         }
       })
 
