@@ -9,8 +9,7 @@
     ref="input"
     autofocus
     v-model="main_input"
-    v-on:keydown.enter="onEnter"
-    v-on:keydown.tab.prevent="onEnter"
+    v-on:keyup.enter="onEnter"
     @keyup="onChange"
     v-on:paste="onPaste"
     v-on:input="onInput"
@@ -53,7 +52,7 @@ export default {
       params.text = this.main_input.trim()
       params.searchById = false
       this.$store.commit('core/setSearch', params)
-      // if (params.tevent.preventDefault()ext.length > 0){
+      // if (params.text.length > 0){
       //   let results = await this.$search(params)
       //   console.log(results)
       //   this.$store.commit('core/setHighlightNodes', results)
