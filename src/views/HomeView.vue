@@ -1,8 +1,6 @@
 <template>
   <div>
-
     <CommandInput fluid="sm" />
-    <CommandeInput fluid="sm" />
     <b-row>
       <b-col md="6">
         <VisualisationView />
@@ -27,7 +25,6 @@ export default {
   components: {
     'VisualisationView': ()=>import('@/views/VisualisationView'),
     'CommandInput': ()=>import('@/views/CommandInput'),
-    'CommandeInput': ()=>import('@/views/CommandeInput'),
     'FabMenu': ()=>import('@/views/FabMenu'),
     'ExternalSource': ()=>import('@/views/ExternalSource'),
     'SideView': ()=>import('@/views/SideView'),

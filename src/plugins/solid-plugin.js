@@ -51,7 +51,8 @@ const plugin = {
     let store = opts.store
 
     Vue.prototype.$checkSolidSession = async function(){
-      console.log("check session")
+      console.log("check session", document.location)
+      localStorage.setItem(Date.now, document.location)
       await sc.handleIncomingRedirect({
         restorePreviousSession: true
       }).then((info) => {
