@@ -12,7 +12,12 @@
 
 <script>
 export default {
-  name: "CommandeInput"
+  name: "CommandeInput",
+  data() {
+    return {
+      main_input: "",
+    }
+  },
   methods:{
     onEnter(){
       console.log("enter")
