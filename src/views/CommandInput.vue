@@ -10,6 +10,7 @@
     autofocus
     v-model="main_input"
     v-on:keyup.enter="onEnter"
+    @keydown.tab.prevent="onTab"
     @keyup="onChange"
     v-on:paste="onPaste"
     v-on:input="onInput"
@@ -74,6 +75,11 @@ export default {
       console.log(this.main_input)
       // let s = this.$refs.input.value
       // this.$store.commit('app/setSearch', s)
+    },
+    onTab(){
+      console.log('tab')
+      alert('tab')
+      this.onEnter()
     },
     onEnter(){
       let inputValue = this.main_input.trim()
