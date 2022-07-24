@@ -3,8 +3,9 @@
     <div v-if="brain != undefined" >Brain: {{ brain }}</div>
     <!-- <GunGraph v-if="showGunGraph"/> -->
     <!-- <IpfsConnector /> -->
+      <NodeEdition sm="6"/>
     <BrainLoader />
-    <NodeEdition sm="6"/>
+
     <TerminalView v-if="showTerminal"/>
   </div>
 </template>

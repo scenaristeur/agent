@@ -2,12 +2,13 @@
   <div>
     <CommandInput fluid="sm" />
     <b-row>
-      <b-col md="6">
-        <VisualisationView />
-      </b-col>
+
       <b-col md="6">
         <SideView />
 
+      </b-col>
+      <b-col md="6">
+        <VisualisationView />
       </b-col>
     </b-row>
     <FabMenu />
