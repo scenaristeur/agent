@@ -8,7 +8,6 @@
     id="input"
     ref="input"
     tabindex="-1"
-    type="search"
     autofocus
     v-model="main_input"
     v-on:keyup.enter="onEnter"
