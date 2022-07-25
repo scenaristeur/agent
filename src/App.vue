@@ -18,7 +18,7 @@
     <a href="https://youtu.be/YT61BcjGfwc" target ="_blank">How To use 3dmindmap Video Demo</a> |
     <router-link to="/test">Test</router-link>
   </i></small>
-    <!-- <LevelgraphJsonld /> -->
+  <!-- <LevelgraphJsonld /> -->
   <!-- <DataCaching /> -->
 
 </div>
@@ -49,10 +49,10 @@ export default {
       this.$loadBrainFromSolid(source)
     }else if(this.$route.query.cid){
       this.loadBrainFromIpfs()
-    }else{
-      this.$checkSolidSession()
+    }else{  
       this.$store.dispatch('core/getNodes')
     }
+    this.$checkSolidSession()
   },
   methods:{
     loadBrainFromIpfs(){
