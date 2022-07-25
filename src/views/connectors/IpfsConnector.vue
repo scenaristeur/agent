@@ -55,6 +55,10 @@ ipfs node : {{ ipfsNode}}
 </template>
 
 <script>
+
+import IpfsDataPlugin from '@/plugins/ipfs-data-plugin';
+import Vue from 'vue'
+
 import axios from 'axios';
 
 export default {
@@ -70,6 +74,7 @@ export default {
     }
   },
   created(){
+    Vue.use(IpfsDataPlugin, {store: this.$store});
     this.$initIpfs()
   },
   methods:{

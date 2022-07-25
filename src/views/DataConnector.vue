@@ -13,7 +13,7 @@
         <!-- <RemoteConnector /> -->
         <!-- <SocialConnector /> -->
         <SolidConnector />
-        <!-- <IpfsConnector /> -->
+        <IpfsConnector />
       </b-container>
     </b-modal>
 
@@ -29,7 +29,7 @@ export default {
     // 'RemoteConnector': ()=>import('@/views/connectors/RemoteConnector'),
     // 'SocialConnector': ()=>import('@/views/connectors/SocialConnector'),
     'SolidConnector': ()=>import('@/views/connectors/SolidConnector'),
-    // 'IpfsConnector': ()=>import('@/views/connectors/IpfsConnector'),
+    'IpfsConnector': ()=>import('@/views/connectors/IpfsConnector'),
   }
 }
 </script>

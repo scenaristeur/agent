@@ -23,8 +23,7 @@ import SolidPlugin from './plugins/solid-plugin';
 Vue.use(SolidPlugin, {store: store});
 import SolidDataPlugin from './plugins/solid-data-plugin';
 Vue.use(SolidDataPlugin, {store: store});
-// import IpfsDataPlugin from './plugins/ipfs-data-plugin';
-// Vue.use(IpfsDataPlugin, {store: store});
+
 import SearchPlugin from './plugins/search-plugin';
 Vue.use(SearchPlugin, {store: store});
 // import BrainPlugin from './plugins/brain-plugin';
