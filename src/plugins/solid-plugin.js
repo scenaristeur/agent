@@ -46,19 +46,20 @@ import { WS, SOLID } from "@inrupt/vocab-solid-common";
 
 import * as sc from '@inrupt/solid-client-authn-browser'
 const LOCAL_STORAGE_KEY__SOLID_SESSION_RESTORE_URL = "solid_session_restore_url"
+// import { fetch as node_fetch } from 'node-fetch';
 
 const plugin = {
   install(Vue, opts = {}) {
     let store = opts.store
 
     Vue.prototype.$checkSolidSession = async function(){
-          localStorage.setItem(LOCAL_STORAGE_KEY__SOLID_SESSION_RESTORE_URL, window.location.toString())
+      localStorage.setItem(LOCAL_STORAGE_KEY__SOLID_SESSION_RESTORE_URL, window.location.toString())
       // console.log("check session", document.location)
       // localStorage.setItem(Date.now, document.location)
 
       sc.onSessionRestore((url) => {
-         history.replaceState(null, "", url)
-       });
+        history.replaceState(null, "", url)
+      });
 
 
       await sc.handleIncomingRedirect({
@@ -70,7 +71,7 @@ const plugin = {
           let session = sc.getDefaultSession()
           this.$getPodInfosFromSession(session)
           // This line is not reached until you are successfully logged in
-    localStorage.setItem(LOCAL_STORAGE_KEY__SOLID_SESSION_RESTORE_URL, "")
+          localStorage.setItem(LOCAL_STORAGE_KEY__SOLID_SESSION_RESTORE_URL, "")
         }
       })
 
@@ -82,7 +83,7 @@ const plugin = {
         await sc.login({
           oidcIssuer: issuer,
           redirectUrl: window.location.href,
-          clientName: "Verse"
+          clientName: "Agent"
         });
       }
     },
@@ -134,6 +135,15 @@ const plugin = {
         pod.name = await getStringNoLocale(profile, FOAF.name);
         pod.friends = await getUrlAll(profile, FOAF.knows).map(webId => {return {webId: webId}})
         pod.storage = await getUrl(profile, WS.storage);
+
+        if (pod.storage == null){
+          // let storage = await getLink(pod.webId)
+          // console.log("storage", storage)
+          // for community solid server with no pim:storage
+          pod.storage = pod.webId.split('/').slice(0,-2).join('/')+'/'
+        }
+
+
         pod.photo = await getUrl(profile, VCARD.hasPhoto);
         pod.neuroneStore == undefined ? pod.neuroneStore = pod.storage+'public/neurones/' : ""
         pod.workspaces = []
@@ -165,6 +175,28 @@ const plugin = {
       console.log(pod)
       return await pod
     }
+
+    // async function getLink(url){
+    //   console.log('url', url)
+    //   const response = await fetch(url);
+    //   // const r1 = response.clone();
+    //   //
+    //   // const results = await Promise.all([response.json(), r1.text()]);
+    //   //
+    //   // console.log("json headers",results[0]);
+    //   return response.headers.get('link').split(',').map(function(v) {
+    //     let link = v.split(';')[0]
+    //     console.log(link)
+    //     if (link == "<http://www.w3.org/ns/pim/space#Storage>"){
+    //       return url
+    //     }else{
+    //       let new_url = url.split('/').slice(0,-1).join('/')
+    //       console.log(new_url)
+    //        return getLink(new_url)
+    //       //return "stop"
+    //     }
+    //   });
+    // }
 
 
 

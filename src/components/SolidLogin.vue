@@ -56,12 +56,13 @@ export default {
   data() {
     return {
       issuers: [
-        { value: "https://solidcommunity.net", text: 'SolidCommunity.net' },
-        { value: "https://solidweb.org", text: 'Solidweb.org' },
+        { value: "https://solidcommunity.net", text: 'SolidCommunity.net (NSS)' },
+        { value: "https://solidweb.org", text: 'Solidweb.org (NSS)' },
+        { value: 'https://solidweb.me/', text: 'Solidweb.me (CSS)'},
         { value: "https://broker.pod.inrupt.com", text: 'Broker Pod Inrupt (Entreprise Solid Server)' },
-        { value: "https://inrupt.net", text: 'Inrupt.net' },
-        { value: "https://dev.inrupt.net", text: 'dev.inrupt.net' },
-        { value: "https://trinpod.us/", text: 'Trinpod.us'},
+        { value: "https://inrupt.net", text: 'Inrupt.net (NSS)' },
+        { value: "https://dev.inrupt.net", text: 'dev.inrupt.net (NSS)' },
+        { value: "https://trinpod.us/", text: 'Trinpod.us (hs ?)'},
         { value: "other", text: 'Autre / Other' },
       ],
       issuer: null,
