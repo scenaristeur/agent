@@ -1,7 +1,7 @@
-// import Vue from 'vue'
+import Vue from 'vue'
 
 const state = () => ({
-  rootNode: "test-brains",
+  rootNode: "hein",
   gunBrains : []
 })
 
@@ -29,6 +29,7 @@ const mutations = {
   },
   setRootNode(state,r){
     state.rootNode = r
+    Vue.prototype.$gunListen()
   }
   // setPod(state, p){
   //   console.log("pod",p)

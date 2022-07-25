@@ -16,9 +16,11 @@ const plugin = {
 
     Vue.prototype.$gunListen = async function(){
       // let gunBrains = []
+      console.log("rootNode", store.state.gun.rootNode)
       console.log("Map",await Vue.prototype.$gun.get(store.state.gun.rootNode).map())
       await Vue.prototype.$gun.get(store.state.gun.rootNode).map().on(
-        (node, key) => store.commit('gun/addGunBrains', {node:node, key: key})
+        // (node, key) => store.commit('gun/addGunBrains', {node:node, key: key})
+        node => store.dispatch('core/addNode', node /* {node:node, key: key}*/)
       )
       //   function(node,key) {
       //   console.log(node,key)
@@ -68,7 +70,7 @@ const plugin = {
 
     Vue.prototype.$gunSet = async function(object){
       console.log(store.state.gun.rootNode, object)
-      Vue.prototype.$gun.get(store.state.gun.rootNode).set(object)
+      Vue.prototype.$gun.get(store.state.gun.rootNode).set(array2object(object))
     }
 
     Vue.prototype.$gunExplore = async function(){
@@ -100,6 +102,21 @@ const plugin = {
       return graph
 
     }
+
+    function array2object(arr){
+      let Gun = window.Gun
+      var obj = {};
+      Gun.list.map(arr, function(v,f,t){
+        console.log(v,f,t)
+        if(Gun.list.is(v) || Gun.obj.is(v)){
+          obj[f] = array2object(v);
+          return;
+        }
+        obj[f] = v;
+      });
+      return obj;
+    }
+
     async function processNode(n){
       let gunNodes = []
       var soul = n._['#'];

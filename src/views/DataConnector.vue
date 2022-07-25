@@ -14,6 +14,7 @@
         <!-- <SocialConnector /> -->
         <SolidConnector />
         <!-- <IpfsConnector /> -->
+        <GunConnector />
       </b-container>
     </b-modal>
 
@@ -29,6 +30,7 @@ export default {
     // 'RemoteConnector': ()=>import('@/views/connectors/RemoteConnector'),
     // 'SocialConnector': ()=>import('@/views/connectors/SocialConnector'),
     'SolidConnector': ()=>import('@/views/connectors/SolidConnector'),
+    'GunConnector': ()=>import('@/views/connectors/GunConnector'),
     // 'IpfsConnector': ()=>import('@/views/connectors/IpfsConnector'),
   }
 }

@@ -74,6 +74,7 @@ const mutations = {
   },
   pushHistory(state, c){
     state.commandHistory.push(c)
+
   },
   setLinks(state, l){
     state.links = l
@@ -115,7 +116,13 @@ const mutations = {
 }
 
 const actions = {
+  addNode(context, n){
+    let index = context.state.nodes.findIndex(x => x['@id'] == n['@id'])
+    index === -1 ? context.state.nodes.push(n) : Object.assign(context.state.nodes[index], n)
+    console.log(index, n)
+  },
   async pushCommandHistory(context, c){
+    console.log("rootState.gun.rootNode", context.rootState.gun.rootNode)
     context.commit('setCommand', c)
     context.commit('pushHistory',c)
     if(c.type == "triplet"){
@@ -127,6 +134,9 @@ const actions = {
         let n = await Vue.prototype.$addProp({node: subjectNode, propertie: p, value: c.value.object})
         await context.dispatch('saveNode', n)
         await context.dispatch('getNodes')
+        // if(context.rootState.gun.rootNode.length > 0){
+        //   console.log("ootState.gun.rootNode", context.rootState.gun.rootNode)
+        // }
       }
       else
       {
@@ -135,6 +145,9 @@ const actions = {
         let nodes2save  = await Vue.prototype.$addLink({subject: subjectNode, predicate:c.value.predicate, object:objectNode})
         nodes2save.forEach(async function(n) {
           await context.dispatch('saveNode', n)
+          if(context.rootState.gun.rootNode.length > 0){
+            Vue.prototype.$gunSet(n)
+          }
         });
         await context.dispatch('getNodes') // pose problème de rafraichissement, certainement car on a enlevé __ob & __threeObj
       }
@@ -150,7 +163,7 @@ const actions = {
     try{
       // console.log("saving", node)
       await idb.saveNode(node);
-    //  await Vue.prototype.$saveNodeToGun(node)
+      //  await Vue.prototype.$saveNodeToGun(node)
     }catch(e){
       alert(e)
     }
