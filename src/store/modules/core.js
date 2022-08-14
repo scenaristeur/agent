@@ -27,10 +27,18 @@ const state = () => ({
   // selectedNodes: new Set(),
   hoverNode: null,
   search: null,
-  galaxy : null
+  galaxy : null,
+  connectors: []
 })
 
 const mutations = {
+  addConnector(state, connector){
+    state.connectors.some(c => c.name === connector.name && c.room == connector.room ) ? "" : state.connectors.push(connector)
+    console.log(state.connectors)
+  },
+  removeConnector(state, i){
+    state.connectors.splice(i, 1);
+  },
   setGalaxy(state, g){
     state.galaxy = g
   },
@@ -150,7 +158,7 @@ const actions = {
     try{
       // console.log("saving", node)
       await idb.saveNode(node);
-    //  await Vue.prototype.$saveNodeToGun(node)
+      //  await Vue.prototype.$saveNodeToGun(node)
     }catch(e){
       alert(e)
     }

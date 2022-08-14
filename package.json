@@ -28,7 +28,10 @@
     "vue-float-action-button": "^0.7.9",
     "vue-router": "^3.5.1",
     "vue-social-sharing": "^3.0.9",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "y-webrtc": "^10.2.3",
+    "y-websocket": "^1.4.3",
+    "yjs": "^13.5.41"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

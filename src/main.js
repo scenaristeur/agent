@@ -27,6 +27,9 @@ Vue.use(SolidDataPlugin, {store: store});
 // Vue.use(IpfsDataPlugin, {store: store});
 import SearchPlugin from './plugins/search-plugin';
 Vue.use(SearchPlugin, {store: store});
+
+import YjsPlugin from './plugins/yjs-plugin';
+Vue.use(YjsPlugin, {store: store});
 // import BrainPlugin from './plugins/brain-plugin';
 // Vue.use(BrainPlugin, {store: store});
 // import LevelgraphJsonLDPlugin from './plugins/levelgraphjsonld-plugin';
