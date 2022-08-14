@@ -6,9 +6,8 @@
 const state = () => ({
   doc: null,
   awareness : null,
-  content: null,
-
-
+  nodes: [],
+  links: []
 })
 
 const mutations = {
@@ -16,10 +15,22 @@ const mutations = {
     console.log(a)
     state.awareness = a
   },
-  setContent(state, c) {
-    state.content = c
+  setNodes(state, n) {
+    state.nodes = n
     //render(newDoc)
   },
+  setLinks(state, l) {
+    state.links = l
+    //render(newDoc)
+  },
+
+  onNodesChange(state, n){
+    console.log("nodes changed", n)
+  },
+  onLinksChange(state, l){
+    console.log("links changed", l)
+  },
+
   async onContentArrayChange(state,ca){
     let brains = ca.content
     let room = ca.room
@@ -61,6 +72,15 @@ const mutations = {
 }
 
 const actions = {
+  set(context, item){
+    console.log("set",item)
+    console.log("nodes in yjs",context.state.nodes)
+    let {map, node} = item
+    console.log(map, node)
+    context.state[map].set(node.id, node)
+    // console.log("state.nodes", state.nodes)
+    // context.state.nodes.insert(context.state.nodes.length, a.item);
+  },
   // async newDoc(context){
   //   let doc = Automerge.init()
   //   context.commit('setDoc', doc)

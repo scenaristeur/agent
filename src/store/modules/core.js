@@ -247,6 +247,7 @@ const actions = {
     }
   },
   async getNodes(context) {
+    let module = this
     let nodes = await idb.getNodes();
     let linksTemp = []
     console.log("nodes in db", nodes)
@@ -255,6 +256,15 @@ const actions = {
       n.type == undefined ? n.type = "neurone" : ""
       n['@context'] == undefined ? n['@context'] = {} : ""
       n['@context']['@vocab'] == undefined ? n['@context']['@vocab'] = vocab : ""
+
+      context.state.connectors.forEach((c) => {
+        console.log(c)
+        module.dispatch(c.name+'/set', {map: 'nodes', node:n}, { root: true })
+      });
+
+
+
+
       var index = context.state.nodes.findIndex(x => x.id==n.id);
 
       index === -1 ? context.state.nodes.push(n) : Object.assign(context.state.nodes[index], n)

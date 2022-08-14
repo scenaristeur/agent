@@ -11,7 +11,7 @@
     name: 'YjsConnector',
     data(){
       return {
-        room: "drawing"
+        room: "graphs"
       }
     },
     methods: {
