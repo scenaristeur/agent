@@ -3,7 +3,8 @@
     <div v-if="brain != undefined" >Brain: {{ brain }}</div>
     <!-- <GunGraph v-if="showGunGraph"/> -->
     <!-- <IpfsConnector /> -->
-    <YjsConnector />
+    <!-- <YjsConnector /> -->
+    <StartsView />
     <ConnectorList />
     <NodeEdition sm="6"/>
     <TerminalView v-if="showTerminal"/>
@@ -20,8 +21,9 @@ export default {
     'TerminalView': ()=>import('@/views/TerminalView'),
     // 'GunGraph': ()=>import('@/views/experiments/GunGraph'),
     // 'IpfsConnector': ()=>import('@/views/connectors/IpfsConnector'),
-    'YjsConnector': ()=>import('@/views/connectors/YjsConnector'),
+    // 'YjsConnector': ()=>import('@/views/connectors/YjsConnector'),
       'ConnectorList': ()=>import('@/views/connectors/ConnectorList'),
+    'StartsView': ()=>import('@/views/StartsView')
   },
   computed: {
     showTerminal() {

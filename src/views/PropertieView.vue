@@ -48,13 +48,9 @@
       </div>
     </div>
     <div v-else>
-
-
-
-
-
-      <b> {{p}}</b> ({{ typeof v}}) :
-      {{v}}
+      <b> {{p}}</b> ({{ typeof v}}) :   
+        <a v-if="v.startsWith('http')" :href="v" target="_blank">{{v}}</a> 
+      <span v-else>{{v}}</span>
     </div>
   </div>
 
@@ -72,11 +68,6 @@ export default {
   methods: {
     switchTo(id){
       console.log("switchTo", id)
-
-
-
-
-      
       this.$store.dispatch('core/switchTo',id)
         let gData = this.$store.state.core.graph.graphData()
       //  console.log(nodes, links)

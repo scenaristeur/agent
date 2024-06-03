@@ -10,7 +10,7 @@
           <b-form-input v:model="currentPath" class="text-right mt-1"></b-form-input>
           <b-button :disabled="pod == null" size="sm" variant="primary" @click="saveBrainToSolid" title="Save to Solid pod"><b-icon-cloud-upload></b-icon-cloud-upload></b-button>
         </b-input-group>
-
+<!-- 
         <b-button-group class="mx-1">
 
 
@@ -22,13 +22,13 @@
         <b-button-group class="mx-1">
           <b-button>&rsaquo;</b-button>
           <b-button>&raquo;</b-button>
-        </b-button-group>
+        </b-button-group> -->
       </b-button-toolbar>
     </div>
-brains : {{ brains }}
+<!-- brains : {{ brains }} -->
     <!-- <b-button :disabled="pod == null" size="sm" variant="primary" >Save to Solid pod</b-button> -->
-    <small><i>podbrowser</i></small>
-    {{pod}}
+    <!-- <small><i>podbrowser</i></small>
+    {{pod}} -->
 
   </b-card>
 </template>

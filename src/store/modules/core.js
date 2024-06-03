@@ -28,7 +28,8 @@ const state = () => ({
   hoverNode: null,
   search: null,
   galaxy : null,
-  connectors: []
+  connectors: [],
+  starts: [],
 })
 
 const mutations = {
@@ -85,6 +86,9 @@ const mutations = {
   },
   setLinks(state, l){
     state.links = l
+  },
+  setStarts(state, s){
+    state.starts = s
   },
   spinnerAdd(state,t){
     state.spinner.push(t)
@@ -247,6 +251,7 @@ const actions = {
       alert(e)
     }
   },
+
   async getNodes(context) {
     let module = this
     let nodes = await idb.getNodes();
@@ -292,6 +297,9 @@ const actions = {
     console.log("validlinks, otherlinks",validLinks, otherLinks)
     context.commit('setLinks', validLinks)
     console.log("last",last)
+    var starts = context.state.nodes.filter(x => x.fonction=="start");
+    console.log("start", starts)
+    context.commit('setStarts', starts)
   },
   async saveBrain(context){
     let {nodes, links} = context.state.graph.graphData()
