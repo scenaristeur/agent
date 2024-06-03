@@ -119,7 +119,8 @@ const mutations = {
       state.highlightNodes.add(item)
     })
     Vue.prototype.$updateHighlight()
-  }
+  },
+  
 }
 
 const actions = {
@@ -316,7 +317,13 @@ const actions = {
   switchTo(context, id){
     let n = context.state.nodes.find(n=> n.id == id)
     context.commit('setCurrentNode', n)
-  }
+  },
+  async addExternalBrain(context, brain) {
+    //context.state.pod.brains.push(brain)
+    console.log(brain)
+    // Vue.prototype.$addBrainToPod(brain)
+  },
+
   // async addWorkspace(context, w) {
   //   context.state.pod.workspaces.push(w)
   //   Vue.prototype.$addWorkspaceToPod(w)

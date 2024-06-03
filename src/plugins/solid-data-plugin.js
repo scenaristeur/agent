@@ -172,6 +172,26 @@ const plugin = {
       }
     }
 
+    Vue.prototype.$addExternalBrain = async function(brain){
+      console.log(brain)
+
+
+        let node = {id: brain.url, name: brain.name, type: "brain", color: "lightgreen", url: brain.url, source: brain.url}
+
+
+        await store.dispatch('core/saveNode', node)
+
+     
+
+      await store.dispatch('core/getNodes')
+
+
+
+      // let test = "https://www.wikidata.org/wiki/Special:EntityData/Q182665.jsonld"
+      // console.log(test)
+      //loadExternalNeurones(tags)
+
+    }
 
     Vue.prototype.$loadBrainsFromWikidata = async function(tags){
       console.log(tags)

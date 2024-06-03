@@ -14,6 +14,22 @@
   <small><i><a href="https://www.wikidata.org" target="_blank">source wikidata</a></i></small>
 </p>
 
+
+<b-input-group>
+  <h3>External Brain</h3>
+  <b-form-input
+  v-model="external_brain.name"
+  placeholder="External Brain Name"
+  ></b-form-input>
+  <b-form-input
+  v-model="external_brain.url"
+  placeholder="External Solid Brain"
+  ></b-form-input>
+  <b-input-group-append>
+    <b-button @click="add_external_brain">Add</b-button>
+  </b-input-group-append>
+</b-input-group>
+
 </b-modal>
 
 </template>
@@ -33,6 +49,7 @@ export default {
       tags: [],
       autocompleteItems: [],
       debounce: null,
+      external_brain: {},
       // sources: [
       //   {name: "wikidata", status: "active", url: "https://www.wikidata.org/w/api.php?action=wbsearchentities&origin*&format=json" },
       //   {name: "semapps-mega carte", status: "in progress", url: "data.semapps" },
@@ -73,6 +90,12 @@ export default {
         this.loading = false
       }
     },
+    async add_external_brain(){
+      console.log(this.external_brain)
+
+      await this.$addExternalBrain(this.external_brain)
+      this.external_brain = {}
+    }
   },
   watch:{
     'tag': _.debounce(function(item) { this.getItems(item) }, 500),

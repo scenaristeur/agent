@@ -71,6 +71,12 @@ export default {
   props: ['p', 'v'],
   methods: {
     switchTo(id){
+      console.log("switchTo", id)
+
+
+
+
+      
       this.$store.dispatch('core/switchTo',id)
         let gData = this.$store.state.core.graph.graphData()
       //  console.log(nodes, links)

@@ -1,6 +1,14 @@
 # agent
 3d mindmap on your Solid Pod
 
+# mon cv 
+- https://scenaristeur.github.io/agent/?source=https://spoggy-test2.solidcommunity.net/public/brains/cv3/
+- http://127.0.0.1:8080/?source=https://spoggy-test2.solidcommunity.net/public/brains/cv3/ (local test)
+
+
+# use nodejs16
+- nvm use 16
+
 
 [![3D mindmap Demo](https://www.youtube.com/watch?v=YT61BcjGfwc/0.jpg)](https://www.youtube.com/watch?v=YT61BcjGfwc "3D mindmap on your Solid Pod")
 
@@ -14,6 +22,8 @@ Pinata 1GB https://www.pinata.cloud/
 Temporal 3GB free https://temporal.cloud/dev/
 Crust Network https://crust.network/
 
+- editorjs collaborative https://noter.sambitsahoo.com/
+
 
 ## Project setup
 ```
@@ -22,7 +32,7 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run dev
 ```
 
 ### Compiles and minifies for production
