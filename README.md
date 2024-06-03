@@ -56,6 +56,12 @@ npm run dev
 npm run build
 ```
 
+### Compiles, minifies for production, and commit
+```
+npm run git -- "external source"
+
+```
+
 ### Lints and fixes files
 ```
 npm run lint
