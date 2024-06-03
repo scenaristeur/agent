@@ -13,6 +13,15 @@
 [![3D mindmap Demo](https://www.youtube.com/watch?v=YT61BcjGfwc/0.jpg)](https://www.youtube.com/watch?v=YT61BcjGfwc "3D mindmap on your Solid Pod")
 
 
+
+# Tips
+- ajouter la fonction "start" à un noeud 
+`mon_noeud .fonction start,`
+- ajouter un brain externe :  Utiliser le "+" et "external source"/"external brain"
+
+
+
+
 # IPFS pinning  services
 https://docs.ipfs.io/concepts/persistence/#pinning-services
 Axel https://www.axel.org/2019/07/23/qa-with-the-developers-of-axel-ipfs/
@@ -23,6 +32,13 @@ Temporal 3GB free https://temporal.cloud/dev/
 Crust Network https://crust.network/
 
 - editorjs collaborative https://noter.sambitsahoo.com/
+
+
+
+
+
+
+
 
 
 ## Project setup
