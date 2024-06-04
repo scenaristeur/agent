@@ -106,3 +106,7 @@ https://codepen.io/adambene/pen/xRWrXN
 - gun graphin https://github.com/lmangani/gun-graphin/blob/99cd85c5eec001f2f4f37713132728f2f14caf60/README.md
 # awesome gun
 - https://github.com/ash0080/gun.doc.cn/blob/839b787466feac52e99d5b7b0147f9c71c97d5d6/Awesome-GUN.md
+
+# solid providers
+- https://ewingson.solidcommunity.net/public/ttl/pod-provider.ttl
+- https://www.podsbeta.de/
