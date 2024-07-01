@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-container v-if="tempNode != null">
-      <div>
+      <div v-if="session != null">
         <b-button-toolbar key-nav aria-label="Toolbar with button groups">
           <b-button-group class="mx-1">
             <b-button v-b-toggle.collapse-1 variant="primary"
@@ -54,7 +54,13 @@
   <b-col md="10">
   <b-row>
   <b-col cols="10"> -->
-        <b-form-input v-model="tempNode.name" placeholder="name"></b-form-input>
+        <b-form-input
+          v-if="session != null"
+          v-model="tempNode.name"
+          placeholder="name"
+        ></b-form-input>
+        <h3 v-else>{{ tempNode.name }}</h3>
+
         <!-- </b-col>
   <b-col cols="6" md="2">
 
@@ -63,7 +69,11 @@
 </b-row>
 <b-row>
 <b-col cols="10"> -->
-        <b-form-input v-model="tempNode.type" placeholder="type"></b-form-input>
+        <b-form-input
+          v-if="session != null"
+          v-model="tempNode.type"
+          placeholder="type"
+        ></b-form-input>
         <!-- </b-col>
 <b-col cols="6" md="2"> -->
 
@@ -89,10 +99,11 @@
 <b-col> -->
 
         <div v-if="currentNode.reverse != undefined">
+          <hr />
           <b-button size="sm" v-b-toggle.collapse-backlinks variant="light"
-            >Backlinks</b-button
+            >liens retour</b-button
           >
-          <b-collapse id="collapse-backlinks" class="mt-2">
+          <b-collapse id="collapse-backlinks" class="mt-2" visible>
             <div v-for="(p, j) in Object.keys(currentNode.reverse)" :key="j">
               <PropertieView :p="p" :v="currentNode.reverse[p]" />
             </div>
@@ -100,10 +111,11 @@
         </div>
         <!-- </b-col>
 </b-row> -->
-
-        <b-button @click="cancel">Cancel</b-button>
-        <b-button @click="save" variant="success">Save</b-button>
-        <hr />
+        <div v-if="session != null">
+          <b-button @click="cancel">Cancel</b-button>
+          <b-button @click="save" variant="success">Save</b-button>
+          <hr />
+        </div>
       </b-collapse>
     </b-container>
   </div>
@@ -189,8 +201,7 @@ export default {
     },
     openExternal() {
       console.log(this.tempNode);
-      this.$loadBrainFromSolid(this.tempNode.id)
-  
+      this.$loadBrainFromSolid(this.tempNode.id);
     },
   },
   watch: {
@@ -213,6 +224,9 @@ export default {
     },
     graph() {
       return this.$store.state.core.graph;
+    },
+    session() {
+      return this.$store.state.solid.session;
     },
   },
 };

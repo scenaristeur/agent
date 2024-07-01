@@ -17,8 +17,8 @@ const plugin = {
 
     function getSize(){
       //768 = medium bootstrap
-      return {w: window.innerWidth > 768 ? window.innerWidth/2 : window.innerWidth,
-        h: window.innerWidth > 768 ? window.innerHeight*.9 : window.innerHeight*.8}
+      return {w: window.innerWidth > 768 ? window.innerWidth/2.05 : window.innerWidth*.99,
+        h: window.innerWidth > 768 ? window.innerHeight*.9 : window.innerHeight*.65}
       }
       window.addEventListener('resize', function(){
         if (store.state.core.graph != null){

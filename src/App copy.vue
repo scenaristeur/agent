@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-
+    <NavBar />
     <!-- <hr>
     <hr>
     <hr>
@@ -12,9 +12,6 @@
   <div v-if="message != null"><b><hr><hr>{{message}}<hr><hr></b></div>
 
   <router-view/>
-
-  <NavBar />
-  
   <small><i>0.0.1 - tabindex="-1" & type search & navigation |
     <a href="https://github.com/scenaristeur/agent" target="_blank">contribute</a> |
     <a href="https://github.com/scenaristeur/agent/wiki" target ="_blank">help</a> |

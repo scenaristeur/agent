@@ -1,9 +1,18 @@
 <template>
-    <div id="graph" width="100px" ref="graph">Loading graph...</div>
+  <div>  
+  <div id="graph" width="100px" ref="graph">Loading graph...
+
+    
+    </div>
+    <FabMenu />
+  </div>
 </template>
 <script>
 export default {
   name: "VisualisationView",
+  components: {
+    'FabMenu': ()=>import('@/views/FabMenu'),
+  },
   mounted(){
     this.$graphInit({domElement: this.$refs.graph})
   },
