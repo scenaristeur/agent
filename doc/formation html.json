@@ -1,0 +1,466 @@
+{
+  "nodes": [
+    {
+      "@context": {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "@base": "http://local/",
+        "@vocab": "https://scenaristeur.github.io/agent/",
+        "id": "@id",
+        "type": "@type",
+        "reverse": "@reverse",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      },
+      "id": "0a843456-ab56-4b1a-a88e-92827fec9d38",
+      "name": "Safari",
+      "type": "neurone",
+      "homepage": "https://scenaristeur.github.io/agent/",
+      "reverse": {
+        "exemple": {
+          "id": "a647d7df-c170-46da-ad13-1cdbbcee5d50",
+          "name": "Navigateur"
+        }
+      }
+    },
+    {
+      "@context": {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "@base": "http://local/",
+        "@vocab": "https://scenaristeur.github.io/agent/",
+        "id": "@id",
+        "type": "@type",
+        "reverse": "@reverse",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      },
+      "id": "1b05202f-2dae-484f-8e6d-319dc812cf7e",
+      "name": "Chrome",
+      "type": "neurone",
+      "homepage": "https://scenaristeur.github.io/agent/",
+      "reverse": {
+        "exemple": {
+          "id": "a647d7df-c170-46da-ad13-1cdbbcee5d50",
+          "name": "Navigateur"
+        }
+      }
+    },
+    {
+      "@context": {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "@base": "http://local/",
+        "@vocab": "https://scenaristeur.github.io/agent/",
+        "id": "@id",
+        "type": "@type",
+        "reverse": "@reverse",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      },
+      "id": "1d83f855-f840-4f68-b0c3-782ca8f6c5bf",
+      "name": "Chromium",
+      "type": "neurone",
+      "homepage": "https://scenaristeur.github.io/agent/",
+      "reverse": {
+        "exemple": {
+          "id": "a647d7df-c170-46da-ad13-1cdbbcee5d50",
+          "name": "Navigateur"
+        }
+      }
+    },
+    {
+      "@context": {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "@base": "http://local/",
+        "@vocab": "https://scenaristeur.github.io/agent/",
+        "id": "@id",
+        "type": "@type",
+        "reverse": "@reverse",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      },
+      "id": "423c1bbb-93b7-46e7-a210-8520fc1f562e",
+      "name": "La Balise H1",
+      "type": "neurone",
+      "homepage": "https://scenaristeur.github.io/agent/",
+      "reverse": {
+        "première": {
+          "id": "80ac286f-3258-4138-b20a-489101ee4e98",
+          "name": "Les Balises"
+        }
+      },
+      "texte": "La balise ouvrante <h1> qui est utilisée pour afficher un titre de niveau 1est accompagnée par une balise fermante </h1>."
+    },
+    {
+      "@context": {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "@base": "http://local/",
+        "@vocab": "https://scenaristeur.github.io/agent/",
+        "id": "@id",
+        "type": "@type",
+        "reverse": "@reverse",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      },
+      "id": "7a78f227-5c05-41ba-92e1-b73b8ef15362",
+      "name": "Formation Html",
+      "type": "neurone",
+      "homepage": "https://scenaristeur.github.io/agent/",
+      "outil": [
+        {
+          "id": "9fb17a80-8205-4531-aa56-71dbb566a73a",
+          "name": "Editeur de code"
+        },
+        {
+          "id": "a647d7df-c170-46da-ad13-1cdbbcee5d50",
+          "name": "Navigateur"
+        }
+      ],
+      "fonction": "start",
+      "debut": {
+        "id": "80ac286f-3258-4138-b20a-489101ee4e98",
+        "name": "Les Balises"
+      }
+    },
+    {
+      "@context": {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "@base": "http://local/",
+        "@vocab": "https://scenaristeur.github.io/agent/",
+        "id": "@id",
+        "type": "@type",
+        "reverse": "@reverse",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      },
+      "id": "80ac286f-3258-4138-b20a-489101ee4e98",
+      "name": "Les Balises",
+      "type": "neurone",
+      "homepage": "https://scenaristeur.github.io/agent/",
+      "reverse": {
+        "debut": {
+          "id": "7a78f227-5c05-41ba-92e1-b73b8ef15362",
+          "name": "Formation Html"
+        }
+      },
+      "texte": "Les balises Html sont des bouts de code délimités par des chevrons comme < et >",
+      "première": {
+        "id": "423c1bbb-93b7-46e7-a210-8520fc1f562e",
+        "name": "La Balise H1"
+      }
+    },
+    {
+      "@context": {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "@base": "http://local/",
+        "@vocab": "https://scenaristeur.github.io/agent/",
+        "id": "@id",
+        "type": "@type",
+        "reverse": "@reverse",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      },
+      "id": "96adbf81-6dd9-4861-8187-0ddf4b796fbd",
+      "name": "VsCode",
+      "type": "neurone",
+      "homepage": "https://scenaristeur.github.io/agent/",
+      "reverse": {
+        "exemple": {
+          "id": "9fb17a80-8205-4531-aa56-71dbb566a73a",
+          "name": "Editeur de code"
+        }
+      }
+    },
+    {
+      "@context": {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "@base": "http://local/",
+        "@vocab": "https://scenaristeur.github.io/agent/",
+        "id": "@id",
+        "type": "@type",
+        "reverse": "@reverse",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      },
+      "id": "9fb17a80-8205-4531-aa56-71dbb566a73a",
+      "name": "Editeur de code",
+      "type": "neurone",
+      "homepage": "https://scenaristeur.github.io/agent/",
+      "reverse": {
+        "outil": {
+          "id": "7a78f227-5c05-41ba-92e1-b73b8ef15362",
+          "name": "Formation Html"
+        }
+      },
+      "exemple": [
+        {
+          "id": "96adbf81-6dd9-4861-8187-0ddf4b796fbd",
+          "name": "VsCode"
+        },
+        {
+          "id": "e27d86fc-c93d-497c-b8b1-eaf7536a1f8d",
+          "name": "VsCodium"
+        }
+      ]
+    },
+    {
+      "@context": {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "@base": "http://local/",
+        "@vocab": "https://scenaristeur.github.io/agent/",
+        "id": "@id",
+        "type": "@type",
+        "reverse": "@reverse",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      },
+      "id": "a647d7df-c170-46da-ad13-1cdbbcee5d50",
+      "name": "Navigateur",
+      "type": "neurone",
+      "homepage": "https://scenaristeur.github.io/agent/",
+      "reverse": {
+        "outil": {
+          "id": "7a78f227-5c05-41ba-92e1-b73b8ef15362",
+          "name": "Formation Html"
+        }
+      },
+      "exemple": [
+        {
+          "id": "b8e37e5c-65de-4d1c-945e-569ae06ba2fd",
+          "name": "Firefox"
+        },
+        {
+          "id": "1b05202f-2dae-484f-8e6d-319dc812cf7e",
+          "name": "Chrome"
+        },
+        {
+          "id": "1d83f855-f840-4f68-b0c3-782ca8f6c5bf",
+          "name": "Chromium"
+        },
+        {
+          "id": "c9949f5e-270b-4af0-ab64-1ecdfac6abb5",
+          "name": "Edge"
+        },
+        {
+          "id": "0a843456-ab56-4b1a-a88e-92827fec9d38",
+          "name": "Safari"
+        },
+        {
+          "id": "bc2a1447-acf9-49f2-a8d2-8d8fd57b1be4",
+          "name": "Opera"
+        }
+      ]
+    },
+    {
+      "@context": {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "@base": "http://local/",
+        "@vocab": "https://scenaristeur.github.io/agent/",
+        "id": "@id",
+        "type": "@type",
+        "reverse": "@reverse",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      },
+      "id": "b8e37e5c-65de-4d1c-945e-569ae06ba2fd",
+      "name": "Firefox",
+      "type": "neurone",
+      "homepage": "https://scenaristeur.github.io/agent/",
+      "reverse": {
+        "exemple": {
+          "id": "a647d7df-c170-46da-ad13-1cdbbcee5d50",
+          "name": "Navigateur"
+        }
+      }
+    },
+    {
+      "@context": {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "@base": "http://local/",
+        "@vocab": "https://scenaristeur.github.io/agent/",
+        "id": "@id",
+        "type": "@type",
+        "reverse": "@reverse",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      },
+      "id": "bc2a1447-acf9-49f2-a8d2-8d8fd57b1be4",
+      "name": "Opera",
+      "type": "neurone",
+      "homepage": "https://scenaristeur.github.io/agent/",
+      "reverse": {
+        "exemple": {
+          "id": "a647d7df-c170-46da-ad13-1cdbbcee5d50",
+          "name": "Navigateur"
+        }
+      }
+    },
+    {
+      "@context": {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "@base": "http://local/",
+        "@vocab": "https://scenaristeur.github.io/agent/",
+        "id": "@id",
+        "type": "@type",
+        "reverse": "@reverse",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      },
+      "id": "c9949f5e-270b-4af0-ab64-1ecdfac6abb5",
+      "name": "Edge",
+      "type": "neurone",
+      "homepage": "https://scenaristeur.github.io/agent/",
+      "reverse": {
+        "exemple": {
+          "id": "a647d7df-c170-46da-ad13-1cdbbcee5d50",
+          "name": "Navigateur"
+        }
+      }
+    },
+    {
+      "@context": {
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "knows": "http://xmlns.com/foaf/0.1/knows",
+        "@base": "http://local/",
+        "@vocab": "https://scenaristeur.github.io/agent/",
+        "id": "@id",
+        "type": "@type",
+        "reverse": "@reverse",
+        "homepage": {
+          "@id": "http://xmlns.com/foaf/0.1/homepage",
+          "@type": "@id"
+        }
+      },
+      "id": "e27d86fc-c93d-497c-b8b1-eaf7536a1f8d",
+      "name": "VsCodium",
+      "type": "neurone",
+      "homepage": "https://scenaristeur.github.io/agent/",
+      "reverse": {
+        "exemple": {
+          "id": "9fb17a80-8205-4531-aa56-71dbb566a73a",
+          "name": "Editeur de code"
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "source": "7a78f227-5c05-41ba-92e1-b73b8ef15362",
+      "target": "9fb17a80-8205-4531-aa56-71dbb566a73a",
+      "label": "outil",
+      "curvature": 0.3,
+      "rotation": 2.1344251091846167
+    },
+    {
+      "source": "7a78f227-5c05-41ba-92e1-b73b8ef15362",
+      "target": "a647d7df-c170-46da-ad13-1cdbbcee5d50",
+      "label": "outil",
+      "curvature": 0.3,
+      "rotation": 2.1344251091846167
+    },
+    {
+      "source": "7a78f227-5c05-41ba-92e1-b73b8ef15362",
+      "target": "80ac286f-3258-4138-b20a-489101ee4e98",
+      "label": "debut",
+      "curvature": 0.3,
+      "rotation": 0.2124547412099395
+    },
+    {
+      "source": "80ac286f-3258-4138-b20a-489101ee4e98",
+      "target": "423c1bbb-93b7-46e7-a210-8520fc1f562e",
+      "label": "première",
+      "curvature": 0.3,
+      "rotation": 2.139962714694298
+    },
+    {
+      "source": "9fb17a80-8205-4531-aa56-71dbb566a73a",
+      "target": "96adbf81-6dd9-4861-8187-0ddf4b796fbd",
+      "label": "exemple",
+      "curvature": 0.3,
+      "rotation": 1.9816366966062966
+    },
+    {
+      "source": "9fb17a80-8205-4531-aa56-71dbb566a73a",
+      "target": "e27d86fc-c93d-497c-b8b1-eaf7536a1f8d",
+      "label": "exemple",
+      "curvature": 0.3,
+      "rotation": 1.9816366966062966
+    },
+    {
+      "source": "a647d7df-c170-46da-ad13-1cdbbcee5d50",
+      "target": "b8e37e5c-65de-4d1c-945e-569ae06ba2fd",
+      "label": "exemple",
+      "curvature": 0.3,
+      "rotation": 0.5137580993518894
+    },
+    {
+      "source": "a647d7df-c170-46da-ad13-1cdbbcee5d50",
+      "target": "1b05202f-2dae-484f-8e6d-319dc812cf7e",
+      "label": "exemple",
+      "curvature": 0.3,
+      "rotation": 0.5137580993518894
+    },
+    {
+      "source": "a647d7df-c170-46da-ad13-1cdbbcee5d50",
+      "target": "1d83f855-f840-4f68-b0c3-782ca8f6c5bf",
+      "label": "exemple",
+      "curvature": 0.3,
+      "rotation": 0.5137580993518894
+    },
+    {
+      "source": "a647d7df-c170-46da-ad13-1cdbbcee5d50",
+      "target": "c9949f5e-270b-4af0-ab64-1ecdfac6abb5",
+      "label": "exemple",
+      "curvature": 0.3,
+      "rotation": 0.5137580993518894
+    },
+    {
+      "source": "a647d7df-c170-46da-ad13-1cdbbcee5d50",
+      "target": "0a843456-ab56-4b1a-a88e-92827fec9d38",
+      "label": "exemple",
+      "curvature": 0.3,
+      "rotation": 0.5137580993518894
+    },
+    {
+      "source": "a647d7df-c170-46da-ad13-1cdbbcee5d50",
+      "target": "bc2a1447-acf9-49f2-a8d2-8d8fd57b1be4",
+      "label": "exemple",
+      "curvature": 0.3,
+      "rotation": 0.5137580993518894
+    }
+  ]
+}

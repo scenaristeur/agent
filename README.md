@@ -1,6 +1,39 @@
 # agent
 3d mindmap on your Solid Pod
 
+# creation d'un triplet
+- La création d'un triplet s'effectue par la saisie de trois mots suivis par un signe de ponctuation qui peut être une virgule, un point-virgule, un point ou un tiret.
+par exemple : 
+
+`chat mange souris.`
+
+Un triplet est un groupe de trois mots ou groupes de mots. Le premier représente *le sujet*, le second est *le prédicat* ou *la propriété*, et le troisième est *l'objet*. 
+
+Si vous souhaitez utiliser plusieurs mot il faut entourer chaque terme du triplet par des guillements ou doubles-quotes, comme par exemple : 
+
+`"Le gentil petit chat" "taquine amoureusement" "la souris verte".`
+
+N'oubliez pas le signe de ponctuation à la fin de votre triplet, cela peut être un point, un point-virgule, une virgule ou un tiret : 
+- le point créé le triplet et efface la ligne.
+- le point virgule créé le triplet et garde le sujet pour le prochain triplet
+- la virgule créé le triplet et garde le sujet et le prédicat
+- le tiret créé le triplet et place l'objet à la place du sujet. Ceci permet d'enchaîner les triplets.
+
+
+
+
+
+# specials predicates
+- indiquer le point de départ d'un graphe
+`sujet .fonction start.`
+- contenu textuel d'un noeud
+`sujet .texte "Bla bla bla".`
+
+
+
+
+
+
 # mon cv 
 - https://scenaristeur.github.io/agent/?source=https://spoggy-test2.solidcommunity.net/public/brains/cv3/
 - http://127.0.0.1:8080/?source=https://spoggy-test2.solidcommunity.net/public/brains/cv3/ (local test)
