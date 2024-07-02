@@ -24,7 +24,7 @@
 import VueCommand, { createStdout, createStderr, createDummyStdout } from "vue-command";
 import "vue-command/dist/vue-command.css";
 import NanoEditor from "@/views/NanoEditor.vue";
-import { Command } from '@/neurone-factory'
+import { Command } from "@/neurone-factory";
 
 const PROMPT = ":#/";
 
@@ -123,10 +123,21 @@ export default {
     },
     processTriple(input) {
       console.log("process", input);
-      let inputObject = new Command({inputValue: input/*, selected: this.selected*/})
-      this.$store.dispatch('core/pushCommandHistory', inputObject)
-      console.log("inputObject", inputObject)
-      return inputObject.inputNew
+      let inputObject = new Command({ inputValue: input /*, selected: this.selected*/ });
+      this.$store.dispatch("core/pushCommandHistory", inputObject);
+      console.log("inputObject", inputObject);
+      return inputObject.inputNew;
+    },
+    arrayToList(a) {
+      //return a.join("<br>")
+      let list = "";
+      for (let i = 0; i < a.length; i++) {
+        list += i + ". " + a[i] + "<br>";
+      }
+      return list;
+      // return a.map(i,v){
+      //   return "indice", i, " with", v
+      // }
     },
   },
   created() {
@@ -138,7 +149,10 @@ export default {
       });
       names.sort();
 
-      return createStdout("ls " + _[1] + JSON.stringify(names, null, 2));
+      // return createStdout("ls " + _[1] + JSON.stringify(names, null, 2));
+      let output =
+        "ls " + _[1] + JSON.stringify(names, null, 2) + "<br>" + this.arrayToList(names);
+      return createStdout(output);
     };
 
     this.commands.mk = ({ _ }) => {
