@@ -125,6 +125,8 @@ export default {
       console.log("process", input);
       let inputObject = new Command({inputValue: input/*, selected: this.selected*/})
       this.$store.dispatch('core/pushCommandHistory', inputObject)
+      console.log("inputObject", inputObject)
+      return inputObject.inputNew
     },
   },
   created() {
@@ -175,9 +177,9 @@ export default {
     this.builtIn = (stdin, terminal) => {
       stdin = stdin.trim();
       if (this.isTriple(stdin)) {
-        this.processTriple(stdin);
+        let result = this.processTriple(stdin);
 
-        this.stdin = "";
+        this.stdin = result;
       } else {
         //Check for application
         if (stdin.trim().split(" ")[0] !== "reverse") {
