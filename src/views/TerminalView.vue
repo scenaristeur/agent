@@ -48,6 +48,7 @@ export default {
       // Show help
       help: () =>
         createStdout(`Available programms:<br><br>
+        &nbsp;subject predicate object [,;.-] # create a new triple don't forget to end with [,;.-]
         &nbsp;ls nodes<br>
         &nbsp;cd [dir]<br>
         &nbsp;clear<br>
