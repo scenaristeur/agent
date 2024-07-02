@@ -24,6 +24,7 @@
 import VueCommand, { createStdout, createStderr, createDummyStdout } from "vue-command";
 import "vue-command/dist/vue-command.css";
 import NanoEditor from "@/views/NanoEditor.vue";
+import { Command } from '@/neurone-factory'
 
 const PROMPT = ":#/";
 
@@ -121,6 +122,8 @@ export default {
     },
     processTriple(input) {
       console.log("process", input);
+      let inputObject = new Command({inputValue: input/*, selected: this.selected*/})
+      this.$store.dispatch('core/pushCommandHistory', inputObject)
     },
   },
   created() {
