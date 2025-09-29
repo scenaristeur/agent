@@ -1,6 +1,13 @@
 # agent
 3d mindmap on your Solid Pod
 
+# Node version 
+- with nvm 
+```
+nvm use 16
+```
+
+
 # creation d'un triplet
 - La création d'un triplet s'effectue par la saisie de trois mots suivis par un signe de ponctuation qui peut être une virgule, un point-virgule, un point ou un tiret.
 par exemple : 

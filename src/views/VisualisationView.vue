@@ -4,15 +4,15 @@
 
     
     </div>
-    <FabMenu />
+    <!-- <FabMenu /> -->
   </div>
 </template>
 <script>
 export default {
   name: "VisualisationView",
-  components: {
-    'FabMenu': ()=>import('@/views/FabMenu'),
-  },
+  // components: {
+  //   'FabMenu': ()=>import('@/views/FabMenu'),
+  // },
   mounted(){
     this.$graphInit({domElement: this.$refs.graph})
   },

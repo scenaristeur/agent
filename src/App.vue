@@ -9,22 +9,26 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav> -->
+
+  <NavBar />
+
+
+
   <div v-if="message != null"><b><hr><hr>{{message}}<hr><hr></b></div>
 
   <router-view/>
 
-  <!-- <NavBar /> -->
 
   <BottomNavBar />
   
 
 
-  <small><i>0.0.1 - tabindex="-1" & type search & navigation |
+  <!-- <small><i>0.0.1 - tabindex="-1" & type search & navigation |
     <a href="https://github.com/scenaristeur/agent" target="_blank">contribute</a> |
     <a href="https://github.com/scenaristeur/agent/wiki" target ="_blank">help</a> |
     <a href="https://youtu.be/YT61BcjGfwc" target ="_blank">How To use 3dmindmap Video Demo</a> |
     <router-link to="/test">Test</router-link>
-  </i></small>
+  </i></small> -->
   <!-- <LevelgraphJsonld /> -->
   <!-- <DataCaching /> -->
 
@@ -40,7 +44,7 @@ export default {
   name: 'App',
   components: {
     'BottomNavBar': ()=>import('@/views/BottomNavBar'),
-    // 'NavBar': ()=>import('@/views/NavBar'),
+    'NavBar': ()=>import('@/views/NavBar'),
     // 'DataCaching': ()=>import('@/views/experiments/DataCaching'),
     // 'LevelgraphJsonld': ()=>import('@/views/experiments/LevelgraphJsonld'),
   },
