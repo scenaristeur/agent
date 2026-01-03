@@ -3,20 +3,18 @@
     <div v-if="brain != undefined">Brain: {{ brain }}</div>
     <!-- <GunGraph v-if="showGunGraph"/> -->
     <!-- <IpfsConnector /> -->
-    <!-- <YjsConnector /> -->
+    <YjsConnector />
     <StartsView />
     <ConnectorList />
     <NodeEdition sm="6" />
     <TerminalView v-if="showTerminal" />
     <BrainLoader />
     <hr />
-    <a href="https://www.youtube.com/watch?v=YT61BcjGfwc" target="_blank">DEMO video</a
-    ><br />
+    <a href="https://www.youtube.com/watch?v=YT61BcjGfwc" target="_blank">DEMO video</a><br />
 
     <a
-      href="https://scenaristeur.github.io/agent?source=https://spoggy-test2.solidcommunity.net/public/brains/Chateau_des_Robots/"
-      >First Brain</a
-    >
+      href="https://scenaristeur.github.io/agent?source=https://spoggy-test2.solidcommunity.net/public/brains/Chateau_des_Robots/">First
+      Brain</a>
   </div>
 </template>
 
@@ -29,7 +27,7 @@ export default {
     TerminalView: () => import("@/views/TerminalView"),
     // 'GunGraph': ()=>import('@/views/experiments/GunGraph'),
     // 'IpfsConnector': ()=>import('@/views/connectors/IpfsConnector'),
-    // 'YjsConnector': ()=>import('@/views/connectors/YjsConnector'),
+    'YjsConnector': () => import('@/views/connectors/YjsConnector'),
     ConnectorList: () => import("@/views/connectors/ConnectorList"),
     StartsView: () => import("@/views/StartsView"),
   },

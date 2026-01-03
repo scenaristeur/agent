@@ -4,14 +4,15 @@
 // import { v4 as uuidv4 } from 'uuid';
 
 const state = () => ({
+  server: "ws://localhost:1234",
   doc: null,
-  awareness : null,
+  awareness: null,
   nodes: [],
   links: []
 })
 
 const mutations = {
-  setAwareness(state, a){
+  setAwareness(state, a) {
     console.log(a)
     state.awareness = a
   },
@@ -24,14 +25,14 @@ const mutations = {
     //render(newDoc)
   },
 
-  onNodesChange(state, n){
+  onNodesChange(state, n) {
     console.log("nodes changed", n)
   },
-  onLinksChange(state, l){
+  onLinksChange(state, l) {
     console.log("links changed", l)
   },
 
-  async onContentArrayChange(state,ca){
+  async onContentArrayChange(state, ca) {
     let brains = ca.content
     let room = ca.room
 
@@ -39,12 +40,12 @@ const mutations = {
 
       let id = brain._item.id
       let getId = id.clock - id.client
-      console.log("BRain",getId, id/*, brain*/)
+      console.log("BRain", getId, id/*, brain*/)
       for await (const neurone of brain) {
 
 
         neurone.group = getId
-        console.log("room",room,"Neuron",neurone)
+        console.log("room", room, "Neuron", neurone)
         // var index = state.nodes.findIndex(x => x.id == neurone.id);
         //
         // index === -1 ? state.nodes.push(neurone) : Object.assign(state.nodes[index], neurone)
@@ -72,10 +73,10 @@ const mutations = {
 }
 
 const actions = {
-  set(context, item){
-    console.log("set",item)
-    console.log("nodes in yjs",context.state.nodes)
-    let {map, node} = item
+  set(context, item) {
+    console.log("set", item)
+    console.log("nodes in yjs", context.state.nodes)
+    let { map, node } = item
     console.log(map, node)
     context.state[map].set(node.id, node)
     // console.log("state.nodes", state.nodes)
