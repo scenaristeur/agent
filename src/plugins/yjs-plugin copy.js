@@ -1,12 +1,6 @@
 // import { Galaxy } from '@/api/galaxy';
-// import { WebsocketProvider } from "y-websocket";
+import { WebsocketProvider } from "y-websocket";
 // import { WebrtcProvider } from 'y-webrtc'
-
-//hocuspocus provider https://tiptap.dev/docs/hocuspocus/provider/configuration
-// and https://tiptap.dev/docs/hocuspocus/provider/install
-import { HocuspocusProvider } from '@hocuspocus/provider'
-
-
 import * as Y from "yjs";
 let awareness = {}
 let server = null
@@ -89,13 +83,7 @@ const plugin = {
     const getDoc = id => {
       const ydoc = new Y.Doc();
       // const providerWebsocket = new WebsocketProvider(`wss:yjs-demos.now.sh`, id, ydoc);
-      const providerWebsocket = //new WebsocketProvider(server, id, ydoc);
-        new HocuspocusProvider({
-          url: server,
-          name: id,
-          document: ydoc,
-          // token: "super-secret-token",
-        });
+      const providerWebsocket = new WebsocketProvider(server, id, ydoc);
 
       // const provider = new WebsocketProvider(`wss:yjs-demos.now.sh`, id, ydoc);
       // const providerWebrtc = new WebrtcProvider(id, ydoc)
