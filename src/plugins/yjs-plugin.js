@@ -6,6 +6,7 @@
 // and https://tiptap.dev/docs/hocuspocus/provider/install
 import { HocuspocusProvider } from '@hocuspocus/provider'
 
+// const delay = ms => new Promise(res => setTimeout(res, ms));
 
 import * as Y from "yjs";
 let awareness = {}
@@ -33,6 +34,7 @@ const plugin = {
       ymap.observe(ymapEvent => {
         ymapEvent.target === ymap // => true
         console.log("nodes", nodes)
+        console.log("ymap", ymap)
         // Find out what changed:
         // Option 1: A set of keys that changed
         ymapEvent.keysChanged // => Set<strings>
@@ -49,9 +51,20 @@ const plugin = {
             console.log(`Node "${key}" was deleted. New value: undefined. Previous value: "${JSON.stringify(change.oldValue).name}".`)
           }
           console.log("NODE", JSON.stringify(ymap.get(key)))
-        })
-      })
 
+          let node = ymap.get(key)
+          this.$store.dispatch('core/saveNode', node)
+
+        })
+
+
+      })
+      let module = this
+      setInterval(function () {
+        // method to be executed;
+        console.log("\nGET NODES from idb")
+        module.$store.dispatch('core/getNodes')
+      }, 5000);
 
       // let ymapLinks = links
       // ymapLinks.observe(ymapEventLinks => {

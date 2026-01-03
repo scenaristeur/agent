@@ -156,6 +156,7 @@ const actions = {
     context.commit('setCurrentNode', node)
   },
   async saveNode(context, node) {
+    console.log("store", node)
     node['@context'] == undefined ? node['@context'] = {} : ""
     node['@context']['@vocab'] == undefined ? node['@context']['@vocab'] = vocab : ""
     try {
@@ -252,6 +253,8 @@ const actions = {
 
   async getNodes(context) {
     let module = this
+    console.log("getNodes")
+
     let nodes = await idb.getNodes();
     let linksTemp = []
     console.log("nodes in db", nodes)
