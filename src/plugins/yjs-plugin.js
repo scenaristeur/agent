@@ -32,7 +32,7 @@ const plugin = {
       let ymap = nodes
       ymap.observe(ymapEvent => {
         ymapEvent.target === ymap // => true
-
+        console.log("nodes", nodes)
         // Find out what changed:
         // Option 1: A set of keys that changed
         ymapEvent.keysChanged // => Set<strings>
@@ -42,15 +42,39 @@ const plugin = {
         // sample code.
         ymapEvent.changes.keys.forEach((change, key) => {
           if (change.action === 'add') {
-            console.log(`Property "${key}" was added. Initial value: "${JSON.stringify(ymap.get(key).name)}".`)
+            console.log(`Node "${key}" was added. Initial value: "${JSON.stringify(ymap.get(key).name)}".`)
           } else if (change.action === 'update') {
-            console.log(`Property "${key}" was updated. New value: "${JSON.stringify(ymap.get(key).name)}". Previous value: "${JSON.stringify(change.oldValue).name}".`)
+            console.log(`Node "${key}" was updated. New value: "${JSON.stringify(ymap.get(key).name)}". Previous value: "${JSON.stringify(change.oldValue).name}".`)
           } else if (change.action === 'delete') {
-            console.log(`Property "${key}" was deleted. New value: undefined. Previous value: "${JSON.stringify(change.oldValue).name}".`)
+            console.log(`Node "${key}" was deleted. New value: undefined. Previous value: "${JSON.stringify(change.oldValue).name}".`)
           }
+          console.log("NODE", JSON.stringify(ymap.get(key)))
         })
       })
 
+
+      // let ymapLinks = links
+      // ymapLinks.observe(ymapEventLinks => {
+      //   console.log("links", links)
+      //   ymapEventLinks.target === ymapLinks // => true
+
+      //   // Find out what changed:
+      //   // Option 1: A set of keys that changed
+      //   ymapEventLinks.keysChanged // => Set<strings>
+      //   // Option 2: Compute the differences
+      //   ymapEventLinks.changes.keys // => Map<string, { action: 'add'|'update'|'delete', oldValue: any}>
+
+      //   // sample code.
+      //   ymapEventLinks.changes.keys.forEach((change, key) => {
+      //     if (change.action === 'add') {
+      //       console.log(`Link "${key}" was added. Initial value: "${JSON.stringify(ymapLinks.get(key).name)}".`)
+      //     } else if (change.action === 'update') {
+      //       console.log(`Link "${key}" was updated. New value: "${JSON.stringify(ymapLinks.get(key).name)}". Previous value: "${JSON.stringify(change.oldValue).name}".`)
+      //     } else if (change.action === 'delete') {
+      //       console.log(`Link "${key}" was deleted. New value: undefined. Previous value: "${JSON.stringify(change.oldValue).name}".`)
+      //     }
+      //   })
+      // })
       // ymap.set('key', 'value') // => Property "key" was added. Initial value: "value".
       // ymap.set('key', 'new') // => Property "key" was updated. New value: "new". Previous value: "value".
       // ymap.delete('key') // => Property "key" was deleted. New value: undefined. Previous Value: "new".
@@ -94,6 +118,60 @@ const plugin = {
           url: server,
           name: id,
           document: ydoc,
+          onOpen() {
+            console.log("open")
+            // …
+          },
+
+          // onAuthenticated() {
+          //   console.log("auth")
+          //   // …
+          // },
+          // onAuthenticationFailed: ({ reason }) => {
+          //   console.log("auth failed:", reason)
+          //   // …
+          // },
+          // onStatus: ({ status }) => {
+          //   console.log("status:", status)
+          //   // …
+          // },
+          // onMessage: ({ event, message }) => {
+          //   console.log("event, mess", event, message)
+          //   // …
+          // },
+          // onOutgoingMessage: ({ message }) => {
+          //   console.log("outgoing mess:", message)
+          //   // …
+          // },
+          // onSynced: ({ state }) => {
+          //   console.log("synced state", state)
+          //   // …
+          // },
+          // onClose: ({ event }) => {
+          //   console.log("close event", event)
+          //   // …
+          // },
+          // onDisconnect: ({ event }) => {
+          //   console.log("disconnect", event)
+          //   // …
+          // },
+          // onDestroy() {
+          //   console.log("destroy")
+          //   // …
+          // },
+          // onAwarenessUpdate: ({ added, updated, removed }) => {
+          //   // …
+          //   console.log("awareness", added, updated, removed)
+          // },
+          // onAwarenessChange: ({ states }) => {
+          //   console.log("ax=wareness change", states)
+          //   // …
+          // },
+          // onStateless: ({ payload }) => {
+          //   console.log("stateless change", payload)
+          //   // ...
+          //   // the provider can also send a custom message to the server: provider.sendStateless('any string payload')
+          // },
           // token: "super-secret-token",
         });
 
