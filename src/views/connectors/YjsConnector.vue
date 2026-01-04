@@ -33,7 +33,3 @@ export default {
 
 }
 </script>
-
-<style lang="css" scoped>
-.yjs-connector {}
-</style>
