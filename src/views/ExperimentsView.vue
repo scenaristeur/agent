@@ -31,7 +31,7 @@ export default {
             graph: null,
             nodes: [],
             links: [],
-            node0: { id: 0, name: "Origin", "val": 10, color: "red" },
+            // node0: { id: 0, name: "Origin", "val": 10, color: "red" },
             ydoc: null,
             provider: null,
             // ymap_brain: null,
@@ -57,7 +57,7 @@ export default {
             // }
             this.nodes = []
             this.links = []
-            this.nodes = [...this.nodes, this.node0]
+            // this.nodes = [...this.nodes, this.node0]
             const elem = document.getElementById("3d-graph");
             this.graph = ForceGraph3D()(elem)
                 .enableNodeDrag(false)
@@ -70,11 +70,12 @@ export default {
             let id = uuidv4()
             let node = { id: id, name: "name of " + id, }
             this.nodes = [...this.nodes, node]
-            let link = { source: node.id, target: 0 }
+            let fake_id = this.nodes[0].id
+            let link = { source: node.id, target: fake_id }
             console.log("link", link)
             this.links = [...this.links, link]
             this.updateGraph()
-            this.yNodes.push([node])
+            this.yNodes.set(id, this.nodes)
             this.yLinks.push([link])
             // this.updateYjs()
         },
@@ -141,54 +142,46 @@ export default {
 
 
             // this.ymap_brain = this.ydoc.getMap('test')
-            this.yNodes = this.ydoc.getArray('nodes')
+            this.yNodes = this.ydoc.getMap('nodes')
             this.yLinks = this.ydoc.getArray('links')
-            this.yNodes.push([this.node0])
+            // this.yNodes.push([this.node0])
 
-            this.yNodes.observe(yarrayEvent => {
-                // yarrayEvent.target === yarray // => true
-
-                // Find out what changed: 
-                // Log the Array-Delta Format to calculate the difference to the last observe-event
-                console.log("nodes changes", yarrayEvent.changes.delta)
-                console.log(yarrayEvent.changes)
-            })
-            this.yLinks.observe(yarrayEvent => {
-                // yarrayEvent.target === yarray // => true
+            this.yNodes.observe(event => {
+                // event.target === yarray // => true
 
                 // Find out what changed: 
                 // Log the Array-Delta Format to calculate the difference to the last observe-event
-                console.log("links changes", yarrayEvent.changes.delta)
-                console.log(yarrayEvent.changes)
+                console.log("nodes changes", event.changes.delta)
+                console.log(event.changes)
+                event.changes.keys.forEach((change, key) => {
+                    if (change.action === 'add') {
+                        console.log(`Property "${key}" was added. Initial value: "${JSON.stringify(this.yNodes.get(key))}".`)
+                        let node = this.yNodes.get(key)[0]
+                        this.addOrUpdateNode(node)
+                    } else if (change.action === 'update') {
+                        console.log(`Property "${key}" was updated. New value: "${JSON.stringify(this.yNodes.get(key))}". Previous value: "${JSON.stringify(change.oldValue)}".`)
+                        let node = this.yNodes.get(key)[0]
+                        this.addOrUpdateNode(node)
+                    } else if (change.action === 'delete') {
+                        console.log(`Property "${key}" was deleted. New value: undefined. Previous value: "${JSON.stringify(change.oldValue)}".`)
+                        // let node = this.yNodes.get(key)[0]
+                        // this.deleteLinks(node)
+                        // this.deleteNode(node)
+                    }
+                })
             })
+            // this.updateYjs()
+        },
+        addOrUpdateNode(node) {
+            console.log("add or update", node)
+            let exist = this.nodes.find(x => x.id == node.id || x.name == node.name)
+            console.log("exist?", node.id, exist)
+            if (exist == undefined) {
+                this.nodes = [...this.nodes, node]
+            }
+            this.graph.graphData({ nodes: this.nodes, links: this.links });
+            // exist == undefined ? objectNode = await Vue.prototype.$newNode({ name: c.value.object }) : ""
 
-            // this.ymap_brain.unobserve()
-            // this.ymap_brain.observe(ymapEvent => {
-            //     // ymapEvent.target === ymap_brain // => true
-
-            //     // Find out what changed: 
-            //     // Option 1: A set of keys that changed
-            //     // console.log(ymapEvent.keysChanged) // => Set<strings>
-            //     // Option 2: Compute the differences
-            //     // console.log(ymapEvent.changes.keys) // => Map<string, { action: 'add'|'update'|'delete', oldValue: any}>
-
-            //     // // sample code.
-            //     ymapEvent.changes.keys.forEach((change, key) => {
-            //         if (change.action === 'add') {
-            //             console.log(`Property "${key}" was added. Initial value: "${JSON.stringify(this.ymap_brain.get(key))}".`)
-            //         } else if (change.action === 'update') {
-            //             console.log(`Property "${key}" was updated. New value: "${JSON.stringify(this.ymap_brain.get(key))}". Previous value: "${JSON.stringify(change.oldValue)}".`)
-            //         } else if (change.action === 'delete') {
-            //             console.log(`Property "${key}" was deleted. New value: undefined. Previous value: "${JSON.stringify(change.oldValue)}".`)
-            //         }
-            //     })
-
-            //     // console.info(this.ymap_brain.toJSON())
-            // })
-
-
-
-            this.updateYjs()
         },
         updateYjs() {
             // let graph = { nodes: this.nodes, links: this.links }
