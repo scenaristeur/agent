@@ -75,7 +75,7 @@ export default {
             console.log("link", link)
             this.links = [...this.links, link]
             this.updateGraph()
-            this.yNodes.set(id, this.nodes)
+            this.yNodes.set(id, node)
             this.yLinks.push([link])
             // this.updateYjs()
         },
@@ -156,11 +156,11 @@ export default {
                 event.changes.keys.forEach((change, key) => {
                     if (change.action === 'add') {
                         console.log(`Property "${key}" was added. Initial value: "${JSON.stringify(this.yNodes.get(key))}".`)
-                        let node = this.yNodes.get(key)[0]
+                        let node = this.yNodes.get(key)
                         this.addOrUpdateNode(node)
                     } else if (change.action === 'update') {
                         console.log(`Property "${key}" was updated. New value: "${JSON.stringify(this.yNodes.get(key))}". Previous value: "${JSON.stringify(change.oldValue)}".`)
-                        let node = this.yNodes.get(key)[0]
+                        let node = this.yNodes.get(key)
                         this.addOrUpdateNode(node)
                     } else if (change.action === 'delete') {
                         console.log(`Property "${key}" was deleted. New value: undefined. Previous value: "${JSON.stringify(change.oldValue)}".`)
