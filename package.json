@@ -34,6 +34,9 @@
     "y-websocket": "^1.4.3",
     "yjs": "^13.5.41"
   },
+  "engines": {
+    "node": "16.19.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",

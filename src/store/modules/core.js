@@ -265,7 +265,8 @@ const actions = {
       n['@context']['@vocab'] == undefined ? n['@context']['@vocab'] = vocab : ""
 
       context.state.connectors.forEach((c) => {
-        console.log(c)
+        console.log("CONTEXTE", c)
+
         module.dispatch(c.name + '/set', { map: 'nodes', node: n }, { root: true })
       });
 
@@ -321,6 +322,8 @@ const actions = {
     let brain = { id: uuidv4(), nodes: nodes_ids, type: 'brain', color: "#fffff" }
     await idb.saveNode(brain);
     //  context.dispatch('getNodes')
+
+    console.log("CONNECTORS", context.state.connectors)
 
   },
   switchTo(context, id) {

@@ -15,6 +15,24 @@
 
 https://github.com/ueberdosis/hocuspocus
 
+# revoir la methode update dans visualisationView
+
+ne pas remplacer le graph, mais le mettre à jour.
+
+```
+ methods:{
+    update(){
+      if (this.graph != undefined){
+        let nodes = this.nodes.map(a => {return {...a}})
+        let links = this.links.map(a => {return {...a}})
+        this.graph.graphData({nodes: nodes, links: links})
+        console.log(this.graph.graphData())
+      }
+    }
+  },
+
+```
+
 [![3D mindmap Demo](https://www.youtube.com/watch?v=YT61BcjGfwc/0.jpg)](https://www.youtube.com/watch?v=YT61BcjGfwc "3D mindmap on your Solid Pod")
 
 # Tips

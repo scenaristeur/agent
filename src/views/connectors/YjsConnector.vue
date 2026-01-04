@@ -6,6 +6,7 @@
     <b-input v-model="server" /> <a href="https://github.com/ueberdosis/hocuspocus" target="_blank">server config</a>
     <b-button @click="testConnection">Test Connection</b-button>
     <div>connected : {{ connected }}</div>
+    <a href="/experiments">experiments</a>
   </div>
 </template>
 
